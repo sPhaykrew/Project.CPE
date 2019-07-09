@@ -19,6 +19,10 @@ public class menu extends AppCompatActivity {
         exercise2 = (Button) findViewById(R.id.Exercise2);
         exercise3 = (Button) findViewById(R.id.Exercise3);
 
+        /**
+         * test hello !
+         */
+
         exercise3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
