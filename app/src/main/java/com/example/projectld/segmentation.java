@@ -46,35 +46,7 @@ public class segmentation {
     public ArrayList<String> substring (String sentence){
         int start = 0;
         int next = 1;
-        String a = null;
-        ArrayList<String> segment = new ArrayList<>();
-
-        while (start != sentence.length()){
-            boolean find_symbol = false;
-            if(next < sentence.length()){
-                a = String.valueOf(sentence.charAt(next));
-                for (int i=0;i<symbol.length;i++){
-                    if(a.equals(symbol[i])){
-                        find_symbol = true;
-                        next++;
-                    }
-                }
-            }
-            else {
-                break;
-            }
-            Log.d("per",start+" "+next+"  "+a);
-            segment.add(sentence.substring(start,next));
-            if (find_symbol){
-                start += 2;
-                next++;
-                Log.d("symbom", String.valueOf(find_symbol));
-            }
-            else {
-                start++;
-                next++;
-            }
-        }
-        return segment;
+     //ทดสอบ
+        return null;
     }
 }
