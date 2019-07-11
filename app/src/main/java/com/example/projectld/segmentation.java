@@ -2,17 +2,16 @@ package com.example.projectld;
 
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
 public class segmentation {
+
     private String replace;
     private static String word1 = null;
     private String word;
-
-    private String[] symbol = {"ะ","ั","็","ิ","่","ํ","ุ","ู","้","๊","๋"};
+    private String[] symbols = {"ะ","ั","็","ิ","่","ํ","ุ","ู","้","๊","๋"};
 
     public  String Break(String i){
 
@@ -44,9 +43,28 @@ public class segmentation {
     }
 
     public ArrayList<String> substring (String sentence){
-        int start = 0;
-        int next = 1;
-     //ทดสอบ
-        return null;
+
+        ArrayList<String> segmentation = new ArrayList<>();
+        ArrayList<String> Arraytext = new ArrayList<>();
+        Arraytext.addAll(Arrays.asList(sentence.split("(?!^)")));
+        for (String Character : Arraytext) {
+            boolean isMatch = false;
+            for(String symbol : symbols) {
+                if (Character.equals(symbol)){
+                    isMatch = true;
+                    Log.i("boolean", String.valueOf(isMatch));
+                }
+            }
+            if (!isMatch){
+                segmentation.add(Character);
+            } else {
+                segmentation.set(segmentation.size()-1,segmentation.get(segmentation.size()-1)+Character);
+                //segmentation.add(segmentation.get(segmentation.size()-1)+Character);
+                //segmentation.remove(segmentation.size()-2);
+            }
+        }
+        //segmentation.remove(0);
+        Log.i("segmentation",segmentation.toString());
+        return segmentation;
     }
 }

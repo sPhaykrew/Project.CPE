@@ -23,6 +23,14 @@ public class menu extends AppCompatActivity {
          * test hello !
          */
 
+//        exercise1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(menu.this,Canvas.class);
+//                startActivity(intent);
+//            }
+//        });
+
         exercise3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

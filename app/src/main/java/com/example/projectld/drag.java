@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,11 @@ import java.util.Random;
 public class drag extends Activity {
 
     segmentation segmentation;
+    TTS tts;
+    Button voice;
+
+    int start = 0;
+    int finish = 0;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
@@ -35,13 +41,16 @@ public class drag extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dragdrop);
 
+        voice = (Button) findViewById(R.id.voice_tts);
+        tts = new TTS(this);
+
         /**
          * ตัดคำ
          */
+        final String word = "วันนี้ฉันไปโรงเรียน";
         segmentation = new segmentation();
-        ArrayList<String> sentence = segmentation.split(segmentation.Break("วันนี้ฉันกำลังไปโรงเรียน")); //ระดับคำศัพท์
-        //ArrayList<String> sentence = segmentation.substring("ธรรมชาติในป่า"); //ระดับตัวอักษร
-        Log.d("sentence",sentence.toString());
+        ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
+        //ArrayList<String> sentence = segmentation.substring(word); //ระดับตัวอักษร
 
         /**
          * question set drag listeners
@@ -61,6 +70,8 @@ public class drag extends Activity {
             valueQT.setOnDragListener(new ChoiceDragListener());
             valueQT.setGravity(Gravity.CENTER);
             question.addView(valueQT);
+
+            start++; //เช็คว่าตอบคำถามครบหรือยัง
         }
 
         /**
@@ -85,6 +96,16 @@ public class drag extends Activity {
             answerCH.setOnTouchListener(new ChoiceTouchListener());
             answer.addView(answerCH);
         }
+
+        /**
+         * call TTS
+         */
+        voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tts.speak(word);
+            }
+        });
     }
 
     /**
@@ -148,7 +169,7 @@ public class drag extends Activity {
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
-
+                        finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
                         //update the text in the target view to reflect the data being dropped
@@ -156,7 +177,7 @@ public class drag extends Activity {
                         //make it bold to highlight the fact that an item has been dropped
                         dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
                         //if an item has already been dropped here, there will be a tag
-                        Object tag = dropTarget.getTag();
+//                        Object tag = dropTarget.getTag();
                         //if there is already an item here, set it back visible in its original place
 
 //                        if(tag!=null)
@@ -171,6 +192,10 @@ public class drag extends Activity {
                         dropTarget.setTag(dropped.getId());
                         //remove setOnDragListener by setting OnDragListener to null, so that no further drag & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
+
+                        if (finish == start){
+                            Toast.makeText(drag.this,"Finish",Toast.LENGTH_LONG).show();
+                        }
                     }
                     else
                         //displays message if first character of dropTarget is not equal to first character of dropped
