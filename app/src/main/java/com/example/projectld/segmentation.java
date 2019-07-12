@@ -11,7 +11,7 @@ public class segmentation {
     private String replace;
     private static String word1 = null;
     private String word;
-    private String[] symbols = {"ะ","ั","็","ิ","่","ํ","ุ","ู","้","๊","๋"};
+    private String[] symbols = {"ะ","ั","็","ิ","่","ํ","ุ","ู","้","๊","๋","ี"};
 
     public  String Break(String i){
 
@@ -52,7 +52,6 @@ public class segmentation {
             for(String symbol : symbols) {
                 if (Character.equals(symbol)){
                     isMatch = true;
-                    Log.i("boolean", String.valueOf(isMatch));
                 }
             }
             if (!isMatch){
