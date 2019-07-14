@@ -15,6 +15,10 @@
             android:id="@+id/data"
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="ข้อมูลผู้ใช้งาน"></item>
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout"
+            android:title="ออกจากระบบ"></item>
     </group>
     <item android:title="Admin">
         <menu>
