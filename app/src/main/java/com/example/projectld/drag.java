@@ -49,8 +49,8 @@ public class drag extends Activity {
          */
         final String word = "วันนี้ฉันไปโรงเรียน";
         segmentation = new segmentation();
-        //ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
-        ArrayList<String> sentence = segmentation.substring(word); //ระดับตัวอักษร
+        ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
+        //ArrayList<String> sentence = segmentation.substring(word); //ระดับตัวอักษร
 
         /**
          * question set drag listeners

@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         onCreate(db);
     }
 
-    public User queryUser(String email, String password) {
+    public User queryUser(String email, String password) {// check login first
 
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
