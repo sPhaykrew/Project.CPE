@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
     public DatabaseHelper(Context context) {
-        super(context, "project.db", null,2);
+        super(context, "project.db", null,3);
     }
 
     @Override
@@ -58,6 +58,19 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(1));
+            cursor.moveToNext();
+        }
+        db.close();
+        return words;
+    }
+
+    public ArrayList<String> queryst (){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> words = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT Word.word From Setting_ex3_easy INNER join Word ON Setting_ex3_easy.wordID = Word.wordID",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            words.add(cursor.getString(0));
             cursor.moveToNext();
         }
         db.close();

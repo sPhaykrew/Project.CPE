@@ -38,6 +38,10 @@
         <activity android:name=".ex3_hard_game"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".st_ex3_easy">
+        </activity>
+        <activity android:name=".Grid_ex3_st_easy">
+        </activity>
     </application>
 
 </manifest>
