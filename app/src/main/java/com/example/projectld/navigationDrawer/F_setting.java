@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.navigationDrawer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.projectld.Grid_ex3_st_easy;
+import com.example.projectld.R;
 
 public class F_setting extends Fragment {
 
@@ -32,7 +35,7 @@ public class F_setting extends Fragment {
         ex3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Grid_ex3_st_easy.class);
+                Intent intent = new Intent(getActivity(), Grid_ex3_st_easy.class);
                 startActivity(intent);
             }
         });

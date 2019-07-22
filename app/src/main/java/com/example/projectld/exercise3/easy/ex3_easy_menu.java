@@ -1,8 +1,12 @@
-package com.example.projectld;
+package com.example.projectld.exercise3.easy;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
+
+import com.example.projectld.DatabaseHelper;
+import com.example.projectld.exercise3.GridviewAdapter;
+import com.example.projectld.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3.nomal;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectld.R;
+import com.example.projectld.TTS;
+import com.example.projectld.exercise3.segmentation;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,7 +34,7 @@ import java.util.Random;
 @SuppressLint("NewApi")
 public class ex3_nomal_game extends Activity {
 
-    segmentation segmentation;
+    com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
     Button voice,next,back;
 

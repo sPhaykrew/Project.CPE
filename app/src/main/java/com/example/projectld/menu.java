@@ -11,6 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.projectld.navigationDrawer.F_data;
+import com.example.projectld.navigationDrawer.F_profile;
+import com.example.projectld.navigationDrawer.F_setting;
+
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 

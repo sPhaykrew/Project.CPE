@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3;
 
 import android.util.Log;
 

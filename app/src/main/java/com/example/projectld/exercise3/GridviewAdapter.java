@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.example.projectld.DatabaseHelper;
+import com.example.projectld.exercise3.easy.ex3_easy_game;
+import com.example.projectld.exercise3.hard.ex3_hard_game;
+import com.example.projectld.exercise3.nomal.ex3_nomal_game;
 
 import java.util.ArrayList;
 import java.util.List;

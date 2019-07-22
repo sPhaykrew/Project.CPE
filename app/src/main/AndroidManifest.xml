@@ -22,20 +22,20 @@
         <activity android:name=".login"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity android:name=".ex3_easy_game"
+        <activity android:name=".exercise3.easy.ex3_easy_game"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".ex3_nomal_game"
+            android:name=".exercise3.nomal.ex3_nomal_game"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".ex3_easy_menu">
+        <activity android:name=".exercise3.easy.ex3_easy_menu">
         </activity>
-        <activity android:name=".ex3_nomal_menu">
+        <activity android:name=".exercise3.nomal.ex3_nomal_menu">
         </activity>
-        <activity android:name=".ex3_hard_menu">
+        <activity android:name=".exercise3.hard.ex3_hard_menu">
         </activity>
-        <activity android:name=".ex3_hard_game"
+        <activity android:name=".exercise3.hard.ex3_hard_game"
             android:screenOrientation="landscape">
         </activity>
         <activity android:name=".st_ex3_easy">

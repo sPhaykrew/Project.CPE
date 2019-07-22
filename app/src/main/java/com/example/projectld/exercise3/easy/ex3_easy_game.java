@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3.easy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,14 +23,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectld.R;
+import com.example.projectld.TTS;
+import com.example.projectld.exercise3.segmentation;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class ex3_hard_game extends Activity {
+public class ex3_easy_game extends Activity {
 
-    segmentation segmentation;
+    com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
     Button voice,next,back;
 
@@ -75,7 +79,7 @@ public class ex3_hard_game extends Activity {
          */
         final String word = "วันนี้ฉันไปโรงเรียน";
         segmentation = new segmentation();
-        //ArrayList<String> sentence = segmentation.split(segmentation.Break(wordset.get(count))); //ระดับคำศัพท์
+        //ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
         ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
 
         /**
@@ -243,12 +247,12 @@ public class ex3_hard_game extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(ex3_hard_game.this,"Finish",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ex3_easy_game.this,"Finish",Toast.LENGTH_LONG).show();
                         }
                     }
                     else
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(ex3_hard_game.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ex3_easy_game.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
