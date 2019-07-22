@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteAssetHelper {
     public DatabaseHelper(Context context) {
-        super(context, "project.db", null,1);
+        super(context, "project.db", null,2);
     }
 
     @Override
@@ -31,7 +33,34 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (cursor != null && cursor.getCount() > 0) {
             user = new User(cursor.getString(1), cursor.getString(2));
         }
+        db.close();
         // return user
         return user;
+    }
+
+    public ArrayList<String> queryword (String table){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> words = new ArrayList<>();
+        Cursor cursor = db.rawQuery("Select * From "+table, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            words.add(cursor.getString(1));
+            cursor.moveToNext();
+        }
+        db.close();
+        return words;
+    }
+
+    public ArrayList<String> queryset (String offset){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> words = new ArrayList<>();
+        Cursor cursor = db.rawQuery("Select * From Word limit 5 offset " + offset,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            words.add(cursor.getString(1));
+            cursor.moveToNext();
+        }
+        db.close();
+        return words;
     }
 }

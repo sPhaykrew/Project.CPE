@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp">
+
+
+    <LinearLayout
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!--<TextView-->
+        <!--android:id="@+id/choice_1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="A for " />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/choice_2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="O for " />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/choice_3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="B for " />-->
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <!--<TextView-->
+        <!--android:id="@+id/option_1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginStart="20dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Apple"-->
+        <!--android:textStyle="bold" />-->
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/option_2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Orange"-->
+        <!--android:textStyle="bold" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/option_3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Ball"-->
+        <!--android:textStyle="bold" />-->
+
+        <Button
+            android:id="@+id/voice_tts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Voice" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/next"
+            android:text="Next"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/back"
+            android:text="Back"/>
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.LinearLayoutCompat>

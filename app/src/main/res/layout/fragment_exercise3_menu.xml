@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/holo_orange_dark">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="228dp">
+
+        <Button
+            android:id="@+id/easy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="easy" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="228dp">
+
+        <Button
+            android:id="@+id/nomal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="nomal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="228dp">
+
+        <Button
+            android:id="@+id/hard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hard" />
+    </LinearLayout>
+
+</android.support.v7.widget.LinearLayoutCompat>

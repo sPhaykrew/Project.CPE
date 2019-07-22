@@ -1,5 +1,7 @@
 package com.example.projectld;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -7,6 +9,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -25,41 +28,65 @@ import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class drag extends Activity {
+public class ex3_hard_game extends Activity {
 
     segmentation segmentation;
     TTS tts;
-    Button voice;
+    Button voice,next,back;
 
-    int start = 0;
+    int start = 0; //เช็คว่าเลากไปกี่ตัวแล้ว
     int finish = 0;
+
+    ArrayList<String> wordset = new ArrayList<>();
+    int count; // count array wordset for next and back
+    SharedPreferences sharedPreferences; //เก็บค่า I ไม่ให้หาย
+    Bundle arrayset; //รับค่า array จาก gridview ที่คิวรี่จากฐานข้อมูล
+
+    int first = 0;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dragdrop);
+        setContentView(R.layout.ex3_easy_game);
+
+        next = (Button)  findViewById(R.id.next);
+        back = (Button) findViewById(R.id.back);
+        arrayset = getIntent().getExtras();
 
         voice = (Button) findViewById(R.id.voice_tts);
         tts = new TTS(this);
+
+        LoadInt();
+
+        if (null != arrayset) {
+            wordset = arrayset.getStringArrayList("wordset");
+        }
+
+        if (first == 0){
+            count = arrayset.getInt("countarray");
+            first++;
+            checkFIrst(first);
+        }
 
         /**
          * ตัดคำ
          */
         final String word = "วันนี้ฉันไปโรงเรียน";
         segmentation = new segmentation();
-        ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
-        //ArrayList<String> sentence = segmentation.substring(word); //ระดับตัวอักษร
+        //ArrayList<String> sentence = segmentation.split(segmentation.Break(wordset.get(count))); //ระดับคำศัพท์
+        ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
 
         /**
-         * question set drag listeners
+         * question set ex3_easy_game listeners
          */
         LinearLayout question = (LinearLayout) findViewById(R.id.question);
         for(int i=0 ; i < sentence.size() ; i++) {
             TextView valueQT = new TextView(this);
             valueQT.setText("__");
             valueQT.setId(i);
+            valueQT.setTextSize(20);
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -75,7 +102,7 @@ public class drag extends Activity {
         }
 
         /**
-         * answer views to drag
+         * answer views to ex3_easy_game
          */
         LinearLayout answer = (LinearLayout) findViewById(R.id.answer);
         int loop = sentence.size();
@@ -84,7 +111,7 @@ public class drag extends Activity {
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
             answerCH.setText(sentenceRD.get(i));
-
+            answerCH.setTextSize(20);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -103,7 +130,29 @@ public class drag extends Activity {
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tts.speak(word);
+                tts.speak(wordset.get(count));
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                SaveInt(count);
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count--;
+                SaveInt(count);
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
     }
@@ -119,7 +168,7 @@ public class drag extends Activity {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 /*
                  * Drag details: we only need default behavior
-                 * - clip data could be set to pass data as part of drag
+                 * - clip data could be set to pass data as part of ex3_easy_game
                  * - shadow can be tailored
                  */
                 ClipData data = ClipData.newPlainText("", "");
@@ -136,7 +185,7 @@ public class drag extends Activity {
     /**
      * DragListener will handle dragged views being dropped on the drop area
      * - only the drop action will have processing added to it as we are not
-     * - amending the default behavior for other parts of the drag process
+     * - amending the default behavior for other parts of the ex3_easy_game process
      *
      */
     @SuppressLint("NewApi")
@@ -190,16 +239,16 @@ public class drag extends Activity {
 
                         //set the tag in the target view being dropped on - to the ID of the view being dropped
                         dropTarget.setTag(dropped.getId());
-                        //remove setOnDragListener by setting OnDragListener to null, so that no further drag & dropping on this TextView can be done
+                        //remove setOnDragListener by setting OnDragListener to null, so that no further ex3_easy_game & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(drag.this,"Finish",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ex3_hard_game.this,"Finish",Toast.LENGTH_LONG).show();
                         }
                     }
                     else
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(drag.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ex3_hard_game.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
@@ -243,6 +292,25 @@ public class drag extends Activity {
             result.remove(test);
         }
         return list;
+    }
+
+    public void SaveInt(int value){ //เซฟค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("key", value);
+        editor.commit();
+    }
+    public void LoadInt(){ // โหลดค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        count = sharedPreferences.getInt("key", 0);
+        first = sharedPreferences.getInt("first",0);
+    }
+
+    public void checkFIrst(int first){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("first",first);
+        editor.commit();
     }
 
 }
