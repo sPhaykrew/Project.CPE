@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.projectld.Grid_ex3_st_easy;
 import com.example.projectld.R;
+import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
+import com.example.projectld.exercise3.st_hard.st_ex3_hard_menu;
+import com.example.projectld.exercise3.st_nomal.st_ex3_normal_menu;
 
 public class F_setting extends Fragment {
 
@@ -35,7 +37,23 @@ public class F_setting extends Fragment {
         ex3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Grid_ex3_st_easy.class);
+                Intent intent = new Intent(getActivity(), st_ex3_easy_menu.class);
+                startActivity(intent);
+            }
+        });
+
+        ex4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), st_ex3_normal_menu.class);
+                startActivity(intent);
+            }
+        });
+
+        ex5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), st_ex3_hard_menu.class);
                 startActivity(intent);
             }
         });

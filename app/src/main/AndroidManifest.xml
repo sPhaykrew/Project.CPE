@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projectld">
 
     <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
@@ -11,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".menu"
         android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -38,9 +40,29 @@
         <activity android:name=".exercise3.hard.ex3_hard_game"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".st_ex3_easy">
+        <activity android:name=".exercise3.st_easy.st_ex3_easy_inMenu">
         </activity>
-        <activity android:name=".Grid_ex3_st_easy">
+        <activity android:name=".exercise3.st_easy.grid_view_ex3_st_easy_selectWord">
+        </activity>
+        <activity android:name=".exercise3.st_easy.st_ex3_easy_menu">
+        </activity>
+        <activity android:name=".exercise3.easy.ex3_easy_game_st">
+        </activity>
+        <activity android:name=".exercise3.st_nomal.st_ex3_normal_menu">
+        </activity>
+        <activity android:name=".exercise3.st_nomal.grid_view_ex3_st_normal_selectWord">
+        </activity>
+        <activity android:name=".exercise3.st_nomal.st_ex3_normal_inMenu">
+        </activity>
+        <activity android:name=".exercise3.nomal.ex3_normal_game_st">
+        </activity>
+        <activity android:name=".exercise3.st_hard.st_ex3_hard_menu">
+        </activity>
+        <activity android:name=".exercise3.st_hard.grid_view_ex3_st_hard_selectWord">
+        </activity>
+        <activity android:name=".exercise3.st_hard.st_ex3_hard_inMenu">
+        </activity>
+        <activity android:name=".exercise3.hard.ex3_hard_game_st">
         </activity>
     </application>
 

@@ -11,21 +11,29 @@ import com.example.projectld.R;
 import java.util.ArrayList;
 
 public class ex3_nomal_menu extends AppCompatActivity {
-
+    DatabaseHelper dbHelper;
+    ArrayList<String> words,st;
+    GridView gridView,gridView_admin;
+    GridviewAdapter gridviewAdapter,gridviewAdapter_admin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex3_hard_menu);
+        setContentView(R.layout.ex3_nomal_menu);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        dbHelper = new DatabaseHelper(getApplicationContext());
 
-        ArrayList<String> words;
         words = dbHelper.queryword("Sentence");
-        GridView gridView = findViewById(R.id.gridViewnomal);
+        gridView = findViewById(R.id.gridViewnomal);
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(words,this,"nomal");
+        gridviewAdapter = new GridviewAdapter(words,this,"nomal");
         gridView.setAdapter(gridviewAdapter);
+
+        //gridview admin setting
+        gridView_admin = findViewById(R.id.gridView_admin);
+        st = dbHelper.GetGroupname("Setting_ex3_normal","st_ex3_normal_id");
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_normal_game_st");
+        gridView_admin.setAdapter(gridviewAdapter_admin);
 
     }
 }

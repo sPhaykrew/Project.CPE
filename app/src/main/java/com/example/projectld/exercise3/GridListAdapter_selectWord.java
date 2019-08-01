@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -9,20 +9,22 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.projectld.R;
+
 import java.util.ArrayList;
 
 /**
  * Created by sonu on 08/02/17.
  */
 
-public class GridListAdapter extends BaseAdapter {
+public class GridListAdapter_selectWord extends BaseAdapter {
     private Context context;
     private ArrayList<String> arrayList;
     private LayoutInflater inflater;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
 
-    public GridListAdapter(Context context, ArrayList<String> arrayList, boolean isListView) {
+    public GridListAdapter_selectWord(Context context, ArrayList<String> arrayList, boolean isListView) {
         this.context = context;
         this.arrayList = arrayList;
         this.isListView = isListView;

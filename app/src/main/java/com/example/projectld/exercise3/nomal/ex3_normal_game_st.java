@@ -1,4 +1,4 @@
-package com.example.projectld.exercise3.easy;
+package com.example.projectld.exercise3.nomal;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
@@ -32,7 +33,7 @@ import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class ex3_easy_game extends Activity {
+public class ex3_normal_game_st extends Activity {
 
     com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
@@ -42,7 +43,7 @@ public class ex3_easy_game extends Activity {
     int finish = 0;
 
     ArrayList<String> wordset = new ArrayList<>();
-    int count; // count array wordset for next and back
+    int count = 0; // count array wordset for next and back
     SharedPreferences sharedPreferences; //เก็บค่า I ไม่ให้หาย
     Bundle arrayset; //รับค่า array จาก gridview ที่คิวรี่จากฐานข้อมูล
 
@@ -53,7 +54,7 @@ public class ex3_easy_game extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex3_easy_game);
+        setContentView(R.layout.ex3_nomal_game);
 
         next = (Button)  findViewById(R.id.next);
         back = (Button) findViewById(R.id.back);
@@ -61,25 +62,20 @@ public class ex3_easy_game extends Activity {
 
         voice = (Button) findViewById(R.id.voice_tts);
         tts = new TTS(this);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
         LoadInt();
 
-        if (null != arrayset) {
-            wordset = arrayset.getStringArrayList("wordset");
-        }
+        String word = arrayset.getString("Groupname");
+        wordset = databaseHelper.ex3_normal_game_st(String.valueOf(word));
 
-        if (first == 0){
-            count = arrayset.getInt("countarray");
-            first++;
-            checkFIrst(first);
-        }
 
         /**
          * ตัดคำ
          */
         segmentation = new segmentation();
-        //ArrayList<String> sentence = segmentation.split(segmentation.Break(word)); //ระดับคำศัพท์
-        ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
+        ArrayList<String> sentence = segmentation.split(segmentation.Break(wordset.get(count))); //ระดับคำศัพท์
+        //ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
 
         /**
          * question set ex3_easy_game listeners
@@ -142,7 +138,7 @@ public class ex3_easy_game extends Activity {
             public void onClick(View v) {
                 count++;
                 if(count >= wordset.size()){
-                    Toast.makeText(ex3_easy_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ex3_normal_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
                     count--;
                 } else {
                     SaveInt(count);
@@ -158,7 +154,7 @@ public class ex3_easy_game extends Activity {
             public void onClick(View v) {
                 count--;
                 if(count < 0){
-                    Toast.makeText(ex3_easy_game.this,"ไม่พบคำก่อนหน้า",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ex3_normal_game_st.this,"ไม่พบคำก่อนหน้า",Toast.LENGTH_SHORT).show();
                     count++;
                 } else {
                     SaveInt(count);
@@ -256,12 +252,12 @@ public class ex3_easy_game extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(ex3_easy_game.this,"Finish",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ex3_normal_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
                         }
                     }
                     else
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(ex3_easy_game.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ex3_normal_game_st.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
@@ -318,12 +314,4 @@ public class ex3_easy_game extends Activity {
         count = sharedPreferences.getInt("key", 0);
         first = sharedPreferences.getInt("first",0);
     }
-
-    public void checkFIrst(int first){
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("first",first);
-        editor.commit();
-    }
-
 }

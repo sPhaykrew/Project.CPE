@@ -12,20 +12,31 @@ import java.util.ArrayList;
 
 public class ex3_easy_menu extends AppCompatActivity {
 
+    DatabaseHelper dbHelper;
+    ArrayList<String> words,st;
+    GridView gridView,gridView_admin;
+    GridviewAdapter gridviewAdapter,gridviewAdapter_admin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_easy_menu);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        dbHelper = new DatabaseHelper(getApplicationContext());
 
-        ArrayList<String> words;
         words = dbHelper.queryword("word");
-        GridView gridView = findViewById(R.id.gridView);
+        gridView = findViewById(R.id.gridView);
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(words,this,"easy");
+        gridviewAdapter = new GridviewAdapter(words,this,"easy");
         gridView.setAdapter(gridviewAdapter);
+
+        //gridview admin setting
+        gridView_admin = findViewById(R.id.gridView_admin);
+        st = dbHelper.GetGroupname("Setting_ex3_easy","st_ex3_easy_id");
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_easy_game_st");
+        gridView_admin.setAdapter(gridviewAdapter_admin);
+
 
     }
 }

@@ -53,7 +53,7 @@ public class ex3_nomal_game extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex3_easy_game);
+        setContentView(R.layout.ex3_nomal_game);
 
         next = (Button)  findViewById(R.id.next);
         back = (Button) findViewById(R.id.back);
@@ -142,10 +142,15 @@ public class ex3_nomal_game extends Activity {
             @Override
             public void onClick(View v) {
                 count++;
-                SaveInt(count);
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                if(count >= wordset.size()){
+                    Toast.makeText(ex3_nomal_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                    count--;
+                } else {
+                    SaveInt(count);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
 
@@ -153,10 +158,15 @@ public class ex3_nomal_game extends Activity {
             @Override
             public void onClick(View v) {
                 count--;
-                SaveInt(count);
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                if(count < 0){
+                    Toast.makeText(ex3_nomal_game.this,"ไม่พบคำก่อนหน้า",Toast.LENGTH_SHORT).show();
+                    count++;
+                } else {
+                    SaveInt(count);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,8 +14,14 @@ import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
+import com.example.projectld.exercise3.easy.ex3_easy_game_st;
 import com.example.projectld.exercise3.hard.ex3_hard_game;
+import com.example.projectld.exercise3.hard.ex3_hard_game_st;
 import com.example.projectld.exercise3.nomal.ex3_nomal_game;
+import com.example.projectld.exercise3.nomal.ex3_normal_game_st;
+import com.example.projectld.exercise3.st_easy.st_ex3_easy_inMenu;
+import com.example.projectld.exercise3.st_hard.st_ex3_hard_inMenu;
+import com.example.projectld.exercise3.st_nomal.st_ex3_normal_inMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +59,6 @@ public class GridviewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         Button button = null;
-        final DatabaseHelper databaseHelper = new DatabaseHelper(context);
 
         if(button == null) {
             button = new Button(context);
@@ -73,15 +79,21 @@ public class GridviewAdapter extends BaseAdapter {
                 editor.remove("first").apply();
 
                 int count = (int) finalButton.getTag(); // count array wordset for next and back
-
-                Toast.makeText(context, finalButton.getTag().toString(),Toast.LENGTH_SHORT).show();
                 wordset = (ArrayList<String>) lstSource;
 
                 switch (mode){
                     case "easy" : intent =  new Intent(context, ex3_easy_game.class); break;
                     case "nomal" : intent =  new Intent(context, ex3_nomal_game.class); break;
                     case "hard" : intent =  new Intent(context, ex3_hard_game.class); break;
-
+                    case "st_easy" : intent = new Intent(context, st_ex3_easy_inMenu.class);break;
+                    case "st_normal" : intent = new Intent(context, st_ex3_normal_inMenu.class);break;
+                    case "st_hard" : intent = new Intent(context, st_ex3_hard_inMenu.class);break;
+                    case "ex3_easy_game_st" : intent = new Intent(context, ex3_easy_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText()); break;
+                    case "ex3_normal_game_st" : intent = new Intent(context, ex3_normal_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText()); break;
+                    case "ex3_hard_game_st" : intent = new Intent(context, ex3_hard_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText()); break;
                 }
 
                 intent.putExtra("countarray",count);

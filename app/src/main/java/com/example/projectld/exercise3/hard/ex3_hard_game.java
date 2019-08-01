@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.projectld.R;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.segmentation;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class ex3_hard_game extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex3_easy_game);
+        setContentView(R.layout.ex3_hard_game);
 
         next = (Button)  findViewById(R.id.next);
         back = (Button) findViewById(R.id.back);
@@ -77,7 +78,6 @@ public class ex3_hard_game extends Activity {
         /**
          * ตัดคำ
          */
-        final String word = "วันนี้ฉันไปโรงเรียน";
         segmentation = new segmentation();
         //ArrayList<String> sentence = segmentation.split(segmentation.Break(wordset.get(count))); //ระดับคำศัพท์
         ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
@@ -142,10 +142,15 @@ public class ex3_hard_game extends Activity {
             @Override
             public void onClick(View v) {
                 count++;
-                SaveInt(count);
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                if(count >= wordset.size()){
+                    Toast.makeText(ex3_hard_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                    count--;
+                } else {
+                    SaveInt(count);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
 
@@ -153,10 +158,15 @@ public class ex3_hard_game extends Activity {
             @Override
             public void onClick(View v) {
                 count--;
-                SaveInt(count);
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                if(count < 0){
+                    Toast.makeText(ex3_hard_game.this,"ไม่พบคำก่อนหน้า",Toast.LENGTH_SHORT).show();
+                    count++;
+                } else {
+                    SaveInt(count);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
     }

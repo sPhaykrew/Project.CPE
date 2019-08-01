@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.exercise3.st_hard;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,22 +8,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.projectld.DatabaseHelper;
+import com.example.projectld.R;
+import com.example.projectld.exercise3.MyRecyclerViewAdapter;
+
 import java.util.ArrayList;
 
-public class st_ex3_easy extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class st_ex3_hard_inMenu extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
     MyRecyclerViewAdapter adapter;
+    Bundle group;
+    String position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.st_ex3_easy);
+        setContentView(R.layout.st_ex3_easy_inmenu);
 
         ArrayList<String> st = new ArrayList<>();
+        group = getIntent().getExtras();
+
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         // data to populate the RecyclerView with
-        st = databaseHelper.queryst();
-
+        position = String.valueOf(group.getInt("countarray")); //รับค่า position มาจากหน้า Gridviewadpater
+        st = databaseHelper.group_st_normal(position,"Setting_ex3_hard");
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvAnimals);
 
