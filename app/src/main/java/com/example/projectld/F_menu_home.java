@@ -1,5 +1,6 @@
 package com.example.projectld;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,7 @@ import android.widget.Button;
 
 import com.example.projectld.exercise3.F_exercise3_menu;
 
-public class F_menu extends Fragment {
+public class F_menu_home extends Fragment {
 
     Button exercise1,exercise2,exercise3;
 
@@ -37,6 +38,14 @@ public class F_menu extends Fragment {
                 transaction.replace(R.id.fragment_container,new F_exercise3_menu() ); // give your fragment container id in first parameter
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
+            }
+        });
+
+        exercise2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent integer = new Intent(getActivity(),test.class);
+                startActivity(integer);
             }
         });
     }

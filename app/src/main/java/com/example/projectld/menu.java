@@ -1,27 +1,39 @@
 package com.example.projectld;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
+import android.util.Base64;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.projectld.navigationDrawer.F_data;
 import com.example.projectld.navigationDrawer.F_profile;
 import com.example.projectld.navigationDrawer.F_setting;
 
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private DrawerLayout drawer;
+    TextView Username,Fullname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,10 +47,25 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Text Profile
+        View header = navigationView.getHeaderView(0);
+        Username = header.findViewById(R.id.Username);
+        Fullname = header.findViewById(R.id.Fullname);
+        Username.setText(sp.getString("Username",null));
+        Fullname.setText(sp.getString("Fullname",null));
+
+        //Profile header
+        final ImageView imageView = header.findViewById(R.id.Profile);
+        byte[] bytes = Base64.decode(sp.getString("Picture",null), Base64.DEFAULT); //แปลง String เป็น byte
+        if (bytes != null){
+            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+            imageView.setImageBitmap(bmp);}
+
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new F_menu())
+                    .replace(R.id.fragment_container, new F_menu_home())
                     .commit();
             //navigationView.setCheckedItem(R.id.setting);
         }
@@ -60,8 +87,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new F_data()).addToBackStack(null).commit();
                 break;
-            case R.id.logout:
-                Toast.makeText(menu.this,"Logout",Toast.LENGTH_LONG).show();
+            case R.id.addPerson:
+                Intent intent = new Intent(getApplicationContext(),Register.class);
+                startActivity(intent);
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -75,4 +104,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             super.onBackPressed();
         }
     }
+
+
+
 }

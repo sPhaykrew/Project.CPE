@@ -29,16 +29,32 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         User user = null;
 
         Cursor cursor = db.query("User", new String[]{"UserID",
-                        "Username", "Password"}, "Username" + "=? and " + "Password" + "=?",
+                        "Username", "Password","Fullname","Age","sex","Permission","Picture"}, "Username" + "=? and " + "Password" + "=?",
                 new String[]{email, password}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
         if (cursor != null && cursor.getCount() > 0) {
-            user = new User(cursor.getString(1), cursor.getString(2));
+            user = new User(cursor.getString(1), cursor.getString(2),cursor.getString(0)
+            ,cursor.getString(3),cursor.getInt(4),cursor.getString(5)
+            ,cursor.getString(6),cursor.getBlob(7));
         }
         db.close();
-        // return user
         return user;
+    }
+
+    public void insert_user (String user,String password,String name,int age,String sex,byte[] Picture){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> words = new ArrayList<>();
+        ContentValues Val = new ContentValues();
+        Val.put("Username",user);
+        Val.put("Password", password);
+        Val.put("Fullname",name);
+        Val.put("Age",age);
+        Val.put("sex",sex);
+        Val.put("Permission","User");
+        Val.put("Picture",Picture);
+        long rows = db.insert("User", null, Val);
+        db.close();
     }
 
     public ArrayList<String> queryword (String table){

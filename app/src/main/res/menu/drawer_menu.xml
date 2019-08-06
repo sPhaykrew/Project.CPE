@@ -30,6 +30,10 @@
                 android:id="@+id/test2"
                 android:icon="@drawable/ic_assessment_black_24dp"
                 android:title="ข้อมูลผู้ใช้งาน"></item>
+            <item
+                android:id="@+id/addPerson"
+                android:icon="@drawable/ic_person_add_black_24dp"
+                android:title="เพิ่มผู้ใช้งาน"></item>
         </menu>
     </item>
 

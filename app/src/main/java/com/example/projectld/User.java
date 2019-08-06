@@ -1,11 +1,20 @@
 package com.example.projectld;
 
 public class User {
-    private String Username,Password,Firstname,Lastname,Nickname,Age,Permission;
+    private String Username,Password,UserID,Fullname,sex,Permission;
+    private Integer Age;
+    private byte[] Picture;
 
-    public User(String Username, String Password) {
+    public User(String Username, String Password,String UserID,String Fullname,Integer Age,String sex,String Permission,byte[] Picture) {
         this.Username = Username;
         this.Password = Password;
+        this.UserID = UserID;
+        this.Fullname = Fullname;
+        this.Age = Age;
+        this.sex = sex;
+        this.Permission = Permission;
+        this.Picture = Picture;
+
     }
 
     public String getUsername() {
@@ -24,36 +33,28 @@ public class User {
         Password = password;
     }
 
-    public String getFirstname() {
-        return Firstname;
+    public String getUserID() {
+        return UserID;
     }
 
-    public void setFirstname(String firstname) {
-        Firstname = firstname;
+    public void setUserID(String userID) {
+        UserID = userID;
     }
 
-    public String getLastname() {
-        return Lastname;
+    public String getFullname() {
+        return Fullname;
     }
 
-    public void setLastname(String lastname) {
-        Lastname = lastname;
+    public void setFullname(String fullname) {
+        Fullname = fullname;
     }
 
-    public String getNickname() {
-        return Nickname;
+    public String getSex() {
+        return sex;
     }
 
-    public void setNickname(String nickname) {
-        Nickname = nickname;
-    }
-
-    public String getAge() {
-        return Age;
-    }
-
-    public void setAge(String age) {
-        Age = age;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getPermission() {
@@ -62,5 +63,21 @@ public class User {
 
     public void setPermission(String permission) {
         Permission = permission;
+    }
+
+    public Integer getAge() {
+        return Age;
+    }
+
+    public void setAge(Integer age) {
+        Age = age;
+    }
+
+    public byte[] getPicture() {
+        return Picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        Picture = picture;
     }
 }

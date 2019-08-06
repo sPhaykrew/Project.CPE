@@ -16,13 +16,13 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".menu"
         android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".login"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".login"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity android:name=".exercise3.easy.ex3_easy_game"
             android:screenOrientation="landscape">
@@ -63,6 +63,10 @@
         <activity android:name=".exercise3.st_hard.st_ex3_hard_inMenu">
         </activity>
         <activity android:name=".exercise3.hard.ex3_hard_game_st">
+        </activity>
+        <activity android:name=".Register">
+        </activity>
+        <activity android:name=".test">
         </activity>
     </application>
 
