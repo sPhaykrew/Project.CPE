@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +20,13 @@ import java.io.IOException;
 public class Register extends AppCompatActivity {
 
     EditText user,password,confirmPS,name,age;
-    Button button,picture;
+    Button button, selectPicture;
     String sex = null;
     ImageView imageView;
     static final int SELECT_PICTURE = 100;
     Bitmap image = null;
-    private Uri selectedImageUri;
+
+    byte[] inputData = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
         age = findViewById(R.id.age);
 
         button = findViewById(R.id.button);
-        picture = findViewById(R.id.picture);
+        selectPicture = findViewById(R.id.picture);
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -58,22 +58,22 @@ public class Register extends AppCompatActivity {
                 {
                     Toast.makeText(Register.this,"พาสเวิดไม่ตรงกัน",Toast.LENGTH_SHORT).show();
                 } else {
-                    try { //แปลงรูปเป็น byte ก่อน insert
-                    byte[] inputData = convertBitmapIntoByteArray();
+                    //แปลงรูปเป็น byte ก่อน insert
+                    if (image != null) {
+                        inputData = convertBitmapIntoByteArray();
+                        }
                     //insert table user
                     databaseHelper.insert_user(user.getText().toString(),password.getText().toString(),name.getText().toString(),
                             Integer.parseInt(age.getText().toString()),sex,inputData);
                             finish();
                     Toast.makeText(Register.this,"เพิ่มผู้ใช้งานแล้ว",Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Log.e("SelectPicture Error", "<saveImageInDB> Error : " + e.getLocalizedMessage());
-                        }
+
                     }
                 }
             }
         });
 
-        picture.setOnClickListener(new View.OnClickListener() {
+        selectPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -119,7 +119,7 @@ public class Register extends AppCompatActivity {
 
     private byte[] convertBitmapIntoByteArray() { //ลดขนาดรูป แปลงรูป
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
     }

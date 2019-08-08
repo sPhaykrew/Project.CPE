@@ -46,8 +46,9 @@ public class login extends AppCompatActivity {
                         editor.putInt("Age",user.getAge());
                         editor.putString("sex",user.getSex());
                         editor.putString("Permission",user.getPermission());
+                        if(user.getPicture() != null){
                         String saveThis = Base64.encodeToString(user.getPicture(), Base64.DEFAULT);//แปลง byte เป็น String
-                        editor.putString("Picture",saveThis);
+                        editor.putString("Picture",saveThis);}
                         editor.commit();
 
                         Intent intent = new Intent(login.this, menu.class);

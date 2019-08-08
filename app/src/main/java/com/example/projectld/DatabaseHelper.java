@@ -44,7 +44,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
     public void insert_user (String user,String password,String name,int age,String sex,byte[] Picture){
         SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<String> words = new ArrayList<>();
         ContentValues Val = new ContentValues();
         Val.put("Username",user);
         Val.put("Password", password);
@@ -54,6 +53,19 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Val.put("Permission","User");
         Val.put("Picture",Picture);
         long rows = db.insert("User", null, Val);
+        db.close();
+    }
+
+    public void update_user (String user,String name,int age,String sex,byte[] Picture,String UserID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        Val.put("Username",user);
+        Val.put("Fullname",name);
+        Val.put("Age",age);
+        Val.put("sex",sex);
+        Val.put("Permission","User");
+        Val.put("Picture",Picture);
+        long rows = db.update("User",Val, "UserID=" + UserID, null);
         db.close();
     }
 

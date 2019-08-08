@@ -28,12 +28,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private DrawerLayout drawer;
     TextView Username,Fullname;
 
+    static menu menu;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        menu = this; //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
+
+        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,15 +56,15 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         View header = navigationView.getHeaderView(0);
         Username = header.findViewById(R.id.Username);
         Fullname = header.findViewById(R.id.Fullname);
-        Username.setText(sp.getString("Username",null));
-        Fullname.setText(sp.getString("Fullname",null));
+        Username.setText(user.getString("Username",null));
+        Fullname.setText(user.getString("Fullname",null));
 
         //Profile header
-        final ImageView imageView = header.findViewById(R.id.Profile);
-        byte[] bytes = Base64.decode(sp.getString("Picture",null), Base64.DEFAULT); //แปลง String เป็น byte
-        if (bytes != null){
+        ImageView imageView = header.findViewById(R.id.Profile);
+        if (user.getString("Picture",null) != null){
+        byte[] bytes = Base64.decode(user.getString("Picture",null), Base64.DEFAULT); //แปลง String เป็น byte
             Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-            imageView.setImageBitmap(bmp);}
+            imageView.setImageBitmap(bmp); }
 
 
         if (savedInstanceState == null) {
@@ -80,8 +85,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                         new F_setting()).addToBackStack(null).commit();
                 break;
             case R.id.edit:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_profile()).addToBackStack(null).commit();
+                Intent editProfile = new Intent(getApplicationContext(), F_profile.class);
+                startActivity(editProfile);
                 break;
             case R.id.data:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -105,6 +110,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
     }
 
-
-
+    public static menu getInstance(){ //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
+        return   menu;
+    }
 }
