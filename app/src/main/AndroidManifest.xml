@@ -68,6 +68,10 @@
         </activity>
         <activity android:name=".navigationDrawer.F_profile">
         </activity>
+        <activity android:name=".Call_GridAdapter_User">
+        </activity>
+        <activity android:name=".GridAdapter_User_Modifiled">
+        </activity>
     </application>
 
 </manifest>

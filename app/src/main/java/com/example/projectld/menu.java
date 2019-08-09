@@ -92,6 +92,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new F_data()).addToBackStack(null).commit();
                 break;
+            case R.id.EditUser:
+                Intent editUser = new Intent(getApplicationContext(),Call_GridAdapter_User.class);
+                startActivity(editUser);
+                break;
             case R.id.addPerson:
                 Intent intent = new Intent(getApplicationContext(),Register.class);
                 startActivity(intent);

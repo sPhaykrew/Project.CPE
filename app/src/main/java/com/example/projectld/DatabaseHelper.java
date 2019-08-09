@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.example.projectld.exercise3.word;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -76,32 +79,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(1));
-            cursor.moveToNext();
-        }
-        db.close();
-        return words;
-    }
-
-    public ArrayList<String> queryset (String offset){
-        SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<String> words = new ArrayList<>();
-        Cursor cursor = db.rawQuery("Select * From Word limit 5 offset " + offset,null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            words.add(cursor.getString(1));
-            cursor.moveToNext();
-        }
-        db.close();
-        return words;
-    }
-
-    public ArrayList<String> query_wordid_fromST(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<String> words = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT Word.word From Setting_ex3_easy INNER join Word ON Setting_ex3_easy.wordID = Word.wordID",null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            words.add(cursor.getString(0));
             cursor.moveToNext();
         }
         db.close();
@@ -229,6 +206,59 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         db.close();
         return words;
+    }
+
+    public ArrayList<String> getAll_User(String select){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> User = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT " +select+ " From User ORDER BY UserID",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            User.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        db.close();
+        return User;
+    }
+
+    public ArrayList<Bitmap> getAll_User_Picture(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Bitmap> Picture = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT Picture From User ORDER BY UserID",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            byte[] bytes = cursor.getBlob(0);
+            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+            Picture.add(bmp);
+            cursor.moveToNext();
+        }
+        db.close();
+        return Picture;
+    }
+
+    public User ModifileUser(String UserID) {// check login first
+
+        Log.d("ssssssssss",UserID);
+        SQLiteDatabase db = this.getReadableDatabase();
+        User user = null;
+
+        Cursor cursor = db.query("User", new String[]{"UserID",
+                        "Username", "Password","Fullname","Age","sex","Permission","Picture"}, "UserID = " + UserID, null, null, null, "1");
+        if (cursor != null)
+            cursor.moveToFirst();
+        if (cursor != null && cursor.getCount() > 0) {
+            user = new User(cursor.getString(1), cursor.getString(2),cursor.getString(0)
+                    ,cursor.getString(3),cursor.getInt(4),cursor.getString(5)
+                    ,cursor.getString(6),cursor.getBlob(7));
+        }
+        db.close();
+        return user;
+    }
+
+    public void delete_user (String UserID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete("User","UserID = " + UserID,null);
+        db.close();
     }
 
 }

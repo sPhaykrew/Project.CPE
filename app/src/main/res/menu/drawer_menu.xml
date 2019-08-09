@@ -27,7 +27,7 @@
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="ตั้งค่า"></item>
             <item
-                android:id="@+id/test2"
+                android:id="@+id/EditUser"
                 android:icon="@drawable/ic_assessment_black_24dp"
                 android:title="ข้อมูลผู้ใช้งาน"></item>
             <item

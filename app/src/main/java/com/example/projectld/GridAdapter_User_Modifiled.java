@@ -1,15 +1,12 @@
-package com.example.projectld.navigationDrawer;
+package com.example.projectld;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,36 +14,32 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.example.projectld.DatabaseHelper;
-import com.example.projectld.R;
-import com.example.projectld.menu;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class F_profile extends AppCompatActivity {
+public class GridAdapter_User_Modifiled extends AppCompatActivity {
 
     EditText Username,Fullname,Age;
     ImageView profile;
     RadioButton male,female;
-    Button update, updatePicture;
+    Button update, updatePicture,delete;
     String getsex,sex;
-    String getUsername,getFullname,getAge,Picture,UserID;
+    String getUsername;
+    String getFullname;
+    String getAge;
+    byte[] Picture;
     static final int SELECT_PICTURE = 100;
     Bitmap image = null;
     boolean selectpicture = true;
 
-    byte[] bytes;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
-
-        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = user.edit();
+        setContentView(R.layout.gridadapter_user_modifiled);
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        final String UserID_GW = getIntent().getExtras().getString("UserID");
+        User user = databaseHelper.ModifileUser(UserID_GW);
 
         Username = findViewById(R.id.Username);
         Fullname = findViewById(R.id.Fullname);
@@ -56,18 +49,16 @@ public class F_profile extends AppCompatActivity {
         female = findViewById(R.id.female);
         update = findViewById(R.id.update);
         updatePicture = findViewById(R.id.updatePicture);
+        delete = findViewById(R.id.delete);
 
-        Picture = user.getString("Picture",null);
-        getUsername = user.getString("Username",null);
-        getFullname = user.getString("Fullname",null);
-        getAge = String.valueOf(user.getInt("Age",0));
-        getsex = user.getString("sex",null);
-        UserID = user.getString("UserID",null);
+        Picture = user.getPicture();
+        getUsername = user.getUsername();
+        getFullname = user.getFullname();
+        getAge = String.valueOf(user.getAge());
+        getsex = user.getSex();
 
-        if(Picture != null){
-            bytes = Base64.decode(Picture,Base64.DEFAULT); //แปลง String เป็น byte
-            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-            profile.setImageBitmap(bmp); }
+        Bitmap bmp= BitmapFactory.decodeByteArray(Picture, 0 , Picture.length);
+        profile.setImageBitmap(bmp);
 
         Username.setText(getUsername);
         Fullname.setText(getFullname);
@@ -89,25 +80,16 @@ public class F_profile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"ไม่พบการเปลี่ยนแปลง",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
+                    byte[] inputData = Picture; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
                     if (image != null) {
-                     inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
-                        }
+                        inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                    }
                     databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                    ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID);
-
-                    editor.putString("Username",Username.getText().toString());
-                    editor.putString("Fullname",Fullname.getText().toString());
-                    editor.putInt("Age", Integer.parseInt(Age.getText().toString()));
-                    editor.putString("sex",sex);
-                    if(image != null){
-                        String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
-                        editor.putString("Picture",saveThis);}
-                    editor.commit();
+                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID_GW);
 
                     finish();
                     Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(F_profile.this, menu.class);
+                    Intent intent = new Intent(GridAdapter_User_Modifiled.this, menu.class);
                     menu.getInstance().finish(); //ปิดหน้าเมนู รีโหลด
                     startActivity(intent);
                 }
@@ -121,6 +103,13 @@ public class F_profile extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseHelper.delete_user(UserID_GW);
             }
         });
 

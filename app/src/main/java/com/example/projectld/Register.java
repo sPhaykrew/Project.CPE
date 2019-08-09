@@ -2,6 +2,8 @@ package com.example.projectld;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -58,10 +60,13 @@ public class Register extends AppCompatActivity {
                 {
                     Toast.makeText(Register.this,"พาสเวิดไม่ตรงกัน",Toast.LENGTH_SHORT).show();
                 } else {
-                    //แปลงรูปเป็น byte ก่อน insert
-                    if (image != null) {
-                        inputData = convertBitmapIntoByteArray();
+                    if (image == null) { //ถ้าไม่ได้เลือกรูปให้ใช้รูปค่า defualt
+                        Drawable myDrawable = getResources().getDrawable(R.drawable.kidpicture);
+                        imageView.setImageDrawable(myDrawable);
+                        image = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                         }
+                    //แปลงรูปเป็น byte ก่อน insert เข้า database
+                    inputData = convertBitmapIntoByteArray();
                     //insert table user
                     databaseHelper.insert_user(user.getText().toString(),password.getText().toString(),name.getText().toString(),
                             Integer.parseInt(age.getText().toString()),sex,inputData);
@@ -119,7 +124,7 @@ public class Register extends AppCompatActivity {
 
     private byte[] convertBitmapIntoByteArray() { //ลดขนาดรูป แปลงรูป
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);//ขนาดภาพที่ลดลง
+        image.compress(Bitmap.CompressFormat.JPEG, 20, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
     }
