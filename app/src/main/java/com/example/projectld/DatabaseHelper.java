@@ -66,7 +66,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Val.put("Fullname",name);
         Val.put("Age",age);
         Val.put("sex",sex);
-        Val.put("Permission","User");
         Val.put("Picture",Picture);
         long rows = db.update("User",Val, "UserID=" + UserID, null);
         db.close();
@@ -169,13 +168,26 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
         return words;
     }
-    public ArrayList<String> ex3_easy_game_st(String name){
-        SQLiteDatabase db = this.getReadableDatabase();
+    public ArrayList<String> ex3_easy_game_st(String GroupName,String UserID){
+        SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> words = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT Word.word From Setting_ex3_easy INNER join Word ON Setting_ex3_easy.wordID = Word.wordID where Setting_ex3_easy.GroupName like '"+name+"'",null);
+        Cursor cursor = db.rawQuery("SELECT Word.word,Setting_ex3_easy.st_ex3_easy_id From Setting_ex3_easy INNER join Word ON Setting_ex3_easy.wordID = Word.wordID where Setting_ex3_easy.GroupName like '"+GroupName+"'",null);
         cursor.moveToFirst();
+
+        Cursor Check = db.rawQuery("SELECT Score_ex3_easy.UserID,Setting_ex3_easy.Groupname " +
+                "from Score_ex3_easy LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id) " +
+                "where Score_ex3_easy.UserID = '"+ UserID +"' AND Setting_ex3_easy.Groupname = '"+ GroupName +"'",null); //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+
+        ContentValues Val = new ContentValues();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(0));
+
+            if (Check.getCount() == 0) { //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+                Val.put("st_ex3_easy_id", cursor.getString(1));
+                Val.put("Score", 0);
+                Val.put("UserID", UserID);
+                long rows = db.insert("Score_ex3_easy", null, Val);
+            }
             cursor.moveToNext();
         }
         db.close();
@@ -228,8 +240,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             byte[] bytes = cursor.getBlob(0);
-            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-            Picture.add(bmp);
+            if (bytes != null) {
+                Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+                Picture.add(bmp);
+            }
             cursor.moveToNext();
         }
         db.close();
@@ -238,7 +252,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
     public User ModifileUser(String UserID) {// check login first
 
-        Log.d("ssssssssss",UserID);
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
 
@@ -258,6 +271,56 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public void delete_user (String UserID){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete("User","UserID = " + UserID,null);
+        db.close();
+    }
+
+    public Score_ex3_word Score_ex3_word(String Groupname,String UserID,String Fullname){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> Word = new ArrayList<>();
+        ArrayList<Integer> Score = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT Word.word,Score_ex3_easy.Score From Score_ex3_easy \n" +
+                "LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id)\n" +
+                "LEFT JOIN Word on (Setting_ex3_easy.wordID = Word.wordID)\n" +
+                "LEFT JOIN User on (Score_ex3_easy.UserID = User.UserID)\n" +
+                "where Setting_ex3_easy.GroupName = '"+Groupname+"' and  Score_ex3_easy.UserID = '"+UserID +"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Word.add(cursor.getString(0));
+            Score.add(cursor.getInt(1));
+            cursor.moveToNext();
+        }
+        Score_ex3_word Score_Word = new Score_ex3_word(Fullname,Word,Score,UserID);
+        db.close();
+        return Score_Word;
+    }
+
+    public String Find_stID(String word,String groupname){
+        Log.d("find",word +"  " +groupname);
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stID = null;
+        Cursor cursor = db.rawQuery("SELECT\n" +
+                "    Setting_ex3_easy.st_ex3_easy_id\n" +
+                "FROM\n" +
+                "    Setting_ex3_easy\n" +
+                "INNER JOIN \n" +
+                "\tWord ON Setting_ex3_easy.wordID=Word.wordID\n" +
+                "where Word.word = '" +word+"' and Setting_ex3_easy.GroupName = '"+groupname+"'",null);
+        cursor.moveToFirst();
+            stID = cursor.getString(0);
+
+        db.close();
+        return stID;
+    }
+
+
+
+    public void update_score_ex3_word (String UserID,int Score,String stID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        //Val.put("UserID",UserID);
+        Val.put("Score",Score);
+        long rows = db.update("Score_ex3_easy",Val, "st_ex3_easy_id=" + stID + " and UserID = "+ UserID, null);
         db.close();
     }
 

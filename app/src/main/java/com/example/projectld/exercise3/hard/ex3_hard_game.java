@@ -1,14 +1,14 @@
 package com.example.projectld.exercise3.hard;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.DragEvent;
@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.example.projectld.R;
 import com.example.projectld.TTS;
-import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.segmentation;
 
 import java.util.ArrayList;
@@ -90,7 +89,7 @@ public class ex3_hard_game extends Activity {
             TextView valueQT = new TextView(this);
             valueQT.setText("__");
             valueQT.setId(i);
-            valueQT.setTextSize(20);
+            valueQT.setTextSize(30);
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -115,7 +114,7 @@ public class ex3_hard_game extends Activity {
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
             answerCH.setText(sentenceRD.get(i));
-            answerCH.setTextSize(20);
+            answerCH.setTextSize(30);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

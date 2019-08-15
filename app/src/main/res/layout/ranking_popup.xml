@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="300dp"
+    android:background="@color/colorPrimary"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="คะแนนจัดอันดับ"
+        android:textSize="18dp"
+        android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank1"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name1"
+                android:layout_marginStart="30dp"
+                android:textSize="15dp"
+                android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore1"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank2"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name2"
+            android:layout_marginStart="30dp"
+            android:textSize="15dp"
+            android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore2"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank3"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name3"
+            android:layout_marginStart="30dp"
+            android:textSize="15dp"
+            android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore3"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank4"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name4"
+            android:layout_marginStart="30dp"
+            android:textSize="15dp"
+            android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore4"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank5"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name5"
+            android:layout_marginStart="30dp"
+            android:textSize="15dp"
+            android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore5"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Back"
+            android:text="ออก"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/MyScore"
+            android:text="ดูคะแนนแบบฝึก"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.LinearLayoutCompat>

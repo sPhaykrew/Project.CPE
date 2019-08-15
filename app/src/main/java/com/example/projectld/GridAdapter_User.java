@@ -54,9 +54,9 @@ public class GridAdapter_User extends BaseAdapter {
         rowView = layoutInflater.inflate(R.layout.custom_gridview_item_user, null);
         holder.tv =(TextView) rowView.findViewById(R.id.name);
         holder.img = (ImageView) rowView.findViewById(R.id.profile);
-
         holder.tv.setText(values.get(position));
         holder.img.setImageBitmap(images.get(position));
+
 
 
         rowView.setOnClickListener(new View.OnClickListener() {

@@ -161,7 +161,7 @@ public class F_profile extends AppCompatActivity {
 
     private byte[] convertBitmapIntoByteArray() { //ลดขนาดรูป แปลงรูป
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);//ขนาดภาพที่ลดลง
+        image.compress(Bitmap.CompressFormat.JPEG, 20, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
     }

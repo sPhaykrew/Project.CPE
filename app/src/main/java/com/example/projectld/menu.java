@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private DrawerLayout drawer;
     TextView Username,Fullname;
 
+    SharedPreferences user;
+
     static menu menu;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
 
@@ -38,7 +41,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         menu = this; //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
-        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
+        user = getSharedPreferences("User", Context.MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,6 +54,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        if (!user.getString("Permission", null).equals("admin")) {
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.setting).setVisible(false);
+            menu.findItem(R.id.EditUser).setVisible(false);
+            menu.findItem(R.id.addPerson).setVisible(false);
+        }
 
         //Text Profile
         View header = navigationView.getHeaderView(0);
@@ -99,6 +109,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.addPerson:
                 Intent intent = new Intent(getApplicationContext(),Register.class);
                 startActivity(intent);
+                break;
+            case R.id.logout:
+                SharedPreferences.Editor editor = user.edit();
+                editor.clear();
+                editor.apply();
+                Intent Logout = new Intent(getApplicationContext(),login.class);
+                startActivity(Logout);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

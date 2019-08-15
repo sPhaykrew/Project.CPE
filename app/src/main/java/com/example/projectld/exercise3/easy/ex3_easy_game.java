@@ -89,7 +89,7 @@ public class ex3_easy_game extends Activity {
             TextView valueQT = new TextView(this);
             valueQT.setText("__");
             valueQT.setId(i);
-            valueQT.setTextSize(20);
+            valueQT.setTextSize(30);
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -114,7 +114,7 @@ public class ex3_easy_game extends Activity {
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
             answerCH.setText(sentenceRD.get(i));
-            answerCH.setTextSize(20);
+            answerCH.setTextSize(30);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

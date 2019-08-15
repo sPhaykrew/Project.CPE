@@ -46,7 +46,8 @@
         </activity>
         <activity android:name=".exercise3.st_easy.st_ex3_easy_menu">
         </activity>
-        <activity android:name=".exercise3.easy.ex3_easy_game_st">
+        <activity android:name=".exercise3.easy.ex3_easy_game_st"
+            android:screenOrientation="landscape">
         </activity>
         <activity android:name=".exercise3.st_nomal.st_ex3_normal_menu">
         </activity>
@@ -54,7 +55,8 @@
         </activity>
         <activity android:name=".exercise3.st_nomal.st_ex3_normal_inMenu">
         </activity>
-        <activity android:name=".exercise3.nomal.ex3_normal_game_st">
+        <activity android:name=".exercise3.nomal.ex3_normal_game_st"
+            android:screenOrientation="landscape">
         </activity>
         <activity android:name=".exercise3.st_hard.st_ex3_hard_menu">
         </activity>
@@ -62,7 +64,8 @@
         </activity>
         <activity android:name=".exercise3.st_hard.st_ex3_hard_inMenu">
         </activity>
-        <activity android:name=".exercise3.hard.ex3_hard_game_st">
+        <activity android:name=".exercise3.hard.ex3_hard_game_st"
+            android:screenOrientation="landscape">
         </activity>
         <activity android:name=".Register">
         </activity>
