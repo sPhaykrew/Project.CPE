@@ -24,13 +24,26 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ToolBarStyle"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            tools:targetApi="m" />
+            android:background="#FAFAFA"
+            android:elevation="4dp">
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="เลือกแบบฝึกสอน"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_gravity="center"/>
+
+       </android.support.v7.widget.Toolbar>
+
+
+        <View android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/toolbar_shadow"/>
+
+
+    </LinearLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"

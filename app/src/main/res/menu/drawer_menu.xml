@@ -4,36 +4,45 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:icon="@drawable/ic_home_black_24dp"
+            android:id="@+id/home"
+            android:title="หน้าหลัก" />
+        <item
             android:id="@+id/edit"
             android:icon="@drawable/ic_mode_edit_black_24dp"
-            android:title="แก้ไขโปรไฟล์"></item>
-        <item
-            android:id="@+id/test"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="ตั้งค่า"></item>
+            android:title="แก้ไขโปรไฟล์" />
         <item
             android:id="@+id/data"
             android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="ข้อมูลผู้ใช้งาน"></item>
+            android:title="ข้อมูลผู้ใช้งาน" />
+        <item
+            android:id="@+id/WordData"
+            android:icon="@drawable/ic_looks_one_black_24dp"
+            android:title="ข้อมูลคำศัพท์" />
+        <item
+            android:id="@+id/SentenceData"
+            android:icon="@drawable/ic_looks_two_black_24dp"
+            android:title="ข้อมูลประโยค" />
         <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
-            android:title="ออกจากระบบ"></item>
+            android:title="ออกจากระบบ" />
     </group>
-    <item android:title="Admin">
+    <item android:title="Admin"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/setting"
                 android:icon="@drawable/ic_settings_black_24dp"
-                android:title="ตั้งค่า"></item>
+                android:title="ตั้งค่า" />
             <item
                 android:id="@+id/EditUser"
                 android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="ข้อมูลผู้ใช้งาน"></item>
+                android:title="ข้อมูลผู้ใช้งาน" />
             <item
                 android:id="@+id/addPerson"
                 android:icon="@drawable/ic_person_add_black_24dp"
-                android:title="เพิ่มผู้ใช้งาน"></item>
+                android:title="เพิ่มผู้ใช้งาน" />
         </menu>
     </item>
 

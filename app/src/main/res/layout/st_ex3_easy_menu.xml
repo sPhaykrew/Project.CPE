@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/menuwordnomal">
+        android:id="@+id/MenuNormal">
 
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/gridViewnomal"
+            android:id="@+id/GridViewnomal"
             android:columnWidth="100dp"
             android:numColumns="3"
             android:verticalSpacing="4dp"

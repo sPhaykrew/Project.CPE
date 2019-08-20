@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.projectld.navigationDrawer.F_Sentence_data;
+import com.example.projectld.navigationDrawer.F_Word_data;
 import com.example.projectld.navigationDrawer.F_data;
 import com.example.projectld.navigationDrawer.F_profile;
 import com.example.projectld.navigationDrawer.F_setting;
@@ -45,6 +47,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -90,6 +93,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
+            case R.id.home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new F_menu_home()).addToBackStack(null).commit();
+                break;
             case R.id.setting:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new F_setting()).addToBackStack(null).commit();
@@ -102,6 +109,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new F_data()).addToBackStack(null).commit();
                 break;
+
+            case R.id.WordData:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new F_Word_data()).addToBackStack(null).commit();
+                break;
+
+            case R.id.SentenceData:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new F_Sentence_data()).addToBackStack(null).commit();
+                break;
+
             case R.id.EditUser:
                 Intent editUser = new Intent(getApplicationContext(),Call_GridAdapter_User.class);
                 startActivity(editUser);
@@ -111,6 +129,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(intent);
                 break;
             case R.id.logout:
+                finish();
                 SharedPreferences.Editor editor = user.edit();
                 editor.clear();
                 editor.apply();

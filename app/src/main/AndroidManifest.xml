@@ -31,50 +31,39 @@
             android:name=".exercise3.nomal.ex3_nomal_game"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".exercise3.easy.ex3_easy_menu">
-        </activity>
-        <activity android:name=".exercise3.nomal.ex3_nomal_menu">
-        </activity>
-        <activity android:name=".exercise3.hard.ex3_hard_menu">
-        </activity>
+        <activity android:name=".exercise3.easy.ex3_easy_menu" />
+        <activity android:name=".exercise3.nomal.ex3_nomal_menu" />
+        <activity android:name=".exercise3.hard.ex3_hard_menu" />
         <activity android:name=".exercise3.hard.ex3_hard_game"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".exercise3.st_easy.st_ex3_easy_inMenu">
-        </activity>
-        <activity android:name=".exercise3.st_easy.grid_view_ex3_st_easy_selectWord">
-        </activity>
-        <activity android:name=".exercise3.st_easy.st_ex3_easy_menu">
-        </activity>
+        <activity android:name=".exercise3.st_easy.st_ex3_easy_inMenu" />
+        <activity android:name=".exercise3.st_easy.grid_view_ex3_st_easy_selectWord" />
+        <activity android:name=".exercise3.st_easy.st_ex3_easy_menu" />
         <activity android:name=".exercise3.easy.ex3_easy_game_st"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".exercise3.st_nomal.st_ex3_normal_menu">
-        </activity>
-        <activity android:name=".exercise3.st_nomal.grid_view_ex3_st_normal_selectWord">
-        </activity>
-        <activity android:name=".exercise3.st_nomal.st_ex3_normal_inMenu">
-        </activity>
+        <activity android:name=".exercise3.st_nomal.st_ex3_normal_menu" />
+        <activity android:name=".exercise3.st_nomal.grid_view_ex3_st_normal_selectWord" />
+        <activity android:name=".exercise3.st_nomal.st_ex3_normal_inMenu" />
         <activity android:name=".exercise3.nomal.ex3_normal_game_st"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".exercise3.st_hard.st_ex3_hard_menu">
-        </activity>
-        <activity android:name=".exercise3.st_hard.grid_view_ex3_st_hard_selectWord">
-        </activity>
-        <activity android:name=".exercise3.st_hard.st_ex3_hard_inMenu">
-        </activity>
+        <activity android:name=".exercise3.st_hard.st_ex3_hard_menu" />
+        <activity android:name=".exercise3.st_hard.grid_view_ex3_st_hard_selectWord" />
+        <activity android:name=".exercise3.st_hard.st_ex3_hard_inMenu" />
         <activity android:name=".exercise3.hard.ex3_hard_game_st"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".Register">
+        <activity android:name=".Register" />
+        <activity android:name=".navigationDrawer.F_profile" />
+        <activity android:name=".Call_GridAdapter_User" />
+        <activity android:name=".GridAdapter_User_Modifiled" />
+        <activity android:name=".exercise3.exercise3_menu"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".navigationDrawer.F_profile">
-        </activity>
-        <activity android:name=".Call_GridAdapter_User">
-        </activity>
-        <activity android:name=".GridAdapter_User_Modifiled">
-        </activity>
+        <activity android:name=".Meaning" />
+        <activity android:name=".Add_Word"/>
     </application>
 
 </manifest>

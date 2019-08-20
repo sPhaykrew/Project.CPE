@@ -10,8 +10,6 @@ import android.widget.GridView;
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.exercise3.GridviewAdapter;
-import com.example.projectld.exercise3.st_easy.grid_view_ex3_st_easy_selectWord;
-import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
 
 import java.util.ArrayList;
 
@@ -27,11 +25,11 @@ public class st_ex3_normal_menu extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
         add_st = (Button) findViewById(R.id.add_st);
-        gridView = findViewById(R.id.gridViewnomal);
+        gridView = findViewById(R.id.GridViewnomal);
         ArrayList<String> Groupname = dbHelper.GetGroupname("Setting_ex3_normal","st_ex3_normal_id");
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_normal");
+        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_normal",R.drawable.radius_button_color2);
         gridView.setAdapter(gridviewAdapter);
 
         add_st.setOnClickListener(new View.OnClickListener() {

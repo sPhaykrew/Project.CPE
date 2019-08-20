@@ -1,16 +1,16 @@
 package com.example.projectld;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.projectld.exercise3.F_exercise3_menu;
+import com.example.projectld.exercise3.exercise3_menu;
 
 public class F_menu_home extends Fragment {
 
@@ -34,10 +34,8 @@ public class F_menu_home extends Fragment {
         exercise3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container,new F_exercise3_menu() ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
+                Intent intent = new Intent(getContext(), exercise3_menu.class);
+                startActivity(intent);
             }
         });
     }

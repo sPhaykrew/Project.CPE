@@ -3,7 +3,6 @@ package com.example.projectld.exercise3.st_easy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -27,11 +26,11 @@ public class st_ex3_easy_menu extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(getApplicationContext());
         add_st = (Button) findViewById(R.id.add_st);
-        gridView = findViewById(R.id.gridViewnomal);
+        gridView = findViewById(R.id.GridViewnomal);
         ArrayList<String> Groupname = dbHelper.GetGroupname("Setting_ex3_easy","st_ex3_easy_id");
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_easy");
+        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_easy",R.drawable.radius_button_color2);
         gridView.setAdapter(gridviewAdapter);
 
         add_st.setOnClickListener(new View.OnClickListener() {

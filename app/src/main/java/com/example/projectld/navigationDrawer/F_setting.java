@@ -17,7 +17,7 @@ import com.example.projectld.exercise3.st_nomal.st_ex3_normal_menu;
 
 public class F_setting extends Fragment {
 
-    Button ex2,ex3,ex4,ex5;
+    Button ex2,ex3,ex4,ex5,Add_Word;
 
     @Nullable
     @Override
@@ -33,6 +33,7 @@ public class F_setting extends Fragment {
         ex3 = (Button) view.findViewById(R.id.ex3);
         ex4 = (Button) view.findViewById(R.id.ex4);
         ex5 = (Button) view.findViewById(R.id.ex5);
+        Add_Word = view.findViewById(R.id.Add_Word);
 
         ex3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,14 @@ public class F_setting extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), st_ex3_hard_menu.class);
+                startActivity(intent);
+            }
+        });
+
+        Add_Word.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.example.projectld.Add_Word.class);
                 startActivity(intent);
             }
         });

@@ -56,6 +56,26 @@
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
+        <Button
+            android:id="@+id/Add_Word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="เพิ่มคำศัพท์"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="12dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/Add_Sentence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="เพิ่มประโยค"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="12dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
     </LinearLayout>
 
 </LinearLayout>

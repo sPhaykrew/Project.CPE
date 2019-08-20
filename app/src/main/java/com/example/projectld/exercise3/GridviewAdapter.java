@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.example.projectld.Meaning;
+import com.example.projectld.TTS;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game_st;
 import com.example.projectld.exercise3.hard.ex3_hard_game;
@@ -23,6 +25,8 @@ import com.example.projectld.exercise3.st_nomal.st_ex3_normal_inMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.graphics.Color.parseColor;
+
 public class GridviewAdapter extends BaseAdapter {
     List<String> lstSource;
     Context context;
@@ -30,11 +34,13 @@ public class GridviewAdapter extends BaseAdapter {
     SharedPreferences sharedPreferences;
     String mode;
     Intent intent;
+    int test;
 
-    public GridviewAdapter(List<String> lstSource, Context context,String mode) {
+    public GridviewAdapter(List<String> lstSource, Context context,String mode,int test) {
         this.lstSource = lstSource;
         this.context = context;
         this.mode = mode;
+        this.test = test;
     }
 
     @Override
@@ -57,11 +63,13 @@ public class GridviewAdapter extends BaseAdapter {
 
         Button button = null;
 
-        if(button == null) {
-            button = new Button(context);
-            button.setLayoutParams(new GridView.LayoutParams(300, 300));
-            button.setPadding(0, 0, 0, 0);
-        }
+        final TTS tts = new TTS(context);
+
+        button = new Button(context);
+        button.setLayoutParams(new GridView.LayoutParams(220, 220));
+        button.setPadding(0, 0, 0, 0);
+        button.setBackgroundResource(test);
+        button.setTextColor(parseColor("#ffffff"));
 
         button.setText(lstSource.get(position));
         button.setTag(position);
@@ -80,23 +88,72 @@ public class GridviewAdapter extends BaseAdapter {
                 wordset = (ArrayList<String>) lstSource;
 
                 switch (mode){
-                    case "easy" : intent =  new Intent(context, ex3_easy_game.class); break;
-                    case "nomal" : intent =  new Intent(context, ex3_nomal_game.class); break;
-                    case "hard" : intent =  new Intent(context, ex3_hard_game.class); break;
-                    case "st_easy" : intent = new Intent(context, st_ex3_easy_inMenu.class);break;
-                    case "st_normal" : intent = new Intent(context, st_ex3_normal_inMenu.class);break;
-                    case "st_hard" : intent = new Intent(context, st_ex3_hard_inMenu.class);break;
-                    case "ex3_easy_game_st" : intent = new Intent(context, ex3_easy_game_st.class);
-                        intent.putExtra("Groupname",finalButton.getText()); break;
-                    case "ex3_normal_game_st" : intent = new Intent(context, ex3_normal_game_st.class);
-                        intent.putExtra("Groupname",finalButton.getText()); break;
-                    case "ex3_hard_game_st" : intent = new Intent(context, ex3_hard_game_st.class);
-                        intent.putExtra("Groupname",finalButton.getText()); break;
+                    case "easy" :
+                        intent =  new Intent(context, ex3_easy_game.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "nomal" :
+                        intent =  new Intent(context, ex3_nomal_game.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "hard" :
+                        intent =  new Intent(context, ex3_hard_game.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "st_easy" :
+                        intent = new Intent(context, st_ex3_easy_inMenu.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "st_normal" :
+                        intent = new Intent(context, st_ex3_normal_inMenu.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "st_hard" :
+                        intent = new Intent(context, st_ex3_hard_inMenu.class);
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "ex3_easy_game_st" :
+                        intent = new Intent(context, ex3_easy_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText());
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "ex3_normal_game_st" :
+                        intent = new Intent(context, ex3_normal_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText());
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "ex3_hard_game_st" :
+                        intent = new Intent(context, ex3_hard_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText());
+                        intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "Sentence_Data" :
+                        tts.speak(String.valueOf(finalButton.getText()));
+                        break;
+                    case "Word_data" :
+                        intent = new Intent(context, Meaning.class);
+                        intent.putExtra("Word_data",String.valueOf(finalButton.getText()));
+                        context.startActivity(intent);
+                        break;
                 }
-
-                intent.putExtra("countarray",count);
-                intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
-                context.startActivity(intent);
             }
         }); return button;
     }
