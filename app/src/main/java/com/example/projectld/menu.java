@@ -26,6 +26,8 @@ import com.example.projectld.navigationDrawer.F_data;
 import com.example.projectld.navigationDrawer.F_profile;
 import com.example.projectld.navigationDrawer.F_setting;
 
+import java.util.Objects;
+
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
@@ -47,7 +49,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

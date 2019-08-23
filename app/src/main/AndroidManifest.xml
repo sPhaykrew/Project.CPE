@@ -64,6 +64,7 @@
         </activity>
         <activity android:name=".Meaning" />
         <activity android:name=".Add_Word"/>
+        <activity android:name=".Add_Sentence" />
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ import com.example.projectld.exercise3.GridviewAdapter;
 
 import java.util.ArrayList;
 
-public class Add_Word extends AppCompatActivity {
+public class Add_Sentence extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     GridView gridView;
@@ -29,9 +29,9 @@ public class Add_Word extends AppCompatActivity {
         dialog = new Dialog(this);
         databaseHelper = new DatabaseHelper(this);
         gridView = findViewById(R.id.GridView_Sentence);
-        ArrayList Word = databaseHelper.queryword("Word");
+        ArrayList Sentence = databaseHelper.queryword("Sentence");
 
-        gridviewAdapter = new GridviewAdapter(Word,this,"Delete_Mod_Word",R.drawable.radius_button_color1);
+        gridviewAdapter = new GridviewAdapter(Sentence,this,"Delete_Mod_Sentence",R.drawable.radius_button_color1);
         gridView.setAdapter(gridviewAdapter);
 
         FloatingActionButton Add = findViewById(R.id.Add);
@@ -54,7 +54,7 @@ public class Add_Word extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (editText.getText().length() > 1){
-                    databaseHelper.AddWord(String.valueOf(editText.getText()),"Word");
+                    databaseHelper.AddWord(String.valueOf(editText.getText()),"Sentence");
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.example.projectld.exercise3;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 
+import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Meaning;
+import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game_st;
@@ -59,7 +63,7 @@ public class GridviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
         Button button = null;
 
@@ -153,6 +157,63 @@ public class GridviewAdapter extends BaseAdapter {
                         intent.putExtra("Word_data",String.valueOf(finalButton.getText()));
                         context.startActivity(intent);
                         break;
+
+                    case "Delete_Mod_Word" :
+                        Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.modify_delete_word_popup);
+                        final DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
+                        final EditText editText = dialog.findViewById(R.id.Edit_Word);
+                        Button delete = dialog.findViewById(R.id.Delete);
+                        Button modify = dialog.findViewById(R.id.modify);
+
+                        editText.setText(String.valueOf(finalButton.getText()));
+
+                        modify.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String Word_Mod = String.valueOf(editText.getText());
+                                databaseHelper.update_word(String.valueOf(finalButton.getText()),Word_Mod,"Word","word");
+                            }
+                        });
+
+                        delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                databaseHelper.delete_word(String.valueOf(finalButton.getText()),"Word","word");
+                            }
+                        });
+                        dialog.show();
+                        break;
+
+                    case "Delete_Mod_Sentence" :
+                        Dialog dialog_sentence = new Dialog(context);
+                        dialog_sentence.setContentView(R.layout.modify_delete_word_popup);
+                        final DatabaseHelper databaseHelper_sentence = new DatabaseHelper(context);
+
+                        final EditText editText_sentence = dialog_sentence.findViewById(R.id.Edit_Word);
+                        Button delete_sentence = dialog_sentence.findViewById(R.id.Delete);
+                        Button modify_sentence = dialog_sentence.findViewById(R.id.modify);
+
+                        editText_sentence.setText(String.valueOf(finalButton.getText()));
+
+                        modify_sentence.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String Word_Mod = String.valueOf(editText_sentence.getText());
+                                databaseHelper_sentence.update_word(String.valueOf(finalButton.getText()),Word_Mod,"Sentence","sentence");
+                            }
+                        });
+
+                        delete_sentence.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                databaseHelper_sentence.delete_word(String.valueOf(finalButton.getText()),"Sentence","sentence");
+                            }
+                        });
+                        dialog_sentence.show();
+                        break;
+
                 }
             }
         }); return button;

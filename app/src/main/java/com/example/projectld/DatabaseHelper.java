@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.projectld.exercise3.word;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -14,8 +15,12 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
+
+    Context context;
+
     public DatabaseHelper(Context context) {
         super(context, "project.db", null,3);
+        this.context = context;
     }
 
     @Override
@@ -321,6 +326,36 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         //Val.put("UserID",UserID);
         Val.put("Score",Score);
         long rows = db.update("Score_ex3_easy",Val, "st_ex3_easy_id=" + stID + " and UserID = "+ UserID, null);
+        db.close();
+    }
+
+    public void delete_word (String word,String table,String column){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(table,column + " = '" + word +"'",null);
+        db.close();
+    }
+
+    public void update_word (String word,String mod,String table,String column){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        Val.put("word",mod);
+        try {
+            long rows = db.update(table,Val, column + " = '" + word +"'", null);
+        } catch (Exception e){
+            Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+
+    public void AddWord (String word,String table){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        Val.put("word",word);
+        try {
+            long rows = db.insertOrThrow(table, null, Val);
+        } catch (Exception e) {
+            Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+        }
         db.close();
     }
 
