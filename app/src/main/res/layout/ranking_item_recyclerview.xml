@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rank"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:text="Rank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:layout_marginStart="30dp"
+            android:textSize="15dp"
+            android:text="Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sumScore"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
+            android:textSize="15dp"
+            android:text="Score"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.LinearLayoutCompat>

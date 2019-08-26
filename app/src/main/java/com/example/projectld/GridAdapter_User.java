@@ -1,5 +1,6 @@
 package com.example.projectld;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,6 +43,7 @@ public class GridAdapter_User extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -55,8 +57,11 @@ public class GridAdapter_User extends BaseAdapter {
         holder.tv =(TextView) rowView.findViewById(R.id.name);
         holder.img = (ImageView) rowView.findViewById(R.id.profile);
         holder.tv.setText(values.get(position));
-        holder.img.setImageBitmap(images.get(position));
+        try{ //กรณีแอดไม่ได้ใส่รูป defual ไม่มีรูป
+            holder.img.setImageBitmap(images.get(position));
+        } catch (Exception e){
 
+        }
 
 
         rowView.setOnClickListener(new View.OnClickListener() {

@@ -1,15 +1,19 @@
 package com.example.projectld.exercise3.nomal;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -25,10 +29,14 @@ import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
+import com.example.projectld.Score_ex3_word;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
+import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
+import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -38,6 +46,8 @@ public class ex3_normal_game_st extends Activity {
     com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
     Button voice,next,back;
+
+    String Groupname,ArraySet;
 
     int start = 0; //เช็คว่าเลากไปกี่ตัวแล้ว
     int finish = 0;
@@ -49,6 +59,16 @@ public class ex3_normal_game_st extends Activity {
 
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
 
+    Dialog dialog,dialog_rank; //popup score
+    DatabaseHelper databaseHelper;
+    SharedPreferences user;
+
+    int Score = 100;
+
+    private RecyclerView RecyclerView;
+    private RecyclerView.LayoutManager LayoutManager;
+    private RecyclerView.Adapter Adapter;
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
@@ -56,19 +76,30 @@ public class ex3_normal_game_st extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_nomal_game);
 
+        user = getSharedPreferences("User", Context.MODE_PRIVATE);
+        dialog = new Dialog(this);
+        dialog_rank = new Dialog(this);
+
         next = (Button)  findViewById(R.id.next);
         back = (Button) findViewById(R.id.back);
         arrayset = getIntent().getExtras();
 
         voice = (Button) findViewById(R.id.voice_tts);
         tts = new TTS(this);
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        databaseHelper = new DatabaseHelper(this);
 
         LoadInt();
 
-        String word = arrayset.getString("Groupname");
-        wordset = databaseHelper.ex3_normal_game_st(String.valueOf(word));
-
+        Groupname = arrayset.getString("Groupname"); //ได้รับชื่อแบบทดสอบ
+        if (first == 0) {
+            wordset = databaseHelper.ex3_normal_game_st(String.valueOf(Groupname), user.getString("UserID", null)); // เก็บคำ 5 คำ และ insert setting ID
+            first++;
+            SaveFirst(first);
+        } else {
+            LoadArray();
+            String[] playlists = ArraySet.split(",");
+            wordset.addAll(Arrays.asList(playlists));
+        }
 
         /**
          * ตัดคำ
@@ -138,9 +169,17 @@ public class ex3_normal_game_st extends Activity {
             public void onClick(View v) {
                 count++;
                 if(count >= wordset.size()){
-                    Toast.makeText(ex3_normal_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ex3_easy_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
                     count--;
+                    Popup_score();
                 } else {
+
+                    StringBuilder Sumwordset = new StringBuilder();
+                    for (int i = 0; i < wordset.size(); i++) {
+                        Sumwordset.append(wordset.get(i)).append(",");
+                    }
+                    SaveArray(Sumwordset.toString());
+
                     SaveInt(count);
                     Intent intent = getIntent();
                     finish();
@@ -252,12 +291,36 @@ public class ex3_normal_game_st extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(ex3_normal_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
+                            String stID = databaseHelper.Find_stID_sentence(wordset.get(count),Groupname,"Setting_ex3_normal","st_ex3_normal_id");
+                            databaseHelper.update_score_ex3_normal(user.getString("UserID",null),Score,stID); //update score
+
+                            wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
+                            //count++;
+                            SaveInt(count);
+
+                            StringBuilder Sumwordset = new StringBuilder();
+                            for (int i = 0; i < wordset.size(); i++) {
+                                Sumwordset.append(wordset.get(i)).append(",");
+                            }
+                            SaveArray(Sumwordset.toString());
+
+                            if (wordset.size() != 0) {
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            } else {
+                                Popup_score();
+                            }
+
+                            //Toast.makeText(ex3_easy_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
+
                         }
                     }
-                    else
+                    else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(ex3_normal_game_st.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
+                        Score = Score - 5;
+                        Toast.makeText(ex3_normal_game_st.this, dropped.getText().toString() + " ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
@@ -303,15 +366,142 @@ public class ex3_normal_game_st extends Activity {
         return list;
     }
 
+    public void SaveArray(String array){ //เซฟค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("array",array);
+        editor.commit();
+    }
+
+    public void LoadArray(){ // โหลดค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        ArraySet = sharedPreferences.getString("array", "Hello!");
+    }
+
     public void SaveInt(int value){ //เซฟค่า count
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("key", value);
         editor.commit();
     }
+
+    public void SaveFirst(int value){ //เซฟค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("first",value);
+        editor.commit();
+    }
+
     public void LoadInt(){ // โหลดค่า count
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         count = sharedPreferences.getInt("key", 0);
         first = sharedPreferences.getInt("first",0);
+    }
+
+    public void Popup_score(){
+        TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
+        Button goBack,goRank;
+
+        dialog.setContentView(R.layout.score_popup);
+
+        Score_ex3_word score = databaseHelper.Score_ex3_normal(Groupname,user.getString("UserID",null)
+                ,user.getString("Fullname",null));
+
+        Sum_Score = dialog.findViewById(R.id.Sum_Score);
+        text1 = dialog.findViewById(R.id.text1);
+        text2 = dialog.findViewById(R.id.text2);
+        text3 = dialog.findViewById(R.id.text3);
+        text4 = dialog.findViewById(R.id.text4);
+        text5 = dialog.findViewById(R.id.text5);
+        score1 = dialog.findViewById(R.id.Score_text1);
+        score2 = dialog.findViewById(R.id.Score_text2);
+        score3 = dialog.findViewById(R.id.Score_text3);
+        score4 = dialog.findViewById(R.id.Score_text4);
+        score5 = dialog.findViewById(R.id.Score_text5);
+
+        goBack = dialog.findViewById(R.id.Back);
+        goRank = dialog.findViewById(R.id.Rank);
+
+        text1.setText(score.getWord().get(0));
+        text2.setText(score.getWord().get(1));
+        text3.setText(score.getWord().get(2));
+        text4.setText(score.getWord().get(3));
+        text5.setText(score.getWord().get(4));
+
+        score1.setText(String.valueOf(score.getScore().get(0)));
+        score2.setText(String.valueOf(score.getScore().get(1)));
+        score3.setText(String.valueOf(score.getScore().get(2)));
+        score4.setText(String.valueOf(score.getScore().get(3)));
+        score5.setText(String.valueOf(score.getScore().get(4)));
+
+        ArrayList<Integer> averrage = new ArrayList<>(score.getScore());
+        int sum_average = Average(averrage);
+        Sum_Score.setText("คะแนนรวม  " +String.valueOf(sum_average));
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        goRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Popup_rank();
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+    }
+
+    public void Popup_rank(){
+        Button goBack,myScore;
+
+        dialog_rank.setContentView(R.layout.ranking_popup);
+
+        ArrayList<Ranking_Item> ranking_items = databaseHelper.rank_ex3_normal(Groupname);
+
+        RecyclerView = dialog_rank.findViewById(R.id.recyclerView);
+        RecyclerView.setHasFixedSize(true);
+        LayoutManager = new LinearLayoutManager(this);
+        Adapter = new Ranking_Adapter(ranking_items);
+
+        RecyclerView.setLayoutManager(LayoutManager);
+        RecyclerView.setAdapter(Adapter);
+
+
+        goBack = dialog_rank.findViewById(R.id.Back);
+        myScore = dialog_rank.findViewById(R.id.MyScore);
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        myScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_rank.dismiss();
+                Popup_score();
+            }
+        });
+
+        dialog_rank.setCanceledOnTouchOutside(false);
+        dialog_rank.show();
+    }
+
+    public int Average (ArrayList<Integer> number){
+        int average = 0;
+        for (int i=0;i<5;i++) {
+            average += number.get(i);
+        }
+        average = average / 5;
+        return  average;
     }
 }

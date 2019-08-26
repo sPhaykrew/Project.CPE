@@ -12,6 +12,8 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -30,6 +32,8 @@ import com.example.projectld.R;
 import com.example.projectld.Score_ex3_word;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
+import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
+import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +64,10 @@ public class ex3_easy_game_st extends Activity {
     SharedPreferences user;
 
     int Score = 100;
+
+    private RecyclerView RecyclerView;
+    private RecyclerView.LayoutManager LayoutManager;
+    private RecyclerView.Adapter Adapter;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
@@ -283,8 +291,8 @@ public class ex3_easy_game_st extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            String stID = databaseHelper.Find_stID(wordset.get(count),Groupname);
-                            databaseHelper.update_score_ex3_word(user.getString("UserID",null),Score,stID); //update score
+                            String stID = databaseHelper.Find_stID_word(wordset.get(count),Groupname);
+                            databaseHelper.update_score_ex3_easy(user.getString("UserID",null),Score,stID); //update score
 
                             wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
                             //count++;
@@ -396,7 +404,7 @@ public class ex3_easy_game_st extends Activity {
 
         dialog.setContentView(R.layout.score_popup);
 
-        Score_ex3_word score = databaseHelper.Score_ex3_word(Groupname,user.getString("UserID",null)
+        Score_ex3_word score = databaseHelper.Score_ex3_easy(Groupname,user.getString("UserID",null)
                 ,user.getString("Fullname",null));
 
         Sum_Score = dialog.findViewById(R.id.Sum_Score);
@@ -454,6 +462,17 @@ public class ex3_easy_game_st extends Activity {
         Button goBack,myScore;
 
         dialog_rank.setContentView(R.layout.ranking_popup);
+
+        ArrayList<Ranking_Item> ranking_items = databaseHelper.rank_ex3_easy(Groupname);
+
+        RecyclerView = dialog_rank.findViewById(R.id.recyclerView);
+        RecyclerView.setHasFixedSize(true);
+        LayoutManager = new LinearLayoutManager(this);
+        Adapter = new Ranking_Adapter(ranking_items);
+
+        RecyclerView.setLayoutManager(LayoutManager);
+        RecyclerView.setAdapter(Adapter);
+
 
         goBack = dialog_rank.findViewById(R.id.Back);
         myScore = dialog_rank.findViewById(R.id.MyScore);

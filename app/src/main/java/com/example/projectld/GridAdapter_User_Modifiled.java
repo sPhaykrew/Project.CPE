@@ -57,8 +57,13 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         getAge = String.valueOf(user.getAge());
         getsex = user.getSex();
 
-        Bitmap bmp= BitmapFactory.decodeByteArray(Picture, 0 , Picture.length);
-        profile.setImageBitmap(bmp);
+        try{ //กรณีแอดไม่ได้ใส่รูป defual ไม่มีรูป
+            Bitmap bmp= BitmapFactory.decodeByteArray(Picture, 0 , Picture.length);
+            profile.setImageBitmap(bmp);
+        } catch (Exception e){
+
+        }
+
 
         Username.setText(getUsername);
         Fullname.setText(getFullname);

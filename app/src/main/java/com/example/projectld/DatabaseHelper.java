@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.projectld.exercise3.word;
+import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
@@ -199,26 +199,52 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return words;
     }
 
-    public ArrayList<String> ex3_normal_game_st(String name){
+    public ArrayList<String> ex3_normal_game_st(String GroupName,String UserID){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> words = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT Sentence.sentence From Setting_ex3_normal INNER join Sentence ON Setting_ex3_normal.sentenceID = Sentence.sentenceID where Setting_ex3_normal.GroupName like '"+name+"'",null);
+        Cursor cursor = db.rawQuery("SELECT Sentence.sentence,Setting_ex3_normal.st_ex3_normal_id From Setting_ex3_normal INNER join Sentence ON Setting_ex3_normal.sentenceID = Sentence.sentenceID where Setting_ex3_normal.GroupName like '"+GroupName+"'",null);
         cursor.moveToFirst();
+
+        Cursor Check = db.rawQuery("SELECT Score_ex3_normal.UserID,Setting_ex3_normal.Groupname " +
+                "from Score_ex3_normal LEFT JOIN Setting_ex3_normal on (Score_ex3_normal.st_ex3_normal_id = Setting_ex3_normal.st_ex3_normal_id) " +
+                "where Score_ex3_normal.UserID = '"+ UserID +"' AND Setting_ex3_normal.Groupname = '"+ GroupName +"'",null); //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+
+        ContentValues Val = new ContentValues();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(0));
+
+            if (Check.getCount() == 0) { //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+                Val.put("st_ex3_normal_id", cursor.getString(1));
+                Val.put("Score", 0);
+                Val.put("UserID", UserID);
+                long rows = db.insert("Score_ex3_normal", null, Val);
+            }
             cursor.moveToNext();
         }
         db.close();
         return words;
     }
 
-    public ArrayList<String> ex3_hard_game_st(String name){
+    public ArrayList<String> ex3_hard_game_st(String GroupName,String UserID){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> words = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT Sentence.sentence From Setting_ex3_hard INNER join Sentence ON Setting_ex3_hard.sentenceID = Sentence.sentenceID where Setting_ex3_hard.GroupName like '"+name+"'",null);
+        Cursor cursor = db.rawQuery("SELECT Sentence.sentence,Setting_ex3_hard.st_ex3_hard_id From Setting_ex3_hard INNER join Sentence ON Setting_ex3_hard.sentenceID = Sentence.sentenceID where Setting_ex3_hard.GroupName like '"+GroupName+"'",null);
         cursor.moveToFirst();
+
+        Cursor Check = db.rawQuery("SELECT Score_ex3_hard.UserID,Setting_ex3_hard.Groupname " +
+                "from Score_ex3_hard LEFT JOIN Setting_ex3_hard on (Score_ex3_hard.st_ex3_hard_id = Setting_ex3_hard.st_ex3_hard_id) " +
+                "where Score_ex3_hard.UserID = '"+ UserID +"' AND Setting_ex3_hard.Groupname = '"+ GroupName +"'",null); //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+
+        ContentValues Val = new ContentValues();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(0));
+
+            if (Check.getCount() == 0) { //เช็ค user ได้ทำการเพิ่มคำศัพท์เข้าไปหรือยัง
+                Val.put("st_ex3_hard_id", cursor.getString(1));
+                Val.put("Score", 0);
+                Val.put("UserID", UserID);
+                long rows = db.insert("Score_ex3_hard", null, Val);
+            }
             cursor.moveToNext();
         }
         db.close();
@@ -279,7 +305,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public Score_ex3_word Score_ex3_word(String Groupname,String UserID,String Fullname){
+    public Score_ex3_word Score_ex3_easy(String Groupname, String UserID, String Fullname){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> Word = new ArrayList<>();
         ArrayList<Integer> Score = new ArrayList<>();
@@ -300,8 +326,49 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return Score_Word;
     }
 
-    public String Find_stID(String word,String groupname){
-        Log.d("find",word +"  " +groupname);
+    public Score_ex3_word Score_ex3_normal (String Groupname,String UserID,String Fullname){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> Word = new ArrayList<>();
+        ArrayList<Integer> Score = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT Sentence.sentence,Score_ex3_normal.Score From Score_ex3_normal \n" +
+                "LEFT JOIN Setting_ex3_normal on (Score_ex3_normal.st_ex3_normal_id = Setting_ex3_normal.st_ex3_normal_id)\n" +
+                "LEFT JOIN Sentence on (Setting_ex3_normal.sentenceID = Sentence.sentenceID)\n" +
+                "LEFT JOIN User on (Score_ex3_normal.UserID = User.UserID)\n" +
+                "where Setting_ex3_normal.GroupName = '"+Groupname+"' and  Score_ex3_normal.UserID = '"+UserID +"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Word.add(cursor.getString(0));
+            Score.add(cursor.getInt(1));
+            cursor.moveToNext();
+        }
+        Score_ex3_word Score_Word = new Score_ex3_word(Fullname,Word,Score,UserID);
+        db.close();
+        return Score_Word;
+    }
+
+    public Score_ex3_word Score_ex3_hard (String Groupname,String UserID,String Fullname){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> Word = new ArrayList<>();
+        ArrayList<Integer> Score = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT Sentence.sentence,Score_ex3_hard.Score From Score_ex3_hard \n" +
+                "LEFT JOIN Setting_ex3_hard on (Score_ex3_hard.st_ex3_hard_id = Setting_ex3_hard.st_ex3_hard_id)\n" +
+                "LEFT JOIN Sentence on (Setting_ex3_hard.sentenceID = Sentence.sentenceID)\n" +
+                "LEFT JOIN User on (Score_ex3_hard.UserID = User.UserID)\n" +
+                "where Setting_ex3_hard.GroupName = '"+Groupname+"' and  Score_ex3_hard.UserID = '"+UserID +"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Word.add(cursor.getString(0));
+            Score.add(cursor.getInt(1));
+            cursor.moveToNext();
+        }
+        Score_ex3_word Score_Word = new Score_ex3_word(Fullname,Word,Score,UserID);
+        db.close();
+        return Score_Word;
+    }
+
+    public String Find_stID_word(String word,String Groupname){
         SQLiteDatabase db = this.getReadableDatabase();
         String stID = null;
         Cursor cursor = db.rawQuery("SELECT\n" +
@@ -310,7 +377,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
                 "    Setting_ex3_easy\n" +
                 "INNER JOIN \n" +
                 "\tWord ON Setting_ex3_easy.wordID=Word.wordID\n" +
-                "where Word.word = '" +word+"' and Setting_ex3_easy.GroupName = '"+groupname+"'",null);
+                "where Word.word = '" +word+"' and Setting_ex3_easy.GroupName = '"+Groupname+"'",null);
         cursor.moveToFirst();
             stID = cursor.getString(0);
 
@@ -318,14 +385,49 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return stID;
     }
 
+    public String Find_stID_sentence(String word,String Groupname,String Table,String ID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stID = null;
+        Cursor cursor = db.rawQuery("SELECT\n" +
+                "    "+Table+"."+ID+"\n" +
+                "FROM\n" +
+                "    "+Table+"\n" +
+                "INNER JOIN \n" +
+                "\tSentence ON "+Table+".sentenceID=Sentence.sentenceID\n" +
+                "where Sentence.sentence = '" +word+"' and "+Table+".GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        stID = cursor.getString(0);
+
+        db.close();
+        return stID;
+    }
 
 
-    public void update_score_ex3_word (String UserID,int Score,String stID){
+
+    public void update_score_ex3_easy(String UserID, int Score, String stID){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         //Val.put("UserID",UserID);
         Val.put("Score",Score);
         long rows = db.update("Score_ex3_easy",Val, "st_ex3_easy_id=" + stID + " and UserID = "+ UserID, null);
+        db.close();
+    }
+
+    public void update_score_ex3_normal (String UserID,int Score,String stID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        //Val.put("UserID",UserID);
+        Val.put("Score",Score);
+        long rows = db.update("Score_ex3_normal",Val, "st_ex3_normal_id=" + stID + " and UserID = "+ UserID, null);
+        db.close();
+    }
+
+    public void update_score_ex3_hard (String UserID,int Score,String stID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        //Val.put("UserID",UserID);
+        Val.put("Score",Score);
+        long rows = db.update("Score_ex3_hard",Val, "st_ex3_hard_id=" + stID + " and UserID = "+ UserID, null);
         db.close();
     }
 
@@ -357,6 +459,66 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
         }
         db.close();
+    }
+
+    public ArrayList<Ranking_Item> rank_ex3_easy (String group){
+        Ranking_Item rankingItem = null;
+        ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
+        int rank=1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select User.Fullname,avg(Score) from Score_ex3_easy \n" +
+                "LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id)\n" +
+                "LEFT JOIN User on (Score_ex3_easy.UserID = User.UserID)\n" +
+                "where Setting_ex3_easy.GroupName = '" + group +"'\n" +
+                "Group by Score_ex3_easy.UserID ORDER by sum(Score) desc\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            rankingItem = new Ranking_Item(String.valueOf(rank),cursor.getString(0),cursor.getString(1));
+            ranking_item.add(rankingItem);
+            rank++;
+            cursor.moveToNext();
+        }
+        return ranking_item;
+    }
+
+    public ArrayList<Ranking_Item> rank_ex3_normal (String group){
+        Ranking_Item rankingItem = null;
+        ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
+        int rank=1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select User.Fullname,avg(Score) from Score_ex3_normal \n" +
+                "LEFT JOIN Setting_ex3_normal on (Score_ex3_normal.st_ex3_normal_id = Setting_ex3_normal.st_ex3_normal_id)\n" +
+                "LEFT JOIN User on (Score_ex3_normal.UserID = User.UserID)\n" +
+                "where Setting_ex3_normal.GroupName = '" + group +"'\n" +
+                "Group by Score_ex3_normal.UserID ORDER by sum(Score) desc\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            rankingItem = new Ranking_Item(String.valueOf(rank),cursor.getString(0),cursor.getString(1));
+            ranking_item.add(rankingItem);
+            rank++;
+            cursor.moveToNext();
+        }
+        return ranking_item;
+    }
+
+    public ArrayList<Ranking_Item> rank_ex3_hard (String group){
+        Ranking_Item rankingItem = null;
+        ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
+        int rank=1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select User.Fullname,avg(Score) from Score_ex3_hard \n" +
+                "LEFT JOIN Setting_ex3_hard on (Score_ex3_hard.st_ex3_hard_id = Setting_ex3_hard.st_ex3_hard_id)\n" +
+                "LEFT JOIN User on (Score_ex3_hard.UserID = User.UserID)\n" +
+                "where Setting_ex3_hard.GroupName = '" + group +"'\n" +
+                "Group by Score_ex3_hard.UserID ORDER by sum(Score) desc\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            rankingItem = new Ranking_Item(String.valueOf(rank),cursor.getString(0),cursor.getString(1));
+            ranking_item.add(rankingItem);
+            rank++;
+            cursor.moveToNext();
+        }
+        return ranking_item;
     }
 
 }
