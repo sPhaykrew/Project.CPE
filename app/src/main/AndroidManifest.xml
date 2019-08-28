@@ -65,6 +65,7 @@
         <activity android:name=".Meaning" />
         <activity android:name=".Add_Word"/>
         <activity android:name=".Add_Sentence" />
+        <activity android:name=".Score_Ranking_User.test"/>
     </application>
 
 </manifest>

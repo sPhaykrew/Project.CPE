@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.projectld.Score_Ranking_User.HorizontalModel;
 import com.example.projectld.exercise3.word;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -478,6 +480,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             rank++;
             cursor.moveToNext();
         }
+        db.close();
         return ranking_item;
     }
 
@@ -498,6 +501,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             rank++;
             cursor.moveToNext();
         }
+        db.close();
         return ranking_item;
     }
 
@@ -518,7 +522,43 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             rank++;
             cursor.moveToNext();
         }
+        db.close();
         return ranking_item;
     }
 
+    public ArrayList<String> SearchGroupName (){
+        ArrayList Groupname = new ArrayList();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Setting_ex3_easy.GroupName , COUNT(*) count FROM Score_ex3_easy \n" +
+                "LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id)\n" +
+                "GROUP BY [GroupName] Having COUNT(*) > 1\n" +
+                "ORDER by Setting_ex3_easy.st_ex3_easy_id\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Groupname.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        db.close();
+        return Groupname;
+    }
+
+    public ArrayList<HorizontalModel> item_word_Ranking(String userID,String Groupname){
+        ArrayList<HorizontalModel> horizontalModel_return = new ArrayList<>();
+        HorizontalModel horizontalModel = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Word.word,Score_ex3_easy.Score \n" +
+                "From Score_ex3_easy\n" +
+                "LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id)\n" +
+                "LEFT JOIN Word on (Setting_ex3_easy.wordID = Word.wordID)\n" +
+                "where Score_ex3_easy.UserID = "+userID+" and Setting_ex3_easy.GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            horizontalModel = new HorizontalModel(cursor.getString(0),cursor.getString(1));
+            horizontalModel_return.add(horizontalModel);
+            cursor.moveToNext();
+        }
+
+        db.close();
+        return horizontalModel_return;
+    }
 }
