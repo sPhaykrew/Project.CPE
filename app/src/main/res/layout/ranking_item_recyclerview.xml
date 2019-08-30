@@ -32,8 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sumScore"
             android:gravity="right"
-            android:layout_weight="1"
-            android:layout_marginEnd="50dp"
+            android:layout_marginStart="30dp"
             android:textSize="15dp"
             android:text="Score"/>
 

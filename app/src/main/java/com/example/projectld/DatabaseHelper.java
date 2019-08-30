@@ -6,15 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.projectld.Score_Ranking_User.HorizontalModel;
+import com.example.projectld.My_Score.Score.HorizontalModel;
 import com.example.projectld.exercise3.word;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
 
@@ -475,7 +475,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
                 "Group by Score_ex3_easy.UserID ORDER by sum(Score) desc\n",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            rankingItem = new Ranking_Item(String.valueOf(rank),cursor.getString(0),cursor.getString(1));
+
+            String a = cursor.getString(0);
+            String[] arrB = a.split(" ");
+            ArrayList<String> Firstname = new ArrayList(Arrays.asList(arrB));
+
+            rankingItem = new Ranking_Item(String.valueOf(rank),Firstname.get(0),cursor.getString(1));
             ranking_item.add(rankingItem);
             rank++;
             cursor.moveToNext();
@@ -526,12 +531,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return ranking_item;
     }
 
-    public ArrayList<String> SearchGroupName (){
+    public ArrayList<String> SearchGroupName (String UserID){
         ArrayList Groupname = new ArrayList();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT Setting_ex3_easy.GroupName , COUNT(*) count FROM Score_ex3_easy \n" +
                 "LEFT JOIN Setting_ex3_easy on (Score_ex3_easy.st_ex3_easy_id = Setting_ex3_easy.st_ex3_easy_id)\n" +
-                "GROUP BY [GroupName] Having COUNT(*) > 1\n" +
+                "where Score_ex3_easy.UserID = '"+UserID+"' GROUP BY [GroupName] Having COUNT(*) > 1\n" +
                 "ORDER by Setting_ex3_easy.st_ex3_easy_id\n",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){

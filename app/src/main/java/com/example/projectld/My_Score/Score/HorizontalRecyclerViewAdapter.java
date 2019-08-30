@@ -1,4 +1,4 @@
-package com.example.projectld.Score_Ranking_User;
+package com.example.projectld.My_Score.Score;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
