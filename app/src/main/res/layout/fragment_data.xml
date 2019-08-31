@@ -6,11 +6,35 @@
     android:background="@android:color/holo_orange_light"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="แบบฝึกที่ 1"
+          android:id="@+id/myscore1">
+      </Button>
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:scrollbars="vertical" />
+        android:text="แบบฝึกที่ 2"
+        android:id="@+id/myscore2">
+    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="แบบฝึกที่ 3"
+        android:id="@+id/myscore3">
+    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="แบบฝึกที่ 4"
+        android:id="@+id/myscore4">
+    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="แบบฝึกที่ 5"
+        android:id="@+id/myscore5">
+    </Button>
 
 </android.support.v7.widget.LinearLayoutCompat>

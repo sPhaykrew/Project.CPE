@@ -9,27 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/word"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:textSize="15dp"
-            android:text="word"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sumScore"
-            android:gravity="right"
             android:layout_weight="1"
-            android:layout_marginEnd="10dp"
-            android:textSize="15dp"
-            android:text="Score"/>
+            android:text="word"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/sumScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Score"
+            android:textSize="15dp" />
 
     </LinearLayout>
 

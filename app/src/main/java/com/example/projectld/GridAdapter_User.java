@@ -5,11 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise3;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise4;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise5;
 
 import java.util.ArrayList;
 
@@ -51,7 +57,7 @@ public class GridAdapter_User extends BaseAdapter {
 
 
         Holder holder = new Holder();
-        View rowView;
+        final View rowView;
 
         rowView = layoutInflater.inflate(R.layout.custom_gridview_item_user, null);
         holder.tv =(TextView) rowView.findViewById(R.id.name);
@@ -68,9 +74,44 @@ public class GridAdapter_User extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context,GridAdapter_User_Modifiled.class);
-                intent.putExtra("UserID", UserID.get(position));
-                context.startActivity(intent);
+//                Intent intent = new Intent(context,GridAdapter_User_Modifiled.class);
+//                intent.putExtra("UserID", UserID.get(position));
+//                context.startActivity(intent);
+
+                //Popup menu
+                PopupMenu popupMenu = new PopupMenu(context,rowView);
+                popupMenu.getMenuInflater().inflate(R.menu.admin_user_menu,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case  R.id.edit_user :
+                                Intent intent = new Intent(context,GridAdapter_User_Modifiled.class);
+                                intent.putExtra("UserID", UserID.get(position));
+                                context.startActivity(intent);
+                                return true;
+
+                            case R.id.admin_score_ex3:
+                                Intent intent_score3 = new Intent(context, Admin_score_exercise3.class);
+                                intent_score3.putExtra("UserID", UserID.get(position));
+                                context.startActivity(intent_score3);
+                                return true;
+                            case R.id.admin_score_ex4:
+                                Intent intent_score4 = new Intent(context, Admin_score_exercise4.class);
+                                intent_score4.putExtra("UserID", UserID.get(position));
+                                context.startActivity(intent_score4);
+                                return true;
+                            case R.id.admin_score_ex5:
+                                Intent intent_score5 = new Intent(context, Admin_score_exercise5.class);
+                                intent_score5.putExtra("UserID", UserID.get(position));
+                                context.startActivity(intent_score5);
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
 
             }
         });

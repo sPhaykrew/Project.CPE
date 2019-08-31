@@ -1,4 +1,4 @@
-package com.example.projectld.My_Score.Score;
+package com.example.projectld.My_Score;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,12 +12,15 @@ import android.util.Log;
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.My_Score.Ranking.Vertical_Ranking_Adapter;
 import com.example.projectld.My_Score.Ranking.Vertical_Ranking_Model;
+import com.example.projectld.My_Score.Score.HorizontalModel;
+import com.example.projectld.My_Score.Score.VerticalModel;
+import com.example.projectld.My_Score.Score.VerticalRecyclerViewAdapter;
 import com.example.projectld.R;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 
 import java.util.ArrayList;
 
-public class My_Score_main extends AppCompatActivity {
+public class My_Score_main_4 extends AppCompatActivity {
 
     //score
     RecyclerView ScoreRecyclerView;
@@ -59,14 +62,14 @@ public class My_Score_main extends AppCompatActivity {
 
         SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        ArrayList Groupname = databaseHelper.SearchGroupName(user.getString("UserID",null));
+        ArrayList Groupname = databaseHelper.SearchGroupName_normal(user.getString("UserID",null));
 
         for (int i=0;i<Groupname.size();i++){
             VerticalModel verticalModel = new VerticalModel();
             verticalModel.setTitle(String.valueOf(Groupname.get(i)));
             verticalModel.setAvgScore(String.valueOf(i));
 
-            ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking
+            ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_normal
                     (user.getString("UserID",null), String.valueOf(Groupname.get(i)));
 
 //            for (int j=0;j<5;j++){
@@ -86,11 +89,11 @@ public class My_Score_main extends AppCompatActivity {
 
         SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        ArrayList Groupname = databaseHelper.SearchGroupName(user.getString("UserID",null));
+        ArrayList Groupname = databaseHelper.SearchGroupName_normal(user.getString("UserID",null));
 
         for (int i=0;i<Groupname.size();i++){
             Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
-            ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_easy(String.valueOf(Groupname.get(i)));
+            ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_normal(String.valueOf(Groupname.get(i)));
 
             Log.d("Horizon", horizontalModels.toString());
 

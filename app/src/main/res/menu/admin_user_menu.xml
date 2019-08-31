@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_user"
+        android:title="แก้ไขโปรไฟล์">
+    </item>
+    <item
+        android:id="@+id/admin_score_ex3"
+        android:title="ดูคะแนนแบบฝึกที่ 3">
+    </item>
+    <item
+        android:id="@+id/admin_score_ex4"
+        android:title="ดูคะแนนแบบฝึกที่ 4">
+    </item>
+    <item
+        android:id="@+id/admin_score_ex5"
+        android:title="ดูคะแนนแบบฝึกที่ 5">
+    </item>
+
+</menu>

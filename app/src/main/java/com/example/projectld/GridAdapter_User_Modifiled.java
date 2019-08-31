@@ -38,8 +38,8 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         setContentView(R.layout.gridadapter_user_modifiled);
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        final String UserID_GW = getIntent().getExtras().getString("UserID");
-        User user = databaseHelper.ModifileUser(UserID_GW);
+        final String Get_UserID = getIntent().getExtras().getString("UserID");
+        User user = databaseHelper.ModifileUser(Get_UserID);
 
         Username = findViewById(R.id.Username);
         Fullname = findViewById(R.id.Fullname);
@@ -90,7 +90,7 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
                         inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
                     }
                     databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID_GW);
+                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, Get_UserID);
 
                     finish();
                     Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
@@ -114,7 +114,7 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.delete_user(UserID_GW);
+                databaseHelper.delete_user(Get_UserID);
             }
         });
 

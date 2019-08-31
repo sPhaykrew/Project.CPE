@@ -65,7 +65,13 @@
         <activity android:name=".Meaning" />
         <activity android:name=".Add_Word"/>
         <activity android:name=".Add_Sentence" />
-        <activity android:name=".My_Score.Score.My_Score_main"/>
+        <activity android:name=".My_Score.My_Score_main_3"/>
+        <activity android:name=".My_Score.My_Score_main_4"/>
+        <activity android:name=".My_Score.My_Score_main_5"/>
+        <activity android:name=".Edit_User_From_Admin.Admin_score_exercise3" />
+        <activity android:name=".Edit_User_From_Admin.Admin_score_exercise4" />
+        <activity android:name=".Edit_User_From_Admin.Admin_score_exercise5" />
+
     </application>
 
 </manifest>
