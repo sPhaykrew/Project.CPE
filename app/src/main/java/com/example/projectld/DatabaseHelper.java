@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import com.example.projectld.My_Score.Score.HorizontalModel;
+import com.example.projectld.exercise2.Character;
 import com.example.projectld.exercise3.word;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -642,5 +643,35 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
         db.close();
         return horizontalModel_return;
+    }
+
+    public Character character(String Character){
+        Character Char = null;
+        String Image = null;
+        String Correct = null;
+        ArrayList<String> arrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //ดึงข้อมูลรูปภาพกับคำถามที่ผิด
+        Cursor cursor = db.rawQuery("select Image,Image_char FROM Character_ex2\n" +
+                "where Anser = '0' and Char = '"+Character+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Image = cursor.getString(0);
+            arrayList.add(cursor.getString(1));
+            cursor.moveToNext();
+        }
+
+        Cursor cursor1 = db.rawQuery("select Image_char FROM Character_ex2\n" +
+                "where Anser = '1' and Char = '"+Character+"'",null);
+        cursor1.moveToFirst();
+        while (!cursor1.isAfterLast()){
+            Correct = cursor1.getString(0);
+            cursor1.moveToNext();
+        }
+
+        db.close();
+        Char = new Character(Image,arrayList,Correct);
+        return Char;
     }
 }

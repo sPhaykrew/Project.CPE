@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.Edit_User_From_Admin;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.example.projectld.DatabaseHelper;
+import com.example.projectld.R;
+import com.example.projectld.User;
+import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

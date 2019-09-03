@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.projectld.exercise2.exercise2_menu;
 import com.example.projectld.exercise3.exercise3_menu;
 
 public class F_menu_home extends Fragment {
@@ -21,7 +22,6 @@ public class F_menu_home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.main_menu,container,false);
-
     }
 
     @Override
@@ -30,10 +30,18 @@ public class F_menu_home extends Fragment {
         exercise2 =  view.findViewById(R.id.Exercise2);
         exercise3 =  view.findViewById(R.id.Exercise3);
 
+        exercise2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), exercise2_menu.class);
+                startActivity(intent);
+            }
+        });
+
         exercise3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), exercise3_menu.class);
+                Intent intent = new Intent(getContext(),exercise3_menu.class);
                 startActivity(intent);
             }
         });

@@ -313,7 +313,7 @@ public class ex3_easy_game extends Activity {
         editor.putInt("key", value);
         editor.commit();
     }
-    public void LoadInt(){ // โหลดค่า count
+    public void LoadInt(){ // โหลดค่า count and first
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         count = sharedPreferences.getInt("key", 0);
         first = sharedPreferences.getInt("first",0);

@@ -1,4 +1,4 @@
-package com.example.projectld;
+package com.example.projectld.Edit_User_From_Admin;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise3;
-import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise4;
-import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise5;
+import com.example.projectld.R;
 
 import java.util.ArrayList;
 

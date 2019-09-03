@@ -57,8 +57,8 @@
         </activity>
         <activity android:name=".Register" />
         <activity android:name=".navigationDrawer.F_profile" />
-        <activity android:name=".Call_GridAdapter_User" />
-        <activity android:name=".GridAdapter_User_Modifiled" />
+        <activity android:name=".Edit_User_From_Admin.Call_GridAdapter_User" />
+        <activity android:name=".Edit_User_From_Admin.GridAdapter_User_Modifiled" />
         <activity android:name=".exercise3.exercise3_menu"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -71,6 +71,8 @@
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise3" />
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise4" />
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise5" />
+        <activity android:name=".exercise2.exercise2_game" />
+        <activity android:name=".exercise2.exercise2_menu" />
 
     </application>
 

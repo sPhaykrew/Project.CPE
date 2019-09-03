@@ -1,10 +1,13 @@
-package com.example.projectld;
+package com.example.projectld.Edit_User_From_Admin;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.GridView;
+
+import com.example.projectld.DatabaseHelper;
+import com.example.projectld.R;
 
 import java.util.ArrayList;
 

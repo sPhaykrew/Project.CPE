@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.projectld.Edit_User_From_Admin.Call_GridAdapter_User;
 import com.example.projectld.navigationDrawer.F_Sentence_data;
 import com.example.projectld.navigationDrawer.F_Word_data;
 import com.example.projectld.navigationDrawer.F_data;
@@ -123,7 +124,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
 
             case R.id.EditUser:
-                Intent editUser = new Intent(getApplicationContext(),Call_GridAdapter_User.class);
+                Intent editUser = new Intent(getApplicationContext(), Call_GridAdapter_User.class);
                 startActivity(editUser);
                 break;
             case R.id.addPerson:

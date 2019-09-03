@@ -16,6 +16,7 @@ import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Meaning;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise2.exercise2_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game_st;
 import com.example.projectld.exercise3.hard.ex3_hard_game;
@@ -213,6 +214,14 @@ public class GridviewAdapter extends BaseAdapter {
                         });
                         dialog_sentence.show();
                         break;
+
+                    case "exercise2_game" :
+                        intent = new Intent(context, exercise2_game.class);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        intent.putExtra("countarray",count);
+                        context.startActivity(intent);
+                        break;
+
 
                 }
             }
