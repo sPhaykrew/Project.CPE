@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projectld.exercise2.exercise2_menu;
+import com.example.projectld.exercise2.main_select_image;
 import com.example.projectld.exercise3.exercise3_menu;
 
 public class F_menu_home extends Fragment {

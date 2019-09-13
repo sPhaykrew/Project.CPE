@@ -32,7 +32,7 @@ public class exercise2_game extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exercise2);
+        setContentView(R.layout.exercise2_game);
 
         final TTS tts = new TTS(this);
 
@@ -66,10 +66,10 @@ public class exercise2_game extends AppCompatActivity {
         String get_char1 = character.getCorrect();
         final int cha1 = getResources().getIdentifier(get_char1 , "drawable", getPackageName());
 
-        String get_char2 = character.getChoice().get(1);
+        String get_char2 = character.getChoice().get(0);
         int cha2 = getResources().getIdentifier(get_char2 , "drawable", getPackageName());
 
-        String get_char3 = character.getChoice().get(2);
+        String get_char3 = character.getChoice().get(1);
         int cha3 = getResources().getIdentifier(get_char3 , "drawable", getPackageName());
 
         final ArrayList<Integer> random = new ArrayList<>();

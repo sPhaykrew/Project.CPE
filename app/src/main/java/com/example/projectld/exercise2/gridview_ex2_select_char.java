@@ -1,8 +1,10 @@
-package com.example.projectld.exercise3.st_easy;
+package com.example.projectld.exercise2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.EditText;
@@ -10,40 +12,40 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
-import com.example.projectld.exercise3.GridListAdapter_selectWord;
 import com.example.projectld.R;
+import com.example.projectld.exercise3.GridListAdapter_selectWord;
+import com.example.projectld.exercise3.st_easy.grid_view_ex3_st_easy_selectWord;
+import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
 import com.example.projectld.exercise3.word;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
+public class gridview_ex2_select_char extends AppCompatActivity {
 
     private GridListAdapter_selectWord adapter;
     private ArrayList<String> arrayList;
     private DatabaseHelper databaseHelper;
-    private EditText editText;
-    ArrayList<word> query_word;
+
+    EditText editText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grid_view_ex3_st_easy_selectword);
+        setContentView(R.layout.gridview_ex2_select_char);
         editText = findViewById(R.id.setGroupName);
 
         loadGridView();
         onClickEvent();
-
     }
 
     private void loadGridView() {
         GridView gridView = (GridView) findViewById(R.id.grid_view);
         databaseHelper = new DatabaseHelper(this);
         arrayList = new ArrayList<>();
-        query_word = databaseHelper.query_id_word("Word");
 
-        for(word a : query_word){
-            arrayList.add(a.getWord());
-        }
+        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช"};
+        arrayList.addAll(Arrays.asList(Char));
 
         adapter = new GridListAdapter_selectWord(this, arrayList, false);
         gridView.setAdapter(adapter);
@@ -55,7 +57,7 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
             public void onClick(View view) {
                 SparseBooleanArray selectedRows = adapter.getSelectedIds();//Get the selected ids from adapter
                 //Check if item is selected or not via size
-                ArrayList<String> wordid_group = new ArrayList<>();
+                ArrayList<String> Character = new ArrayList<>();
                 if (selectedRows.size() > 0) {
                     //Loop to all the selected rows array
                     for (int i = 0; i < selectedRows.size(); i++) {
@@ -63,7 +65,7 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                         //Check if selected rows have value i.e. checked item
                         if (selectedRows.valueAt(i)) {
                             //Get the checked item text from array list by getting keyAt method of selectedRowsarray
-                            wordid_group.add(arrayList.get(selectedRows.keyAt(i)));
+                            Character.add(arrayList.get(selectedRows.keyAt(i)));
                         }
                     }
                     if(selectedRows.size() != 5 || selectedRows.size() > 5){
@@ -73,47 +75,17 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                     } else if (editText.getText().toString().length() > 8){
                         Toast.makeText(getApplicationContext(), "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
                     } else {
-                        String group = CheckGroup();
-                        for (String word : wordid_group){
-                            String wordID = CheckWordID(word,query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
-                            String GroupName =  String.valueOf(editText.getText()); //ตั้งชื่อให้กับ Group
-                            databaseHelper.insert_group(wordID,group,GroupName,"Setting_ex3_easy","wordID");
-                        }
-                        Intent intent = new Intent(grid_view_ex3_st_easy_selectWord.this,st_ex3_easy_menu.class);
+
+                        //do something
+
+                        Intent intent = new Intent(gridview_ex2_select_char.this, main_select_image.class);
+                        intent.putExtra("Character",Character);
+                        intent.putExtra("Groupname",String.valueOf(editText.getText()));
                         startActivity(intent);
                         finish();
                     }
                 }
             }
         });
-    }
-
-    private String CheckGroup(){ //เช็คค่า group ใน table setting ว่าจะสร้าง group ไหน
-        boolean check = false;
-        int i;
-        String number_group = null;
-        ArrayList<String> group = databaseHelper.Check_Group_db("Setting_ex3_easy");
-
-        for(i=0;i<group.size();i++){
-            number_group = String.valueOf(i);
-            if(!number_group.equals(group.get(i))){
-                check = true;
-                break;
-            }
-        }
-        if(!check){
-            number_group = String.valueOf(i);
-        }
-        return number_group;
-    }
-
-    public String CheckWordID(String word,ArrayList<word> word_id){ // หา word ว่าเท่ากับ wordid ที่เท่าไหร
-        String id = null;
-        for(int i=0;i<word_id.size();i++){
-        if(word.equals(word_id.get(i).getWord())) {
-            id = word_id.get(i).getId();
-            }
-        }
-        return id;
     }
 }

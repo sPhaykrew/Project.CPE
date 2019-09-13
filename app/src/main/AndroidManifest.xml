@@ -73,6 +73,10 @@
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise5" />
         <activity android:name=".exercise2.exercise2_game" />
         <activity android:name=".exercise2.exercise2_menu" />
+        <activity android:name=".exercise2.st_exercise2_menu" />
+        <activity android:name=".exercise2.gridview_ex2_select_char" />
+        <activity android:name=".exercise2.main_select_image" />
+        <activity android:name=".exercise2.ex2_game_st" />
 
     </application>
 

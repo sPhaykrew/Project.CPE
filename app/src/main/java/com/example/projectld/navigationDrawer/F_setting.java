@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.projectld.R;
+import com.example.projectld.exercise2.st_exercise2_menu;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
 import com.example.projectld.exercise3.st_hard.st_ex3_hard_menu;
 import com.example.projectld.exercise3.st_nomal.st_ex3_normal_menu;
@@ -35,6 +36,14 @@ public class F_setting extends Fragment {
         ex5 = view.findViewById(R.id.ex5);
         Add_Word = view.findViewById(R.id.Add_Word);
         Add_Sentence = view.findViewById(R.id.Add_Sentence);
+
+        ex2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), st_exercise2_menu.class);
+                startActivity(intent);
+            }
+        });
 
 
         ex3.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Meaning;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise2.ex2_game_st;
 import com.example.projectld.exercise2.exercise2_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game_st;
@@ -222,6 +223,12 @@ public class GridviewAdapter extends BaseAdapter {
                         context.startActivity(intent);
                         break;
 
+                    case "exercise2_game_st" :
+                        intent = new Intent(context, ex2_game_st.class);
+                        intent.putExtra("Groupname",finalButton.getText());
+                        intent.putExtra("countarray",count);
+                        context.startActivity(intent);
+                        break;
 
                 }
             }
