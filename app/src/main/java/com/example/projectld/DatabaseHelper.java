@@ -458,32 +458,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return stID;
     }
 
-    public ArrayList<Ranking_Item> rank_ex2 (String group){
-        Ranking_Item rankingItem = null;
-        ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
-        int rank=1;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select User.Fullname,avg(Score) from Score_ex2 \n" +
-                "LEFT JOIN Setting_ex2 on (Score_ex2.st_ex2_id = Setting_ex2.st_ex2_id)\n" +
-                "LEFT JOIN User on (Score_ex2.UserID = User.UserID)\n" +
-                "where Setting_ex2.GroupName = '" + group +"'\n" +
-                "Group by Score_ex2.UserID ORDER by sum(Score) desc\n",null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-
-            String a = cursor.getString(0);
-            String[] arrB = a.split(" ");
-            ArrayList<String> Firstname = new ArrayList(Arrays.asList(arrB));
-
-            rankingItem = new Ranking_Item(String.valueOf(rank),Firstname.get(0),cursor.getString(1));
-            ranking_item.add(rankingItem);
-            rank++;
-            cursor.moveToNext();
-        }
-        db.close();
-        return ranking_item;
-    }
-
     public String Find_stID_word(String word,String Groupname){
         SQLiteDatabase db = this.getReadableDatabase();
         String stID = null;
@@ -577,6 +551,32 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
+    public ArrayList<Ranking_Item> rank_ex2 (String group){
+        Ranking_Item rankingItem = null;
+        ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
+        int rank=1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select User.Fullname,avg(Score) from Score_ex2 \n" +
+                "LEFT JOIN Setting_ex2 on (Score_ex2.st_ex2_id = Setting_ex2.st_ex2_id)\n" +
+                "LEFT JOIN User on (Score_ex2.UserID = User.UserID)\n" +
+                "where Setting_ex2.GroupName = '" + group +"' and Score_ex2.this_Score = 'yes'\n" +
+                "Group by Score_ex2.UserID ORDER by sum(Score) desc\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+
+            String a = cursor.getString(0);
+            String[] arrB = a.split(" ");
+            ArrayList<String> Firstname = new ArrayList(Arrays.asList(arrB));
+
+            rankingItem = new Ranking_Item(String.valueOf(rank),Firstname.get(0),cursor.getString(1));
+            ranking_item.add(rankingItem);
+            rank++;
+            cursor.moveToNext();
+        }
+        db.close();
+        return ranking_item;
+    }
+
     public ArrayList<Ranking_Item> rank_ex3_easy (String group){
         Ranking_Item rankingItem = null;
         ArrayList<Ranking_Item> ranking_item = new ArrayList<>();
@@ -650,6 +650,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return ranking_item;
     }
 
+    public ArrayList<String> SearchGroupName_ex2(String UserID){
+        ArrayList Groupname = new ArrayList();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Setting_ex2.GroupName , COUNT(*) count FROM Score_ex2 \n" +
+                "LEFT JOIN Setting_ex2 on (Score_ex2.st_ex2_id = Setting_ex2.st_ex2_id)\n" +
+                "where Score_ex2.UserID = '"+UserID+"' GROUP BY [GroupName] Having COUNT(*) > 1\n" +
+                "ORDER by Setting_ex2.st_ex2_id\n",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Groupname.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        db.close();
+        return Groupname;
+    }
+
     public ArrayList<String> SearchGroupName_easy(String UserID){
         ArrayList Groupname = new ArrayList();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -696,6 +712,25 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         db.close();
         return Groupname;
+    }
+
+    public ArrayList<HorizontalModel> item_word_Ranking_ex2(String userID, String Groupname){
+        ArrayList<HorizontalModel> horizontalModel_return = new ArrayList<>();
+        HorizontalModel horizontalModel = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Character_ex2.Char,Score_ex2.Score\n" +
+                "From Score_ex2\n" +
+                "LEFT JOIN Setting_ex2 on (Score_ex2.st_ex2_id = Setting_ex2.st_ex2_id)\n" +
+                "LEFT JOIN Character_ex2 on (Setting_ex2.choiceID = Character_ex2.choiceID)\n" +
+                "where Score_ex2.UserID = '"+userID+"' and Setting_ex2.GroupName = '"+Groupname+"' and Score_ex2.this_Score = 'yes'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            horizontalModel = new HorizontalModel(cursor.getString(0),cursor.getString(1));
+            horizontalModel_return.add(horizontalModel);
+            cursor.moveToNext();
+        }
+        db.close();
+        return horizontalModel_return;
     }
 
     public ArrayList<HorizontalModel> item_word_Ranking_easy(String userID, String Groupname){

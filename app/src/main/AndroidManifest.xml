@@ -77,6 +77,7 @@
         <activity android:name=".exercise2.gridview_ex2_select_char" />
         <activity android:name=".exercise2.main_select_image" />
         <activity android:name=".exercise2.ex2_game_st" />
+        <activity android:name=".My_Score.My_Score_main_2" />
 
     </application>
 

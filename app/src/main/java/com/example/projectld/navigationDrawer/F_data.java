@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.projectld.My_Score.My_Score_main_2;
 import com.example.projectld.My_Score.My_Score_main_3;
 import com.example.projectld.My_Score.My_Score_main_4;
 import com.example.projectld.My_Score.My_Score_main_5;
@@ -34,6 +35,14 @@ public class F_data extends Fragment {
         score3 = view.findViewById(R.id.myscore3);
         score4 = view.findViewById(R.id.myscore4);
         score5 = view.findViewById(R.id.myscore5);
+
+        score2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), My_Score_main_2.class);
+                startActivity(intent);
+            }
+        });
 
         score3.setOnClickListener(new View.OnClickListener() {
             @Override
