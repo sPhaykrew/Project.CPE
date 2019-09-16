@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projectld.exercise2.exercise2_menu;
-import com.example.projectld.exercise2.main_select_image;
 import com.example.projectld.exercise3.exercise3_menu;
 
 public class F_menu_home extends Fragment {
@@ -27,9 +26,9 @@ public class F_menu_home extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        exercise1 =  view.findViewById(R.id.Exercise1);
-        exercise2 =  view.findViewById(R.id.Exercise2);
-        exercise3 =  view.findViewById(R.id.Exercise3);
+        exercise1 =  view.findViewById(R.id.easy);
+        exercise2 =  view.findViewById(R.id.normal);
+        exercise3 =  view.findViewById(R.id.hard);
 
         exercise2.setOnClickListener(new View.OnClickListener() {
             @Override
