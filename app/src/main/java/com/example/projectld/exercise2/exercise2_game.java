@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
@@ -17,11 +19,12 @@ import com.example.projectld.TTS;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class exercise2_game extends AppCompatActivity {
 
     ImageView imageView,ch1,ch2,ch3;
-    Button next,back,voice;
+    ImageView next,back,voice;
 
     int first = 0 ; //เช็คการทำงานรอบแรก
     int count; //เช็คเริ่มเข้ามาที่ตัวอักษรไหน
@@ -33,6 +36,22 @@ public class exercise2_game extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise2_game);
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("เแบบฝึกถามตอบ");
+        Title.setTextSize(16);
+
+        ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        back_toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         final TTS tts = new TTS(this);
 
@@ -53,7 +72,7 @@ public class exercise2_game extends AppCompatActivity {
         ch3 = findViewById(R.id.ch3);
 
         next = findViewById(R.id.next);
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.back_this);
         voice = findViewById(R.id.voice);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
@@ -91,6 +110,18 @@ public class exercise2_game extends AppCompatActivity {
             public void onClick(View v) {
                 if (random.get(0) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+
+                    count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
+                    if(count >= char_array.size()){
+                        Toast.makeText(exercise2_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                        count--;
+                    } else {
+                        SaveInt(count);
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -102,6 +133,18 @@ public class exercise2_game extends AppCompatActivity {
             public void onClick(View v) {
                 if (random.get(1) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+
+                    count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
+                    if(count >= char_array.size()){
+                        Toast.makeText(exercise2_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                        count--;
+                    } else {
+                        SaveInt(count);
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -113,6 +156,18 @@ public class exercise2_game extends AppCompatActivity {
             public void onClick(View v) {
                 if (random.get(2) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+
+                    count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
+                    if(count >= char_array.size()){
+                        Toast.makeText(exercise2_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                        count--;
+                    } else {
+                        SaveInt(count);
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }

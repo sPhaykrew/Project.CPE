@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -19,6 +21,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,15 +31,16 @@ import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class ex3_nomal_game extends Activity {
+public class ex3_nomal_game extends AppCompatActivity {
 
     com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
-    Button voice,next,back;
+    ImageView voice,next,back;
 
     int start = 0; //เช็คว่าเลากไปกี่ตัวแล้ว
     int finish = 0;
@@ -55,11 +59,27 @@ public class ex3_nomal_game extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_nomal_game);
 
-        next = (Button)  findViewById(R.id.next);
-        back = (Button) findViewById(R.id.back);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("เแบบฝึกเรียงตัวอักษร");
+        Title.setTextSize(16);
+
+        ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        back_toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        voice =  findViewById(R.id.voice_tts);
+        next = findViewById(R.id.next);
+        back = findViewById(R.id.back_this);
         arrayset = getIntent().getExtras();
 
-        voice = (Button) findViewById(R.id.voice_tts);
         tts = new TTS(this);
 
         LoadInt();
@@ -257,12 +277,23 @@ public class ex3_nomal_game extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(ex3_nomal_game.this,"Finish",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ex3_nomal_game.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+
+                            count++;
+                            if(count >= wordset.size()){
+                                Toast.makeText(ex3_nomal_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                                count--;
+                            } else {
+                                SaveInt(count);
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
                         }
                     }
                     else
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(ex3_nomal_game.this, dropTarget.getText().toString() + "is not " + dropped.getText().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ex3_nomal_game.this,"ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary

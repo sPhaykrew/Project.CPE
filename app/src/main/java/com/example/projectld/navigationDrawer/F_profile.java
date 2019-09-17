@@ -8,13 +8,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
@@ -23,13 +30,14 @@ import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class F_profile extends AppCompatActivity {
 
     EditText Username,Fullname,Age;
     ImageView profile;
     RadioButton male,female;
-    Button update, updatePicture;
+    Button update;
     String getsex,sex;
     String getUsername,getFullname,getAge,Picture,UserID;
     static final int SELECT_PICTURE = 100;
@@ -45,8 +53,23 @@ public class F_profile extends AppCompatActivity {
 
         SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = user.edit();
-
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("แก้ไขโปรไฟล์");
+        Title.setTextSize(16);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Username = findViewById(R.id.Username);
         Fullname = findViewById(R.id.Fullname);
@@ -55,7 +78,6 @@ public class F_profile extends AppCompatActivity {
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
         update = findViewById(R.id.update);
-        updatePicture = findViewById(R.id.updatePicture);
 
         Picture = user.getString("Picture",null);
         getUsername = user.getString("Username",null);
@@ -91,10 +113,10 @@ public class F_profile extends AppCompatActivity {
                 else {
                     byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
                     if (image != null) {
-                     inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
-                        }
+                        inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                    }
                     databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                    ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID);
+                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID);
 
                     editor.putString("Username",Username.getText().toString());
                     editor.putString("Fullname",Fullname.getText().toString());
@@ -114,7 +136,7 @@ public class F_profile extends AppCompatActivity {
             }
         });
 
-        updatePicture.setOnClickListener(new View.OnClickListener() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -161,7 +183,7 @@ public class F_profile extends AppCompatActivity {
 
     private byte[] convertBitmapIntoByteArray() { //ลดขนาดรูป แปลงรูป
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 20, stream);//ขนาดภาพที่ลดลง
+        image.compress(Bitmap.CompressFormat.JPEG, 10, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
     }

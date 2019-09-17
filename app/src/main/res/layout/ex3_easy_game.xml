@@ -3,108 +3,82 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp">
+    android:orientation="vertical">
 
+    <include layout="@layout/toolbar_back"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00BCD4">
+
+<!--        <com.nex3z.flowlayout.FlowLayout-->
+<!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:id="@+id/question"-->
+<!--            android:layout_height="130dp"-->
+<!--            app:flChildSpacing="auto"-->
+<!--            app:flChildSpacingForLastRow="align"-->
+<!--            app:flRowSpacing="8dp">-->
 
     <LinearLayout
         android:id="@+id/question"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:gravity="center"
         android:orientation="horizontal">
-
-        <!--<TextView-->
-            <!--android:id="@+id/choice_1"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="A for " />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/choice_2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="O for " />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/choice_3"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="B for " />-->
-
-
-
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+<!--        </com.nex3z.flowlayout.FlowLayout>-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/option_1"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Apple"-->
-            <!--android:textStyle="bold" />-->
-
-
-        <!--<TextView-->
-            <!--android:id="@+id/option_2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Orange"-->
-            <!--android:textStyle="bold" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/option_3"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Ball"-->
-            <!--android:textStyle="bold" />-->
-
-        <Button
+        <ImageView
             android:id="@+id/voice_tts"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_volume_up_black_24dp"
+            android:layout_alignParentRight="true">
+        </ImageView>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/answer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="Voice" />
+            android:gravity="center"
+            android:layout_centerInParent ="true"
+            android:orientation="horizontal">
+        </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/back_this"
+            android:background="@drawable/ic_chevron_left_black_24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="back">
+        </ImageView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/next"
-            android:text="Next"/>
+            android:background="@drawable/ic_navigate_next_black_24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="next">
+        </ImageView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/back"
-            android:text="Back"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </android.support.v7.widget.LinearLayoutCompat>

@@ -12,8 +12,10 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -23,6 +25,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,21 +34,23 @@ import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.Score_ex3_word;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise3.easy.ex3_easy_game_st;
 import com.example.projectld.exercise3.segmentation;
 import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class ex3_normal_game_st extends Activity {
+public class ex3_normal_game_st extends AppCompatActivity {
 
     com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
-    Button voice,next,back;
+    ImageView voice,next,back;
 
     String Groupname,ArraySet;
 
@@ -76,15 +81,31 @@ public class ex3_normal_game_st extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_nomal_game);
 
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("เแบบฝึกเรียงตัวอักษร");
+        Title.setTextSize(16);
+
+        ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        back_toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         user = getSharedPreferences("User", Context.MODE_PRIVATE);
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
 
-        next = (Button)  findViewById(R.id.next);
-        back = (Button) findViewById(R.id.back);
+        voice = findViewById(R.id.voice_tts);
+        next = findViewById(R.id.next);
+        back = findViewById(R.id.back_this);
         arrayset = getIntent().getExtras();
 
-        voice = (Button) findViewById(R.id.voice_tts);
         tts = new TTS(this);
         databaseHelper = new DatabaseHelper(this);
 
@@ -291,6 +312,9 @@ public class ex3_normal_game_st extends Activity {
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
+
+                            Toast.makeText(ex3_normal_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+
                             String stID = databaseHelper.Find_stID_sentence(wordset.get(count),Groupname,"Setting_ex3_normal","st_ex3_normal_id");
                             databaseHelper.update_score_ex3_normal(user.getString("UserID",null),Score,stID); //update score
 
@@ -319,7 +343,7 @@ public class ex3_normal_game_st extends Activity {
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
                         Score = Score - 5;
-                        Toast.makeText(ex3_normal_game_st.this, dropped.getText().toString() + " ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ex3_normal_game_st.this, " ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:

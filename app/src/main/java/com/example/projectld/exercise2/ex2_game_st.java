@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +29,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ex2_game_st extends AppCompatActivity {
 
     ImageView imageView,ch1,ch2,ch3;
-    Button next,back,voice;
+    ImageView next,back,voice;
 
     int first = 0 ; //เช็คการทำงานรอบแรก
     int count = 0; //ให้ index array ตัวแรกที่ 0
@@ -56,6 +58,22 @@ public class ex2_game_st extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise2_game);
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("เแบบฝึกถามตอบ");
+        Title.setTextSize(16);
+
+        ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        back_toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
@@ -96,7 +114,7 @@ public class ex2_game_st extends AppCompatActivity {
         ch3 = findViewById(R.id.ch3);
 
         next = findViewById(R.id.next);
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.back_this);
         voice = findViewById(R.id.voice);
 
         Character character = databaseHelper.character(Char_set.get(count));

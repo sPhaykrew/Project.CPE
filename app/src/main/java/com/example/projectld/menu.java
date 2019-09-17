@@ -36,6 +36,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     SharedPreferences user;
 
+    public TextView toolbar_text;
+
     static menu menu;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
 
@@ -45,6 +47,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         setContentView(R.layout.menu);
 
         menu = this; //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
+
+        toolbar_text = findViewById(R.id.titel_toolbar);
+        toolbar_text.setText("เลือกแบบฝึก");
 
         user = getSharedPreferences("User", Context.MODE_PRIVATE);
 
