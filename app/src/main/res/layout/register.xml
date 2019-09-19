@@ -5,9 +5,11 @@
     android:orientation="vertical"
     android:gravity="center|top">
 
+    <include layout="@layout/toolbar_back" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/selectPicture"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@mipmap/ic_launcher_round"/>
@@ -15,48 +17,57 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:id="@+id/ID"
         android:hint="ชื่อผู้ใช้งาน"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:id="@+id/password"
         android:hint="รหัสผ่าน"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:id="@+id/psconfirm"
         android:hint="ยืนยันรหัสผ่าน"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:id="@+id/name"
         android:hint="ชื่อ - นามสกุล"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/age"
-        android:inputType="number"
-        android:hint="อายุ"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center|top">
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="horizontal">
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="เพศ"/>
+            android:id="@+id/age"
+            android:inputType="number"
+            android:hint="อายุ"/>
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
             android:orientation="horizontal">
             <RadioButton android:id="@+id/male"
                 android:layout_width="wrap_content"
@@ -70,19 +81,16 @@
                 android:onClick="onRadioButtonClicked"/>
         </RadioGroup>
 
-
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/picture"
-        android:text="เลือกรูปภาพ"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/button"
-        android:text="ตกลง"/>
+        android:text="ยืนยัน"/>
 
 </android.support.v7.widget.LinearLayoutCompat>

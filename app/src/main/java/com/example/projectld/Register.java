@@ -9,20 +9,23 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Register extends AppCompatActivity {
 
     EditText user,password,confirmPS,name,age;
-    Button button, selectPicture;
+    Button button;
     String sex = null;
     ImageView imageView;
     static final int SELECT_PICTURE = 100;
@@ -35,6 +38,22 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("สมัคสมาชิก");
+        Title.setTextSize(16);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         imageView = findViewById(R.id.selectPicture);
 
         user = findViewById(R.id.ID);
@@ -44,7 +63,6 @@ public class Register extends AppCompatActivity {
         age = findViewById(R.id.age);
 
         button = findViewById(R.id.button);
-        selectPicture = findViewById(R.id.picture);
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -78,7 +96,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        selectPicture.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
     android:layout_height="300dp"
-    android:background="@color/colorPrimary"
-    android:layout_gravity="center"
-    android:orientation="vertical">
+    android:background="@drawable/relative_layout_radius"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:id="@+id/this_back"
+        android:elevation="4dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_close_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,24 +39,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Back"
-            android:text="ออก"
-            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatButton
 
-        <Button
-            android:layout_width="wrap_content"
+            android:theme="@style/DefaultButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/MyScore"
-            android:text="ดูคะแนนแบบฝึก"
-            android:gravity="center"/>
+            android:text="คะแนนแบบฝึก"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
-</android.support.v7.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+</RelativeLayout>

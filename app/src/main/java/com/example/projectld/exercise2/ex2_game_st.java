@@ -334,8 +334,10 @@ public class ex2_game_st extends AppCompatActivity {
 
     public void Popup_score(){
         TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
-        Button goBack,goRank;
+        Button goRank;
+        ImageView goBack;
 
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
         dialog.setContentView(R.layout.score_popup);
 
         Score_ex3_word score = databaseHelper.Score_ex2(Groupname,user.getString("UserID",null)
@@ -353,7 +355,7 @@ public class ex2_game_st extends AppCompatActivity {
         score4 = dialog.findViewById(R.id.Score_text4);
         score5 = dialog.findViewById(R.id.Score_text5);
 
-        goBack = dialog.findViewById(R.id.Back);
+        goBack = dialog.findViewById(R.id.this_back);
         goRank = dialog.findViewById(R.id.Rank);
 
         text1.setText(score.getWord().get(0));
@@ -393,8 +395,10 @@ public class ex2_game_st extends AppCompatActivity {
     }
 
     public void Popup_rank(){
-        Button goBack,myScore;
+        Button myScore;
+        ImageView goBack;
 
+        dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
         dialog_rank.setContentView(R.layout.ranking_popup);
 
         ArrayList<Ranking_Item> ranking_items = databaseHelper.rank_ex2(Groupname);
@@ -408,7 +412,7 @@ public class ex2_game_st extends AppCompatActivity {
         RecyclerView.setAdapter(Adapter);
 
 
-        goBack = dialog_rank.findViewById(R.id.Back);
+        goBack = dialog_rank.findViewById(R.id.this_back);
         myScore = dialog_rank.findViewById(R.id.MyScore);
 
         goBack.setOnClickListener(new View.OnClickListener() {
