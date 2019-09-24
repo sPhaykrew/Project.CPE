@@ -5,42 +5,59 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.projectld.Export_db;
 import com.example.projectld.R;
 import com.example.projectld.exercise2.st_exercise2_menu;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
 import com.example.projectld.exercise3.st_hard.st_ex3_hard_menu;
 import com.example.projectld.exercise3.st_nomal.st_ex3_normal_menu;
 
-public class F_setting extends Fragment {
+public class F_setting extends AppCompatActivity {
 
-    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_setting,container,false);
-    }
+    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence,export_db;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_setting);
 
-        ex2 = view.findViewById(R.id.ex2);
-        ex3 = view.findViewById(R.id.ex3);
-        ex4 = view.findViewById(R.id.ex4);
-        ex5 = view.findViewById(R.id.ex5);
-        Add_Word = view.findViewById(R.id.Add_Word);
-        Add_Sentence = view.findViewById(R.id.Add_Sentence);
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("ตั้งค่า");
+        Title.setTextSize(20);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        ex2 = findViewById(R.id.ex2);
+        ex3 = findViewById(R.id.ex3);
+        ex4 = findViewById(R.id.ex4);
+        ex5 = findViewById(R.id.ex5);
+        Add_Word = findViewById(R.id.Add_Word);
+        Add_Sentence = findViewById(R.id.Add_Sentence);
+        export_db = findViewById(R.id.Export_db);
 
         ex2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), st_exercise2_menu.class);
+                Intent intent = new Intent(getApplicationContext(), st_exercise2_menu.class);
                 startActivity(intent);
             }
         });
@@ -49,7 +66,7 @@ public class F_setting extends Fragment {
         ex3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), st_ex3_easy_menu.class);
+                Intent intent = new Intent(getApplicationContext(), st_ex3_easy_menu.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +74,7 @@ public class F_setting extends Fragment {
         ex4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), st_ex3_normal_menu.class);
+                Intent intent = new Intent(getApplicationContext(), st_ex3_normal_menu.class);
                 startActivity(intent);
             }
         });
@@ -65,7 +82,7 @@ public class F_setting extends Fragment {
         ex5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), st_ex3_hard_menu.class);
+                Intent intent = new Intent(getApplicationContext(), st_ex3_hard_menu.class);
                 startActivity(intent);
             }
         });
@@ -73,7 +90,7 @@ public class F_setting extends Fragment {
         Add_Word.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.example.projectld.Add_Word.class);
+                Intent intent = new Intent(getApplicationContext(), com.example.projectld.Add_Word.class);
                 startActivity(intent);
             }
         });
@@ -81,10 +98,20 @@ public class F_setting extends Fragment {
         Add_Sentence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.example.projectld.Add_Sentence.class);
+                Intent intent = new Intent(getApplicationContext(), com.example.projectld.Add_Sentence.class);
                 startActivity(intent);
             }
         });
 
+        export_db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Export_db.class);
+                startActivity(intent);
+            }
+        });
+
+        }
+
     }
-}
+

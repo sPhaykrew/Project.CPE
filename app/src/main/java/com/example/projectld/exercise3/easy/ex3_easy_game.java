@@ -9,6 +9,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,7 +51,12 @@ public class ex3_easy_game extends AppCompatActivity {
     SharedPreferences sharedPreferences; //เก็บค่า I ไม่ให้หาย
     Bundle arrayset; //รับค่า array จาก gridview ที่คิวรี่จากฐานข้อมูล
 
+    LinearLayout answer;
+
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
+
+    String status = null; // เก็บคำจาก view ที่คลิ๊ก
+    int status_id;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
@@ -118,6 +124,7 @@ public class ex3_easy_game extends AppCompatActivity {
             );
             params.setMarginStart(40);
             valueQT.setLayoutParams(params);
+            valueQT.setOnClickListener(setAnswer(valueQT));
             valueQT.setOnDragListener(new ChoiceDragListener());
             valueQT.setGravity(Gravity.CENTER);
             question.addView(valueQT);
@@ -128,7 +135,7 @@ public class ex3_easy_game extends AppCompatActivity {
         /**
          * answer views to ex3_easy_game
          */
-        LinearLayout answer = (LinearLayout) findViewById(R.id.answer);
+        answer = (LinearLayout) findViewById(R.id.answer);
         int loop = sentence.size();
         ArrayList<String> sentenceRD = random(sentence,loop);
 
@@ -147,6 +154,7 @@ public class ex3_easy_game extends AppCompatActivity {
             answerCH.setLayoutParams(params);
             answerCH.setOnTouchListener(new ChoiceTouchListener());
             answer.addView(answerCH);
+
         }
 
         /**
@@ -199,21 +207,44 @@ public class ex3_easy_game extends AppCompatActivity {
     private final class ChoiceTouchListener implements OnTouchListener {
         @SuppressLint("NewApi")
         @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                /*
-                 * Drag details: we only need default behavior
-                 * - clip data could be set to pass data as part of ex3_easy_game
-                 * - shadow can be tailored
-                 */
-                ClipData data = ClipData.newPlainText("", "");
-                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                //start dragging the item touched
-                view.startDrag(data, shadowBuilder, view, 0);
+        public boolean onTouch(final View view, MotionEvent motionEvent) {
+
+            Runnable rannable = new Runnable() { // include touch and click *ถ้าไม่มีจะทำงานร่วมกันไม่ได้
+                @Override
+                public void run() {
+                    /*
+                     * Drag details: we only need default behavior
+                     * - clip data could be set to pass data as part of ex3_easy_game
+                     * - shadow can be tailored
+                     */
+                    ClipData data = ClipData.newPlainText("", "");
+                    DragShadowBuilder shadowBuilder = new DragShadowBuilder(view);
+                    //start dragging the item touched
+                    view.startDrag(data, shadowBuilder, view, 0);
+                }
+            };
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) { //onClick
+
+                for (int i=0;i<answer.getChildCount();i++){ //setText size all view
+                    TextView textView = (TextView) answer.getChildAt(i);
+                    textView.setTextSize(30);
+                }
+                status = String.valueOf(((TextView) view).getTag());
+                status_id = ((TextView) view).getId();
+                ((TextView) view).setTextSize(60);
                 return true;
-            } else {
-                return false;
             }
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) { //onTouch
+                Handler handler = new Handler();
+                handler.postDelayed(rannable,100);
+                return true;
+            }
+
+            //else {
+                return false;
+            //}
         }
     }
 
@@ -257,9 +288,11 @@ public class ex3_easy_game extends AppCompatActivity {
                         //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
                         //update the text in the target view to reflect the data being dropped
-                        dropTarget.setText(dropped.getText().toString());
+                        dropTarget.setText(dropped.getText());
+
                         //make it bold to highlight the fact that an item has been dropped
-                        dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
+                        //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);  //font style **
+
                         //if an item has already been dropped here, there will be a tag
 //                        Object tag = dropTarget.getTag();
                         //if there is already an item here, set it back visible in its original place
@@ -357,6 +390,26 @@ public class ex3_easy_game extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("first",first);
         editor.commit();
+    }
+
+    View.OnClickListener setAnswer(final TextView textView)  {
+        return new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if (!textView.getTag().equals("done")){
+                    if (textView.getTag().equals(status)){
+                        textView.setText(status);
+                        textView.setOnDragListener(null);
+                        textView.setTag("done");
+                        TextView get_status = (TextView) answer.getChildAt(status_id);
+                        get_status.setVisibility(View.INVISIBLE);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        };
     }
 
 }

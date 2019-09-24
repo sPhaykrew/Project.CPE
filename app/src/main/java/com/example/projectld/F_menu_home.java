@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.projectld.exercise2.exercise2_menu;
 import com.example.projectld.exercise3.exercise3_menu;
@@ -29,6 +30,13 @@ public class F_menu_home extends Fragment {
         exercise1 =  view.findViewById(R.id.easy);
         exercise2 =  view.findViewById(R.id.normal);
         exercise3 =  view.findViewById(R.id.hard);
+
+        exercise1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"ยังไม่เปิดใช้งาน",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         exercise2.setOnClickListener(new View.OnClickListener() {
             @Override

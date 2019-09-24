@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.projectld.Export_Import.ex2_st_object;
 import com.example.projectld.My_Score.Score.HorizontalModel;
 import com.example.projectld.exercise2.Character;
 import com.example.projectld.exercise2.st_ex2_adapter.Item_st_ex2;
@@ -848,5 +849,41 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Val.put("GroupName", Groupname);
         long rows = db.insert("Setting_ex2", null, Val);
         db.close();
+    }
+
+    public ArrayList<ex2_st_object> export_ex2(String Groupname){
+        ArrayList<ex2_st_object> return_object = new ArrayList<>();
+        ex2_st_object object = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select choiceID,GroupName from Setting_ex2 where GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            object = new ex2_st_object(cursor.getString(0),cursor.getString(1));
+            return_object.add(object);
+            cursor.moveToNext();
+        }
+        db.close();
+        return return_object;
+    }
+
+    public void Import_ex2(String choiceID,String GroupName){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues Val = new ContentValues(); //insert data
+            Val.put("choiceID", choiceID);
+            Val.put("GroupName", GroupName);
+            long rows = db.insert("Setting_ex2", null, Val);
+            db.close();
+    }
+
+    public String check_groupname_ex2(String GroupName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String check_group = null;
+        Cursor cursor = db.rawQuery("select GroupName from Setting_ex2 where GroupName = '"+GroupName+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            check_group = cursor.getString(0);
+            cursor.moveToNext();
+        }
+        return check_group;
     }
 }

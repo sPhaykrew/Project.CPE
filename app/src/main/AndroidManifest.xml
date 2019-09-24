@@ -6,6 +6,9 @@
     <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <!--<uses-permission android:name="android.permission.INTERNET"/>-->
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -78,6 +81,18 @@
         <activity android:name=".exercise2.main_select_image" />
         <activity android:name=".exercise2.ex2_game_st" />
         <activity android:name=".My_Score.My_Score_main_2" />
+        <activity android:name=".navigationDrawer.F_setting" />
+        <activity android:name=".Export_db" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.projectld.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
 

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_back" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,9 +15,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ระบบ"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"/>
+            android:text="ตั้งค่าแบบฝึก"
+            android:textColor="#00BCD4"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"/>
 
         <Button
             android:id="@+id/ex2"
@@ -22,7 +26,8 @@
             android:layout_height="wrap_content"
             android:text="ตั้งค่าแบบฝึกจำตัวอักษร"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -32,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบง่าย"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -42,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบปกติ"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -52,17 +57,34 @@
             android:layout_height="wrap_content"
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบยาก"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="1dp"
+            android:background="#DBDBDB"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#00BCD4"
+            android:text="ฐานข้อมูล"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"/>
 
         <Button
             android:id="@+id/Add_Word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="เพิ่มคำศัพท์"
+            android:layout_marginTop="10dp"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -72,7 +94,18 @@
             android:layout_height="wrap_content"
             android:text="เพิ่มประโยค"
             android:stateListAnimator="@null"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/Export_db"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="นำออกข้อมูลการตั้งค่า"
+            android:textSize="16dp"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="15dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 

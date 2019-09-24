@@ -106,8 +106,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                         new F_menu_home()).addToBackStack(null).commit();
                 break;
             case R.id.setting:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_setting()).addToBackStack(null).commit();
+                Intent setting = new Intent(getApplicationContext(),F_setting.class);
+                startActivity(setting);
                 break;
             case R.id.edit:
                 Intent editProfile = new Intent(getApplicationContext(), F_profile.class);
