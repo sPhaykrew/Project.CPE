@@ -884,6 +884,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             check_group = cursor.getString(0);
             cursor.moveToNext();
         }
+        db.close();
         return check_group;
     }
 }

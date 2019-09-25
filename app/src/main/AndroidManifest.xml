@@ -82,7 +82,7 @@
         <activity android:name=".exercise2.ex2_game_st" />
         <activity android:name=".My_Score.My_Score_main_2" />
         <activity android:name=".navigationDrawer.F_setting" />
-        <activity android:name=".Export_db" />
+        <activity android:name=".Export_Import.Export_db" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
