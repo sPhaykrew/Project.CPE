@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.projectld.Export_Import.ex2_st_object;
+import com.example.projectld.Export_Import.Import_object;
 import com.example.projectld.My_Score.Score.HorizontalModel;
 import com.example.projectld.exercise2.Character;
 import com.example.projectld.exercise2.st_ex2_adapter.Item_st_ex2;
@@ -136,12 +135,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return words;
     }
 
-    public void insert_group (String ID ,String group,String GroupName,String table,String tableFK){
+    public void insert_group (String ID ,String GroupName,String table,String tableFK){
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<String> words = new ArrayList<>();
         ContentValues Val = new ContentValues();
         Val.put(tableFK,ID);
-        Val.put("\"group\"", group);
         Val.put("GroupName",GroupName);
         long rows = db.insert(table, null, Val);
         db.close();
@@ -851,14 +849,59 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public ArrayList<ex2_st_object> export_ex2(String Groupname){
-        ArrayList<ex2_st_object> return_object = new ArrayList<>();
-        ex2_st_object object = null;
+    public ArrayList<Import_object> export_ex2(String Groupname){
+        ArrayList<Import_object> return_object = new ArrayList<>();
+        Import_object object = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select choiceID,GroupName from Setting_ex2 where GroupName = '"+Groupname+"'",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            object = new ex2_st_object(cursor.getString(0),cursor.getString(1));
+            object = new Import_object(cursor.getString(0),cursor.getString(1));
+            return_object.add(object);
+            cursor.moveToNext();
+        }
+        db.close();
+        return return_object;
+    }
+
+    public ArrayList<Import_object> export_ex3(String Groupname){
+        ArrayList<Import_object> return_object = new ArrayList<>();
+        Import_object object = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select wordID,GroupName from Setting_ex3_easy where GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            object = new Import_object(cursor.getString(0),cursor.getString(1));
+            return_object.add(object);
+            cursor.moveToNext();
+        }
+        db.close();
+        return return_object;
+    }
+
+    public ArrayList<Import_object> export_ex4(String Groupname){
+        ArrayList<Import_object> return_object = new ArrayList<>();
+        Import_object object = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select SentenceID,GroupName from Setting_ex3_normal where GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            object = new Import_object(cursor.getString(0),cursor.getString(1));
+            return_object.add(object);
+            cursor.moveToNext();
+        }
+        db.close();
+        return return_object;
+    }
+
+    public ArrayList<Import_object> export_ex5(String Groupname){
+        ArrayList<Import_object> return_object = new ArrayList<>();
+        Import_object object = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select SentenceID,GroupName from Setting_ex3_hard where GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            object = new Import_object(cursor.getString(0),cursor.getString(1));
             return_object.add(object);
             cursor.moveToNext();
         }
@@ -875,10 +918,37 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             db.close();
     }
 
-    public String check_groupname_ex2(String GroupName){
+    public void Import_ex3 (String wordID,String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("wordID",wordID);
+        values.put("GroupName",GroupName);
+        long row = db.insert("Setting_ex3_easy",null,values);
+        db.close();
+    }
+
+    public void Import_ex4 (String sentenceID,String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sentenceID",sentenceID);
+        values.put("GroupName",GroupName);
+        long row = db.insert("Setting_ex3_normal",null,values);
+        db.close();
+    }
+
+    public void Import_ex5 (String sentenceID,String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sentenceID",sentenceID);
+        values.put("GroupName",GroupName);
+        long row = db.insert("Setting_ex3_hard",null,values);
+        db.close();
+    }
+
+    public String check_groupname_import(String GroupName,String table){
         SQLiteDatabase db = this.getReadableDatabase();
         String check_group = null;
-        Cursor cursor = db.rawQuery("select GroupName from Setting_ex2 where GroupName = '"+GroupName+"'",null);
+        Cursor cursor = db.rawQuery("select GroupName from "+table+" where GroupName = '"+GroupName+"'",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             check_group = cursor.getString(0);

@@ -152,14 +152,18 @@ public class ex2_game_st extends AppCompatActivity {
                 if (random.get(0) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
-                    //update score
-                    String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                    databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                    try { //ถ้าไม่ทำ try catch ไว้ กดถูกไปเรื่อยๆหน้าสุดท้ายจะ error เนื่องจาก index ของ count
+                        //update score
+                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                        Char_set.remove(count);
+                    } catch (Exception e) {
+                        Log.d("exception",e.toString());
+                    }
 
-                    Char_set.remove(count);
                     if(count >= Char_set.size()){
                         Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        count--;
+                        //count--;
                     } else {
 
                         StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
@@ -187,14 +191,18 @@ public class ex2_game_st extends AppCompatActivity {
                 if (random.get(1) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
-                    //update score
-                    String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                    databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                    try {
+                        //update score
+                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                        Char_set.remove(count);
+                    } catch (Exception e) {
+                        Log.d("exception ",e.toString());
+                    }
 
-                    Char_set.remove(count);
                     if(count >= Char_set.size()){
                         Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        count--;
+                        //count--;
                     } else {
 
                         StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
@@ -222,14 +230,18 @@ public class ex2_game_st extends AppCompatActivity {
                 if (random.get(2) == cha1){
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
-                    //update score
-                    String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                    databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                    try {
+                        //update score
+                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+                        Char_set.remove(count);
+                    } catch (Exception e) {
+                        Log.d("Exception",e.toString());
+                    }
 
-                    Char_set.remove(count);
                     if(count >= Char_set.size()){
                         Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        count--;
+                        //count--;
                     } else {
 
                         StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set

@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.projectld.Export_Import.Export_db;
+import com.example.projectld.Export_Import.Export_menu;
+import com.example.projectld.Export_Import.Import_db;
 import com.example.projectld.R;
 import com.example.projectld.exercise2.st_exercise2_menu;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
@@ -19,7 +20,7 @@ import com.example.projectld.exercise3.st_nomal.st_ex3_normal_menu;
 
 public class F_setting extends AppCompatActivity {
 
-    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence,export_db;
+    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence,export_db,import_db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class F_setting extends AppCompatActivity {
         Add_Word = findViewById(R.id.Add_Word);
         Add_Sentence = findViewById(R.id.Add_Sentence);
         export_db = findViewById(R.id.Export_db);
+        import_db = findViewById(R.id.Import_db);
 
         ex2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +104,15 @@ public class F_setting extends AppCompatActivity {
         export_db.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Export_db.class);
+                Intent intent = new Intent(getApplicationContext(), Export_menu.class);
+                startActivity(intent);
+            }
+        });
+
+        import_db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Import_db.class);
                 startActivity(intent);
             }
         });

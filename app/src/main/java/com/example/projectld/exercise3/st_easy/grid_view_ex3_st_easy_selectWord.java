@@ -73,11 +73,10 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                     } else if (editText.getText().toString().length() > 8){
                         Toast.makeText(getApplicationContext(), "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
                     } else {
-                        String group = CheckGroup();
                         for (String word : wordid_group){
                             String wordID = CheckWordID(word,query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
                             String GroupName =  String.valueOf(editText.getText()); //ตั้งชื่อให้กับ Group
-                            databaseHelper.insert_group(wordID,group,GroupName,"Setting_ex3_easy","wordID");
+                            databaseHelper.insert_group(wordID,GroupName,"Setting_ex3_easy","wordID");
                         }
                         Intent intent = new Intent(grid_view_ex3_st_easy_selectWord.this,st_ex3_easy_menu.class);
                         startActivity(intent);
@@ -86,25 +85,6 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private String CheckGroup(){ //เช็คค่า group ใน table setting ว่าจะสร้าง group ไหน
-        boolean check = false;
-        int i;
-        String number_group = null;
-        ArrayList<String> group = databaseHelper.Check_Group_db("Setting_ex3_easy");
-
-        for(i=0;i<group.size();i++){
-            number_group = String.valueOf(i);
-            if(!number_group.equals(group.get(i))){
-                check = true;
-                break;
-            }
-        }
-        if(!check){
-            number_group = String.valueOf(i);
-        }
-        return number_group;
     }
 
     public String CheckWordID(String word,ArrayList<word> word_id){ // หา word ว่าเท่ากับ wordid ที่เท่าไหร

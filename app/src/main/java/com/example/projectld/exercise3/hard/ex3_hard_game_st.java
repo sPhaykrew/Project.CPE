@@ -424,7 +424,8 @@ public class ex3_hard_game_st extends AppCompatActivity {
 
     public void Popup_score(){
         TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
-        Button goBack,goRank;
+        Button goRank;
+        ImageView goBack;
 
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
         dialog.setContentView(R.layout.score_popup);
@@ -484,7 +485,8 @@ public class ex3_hard_game_st extends AppCompatActivity {
     }
 
     public void Popup_rank(){
-        Button goBack,myScore;
+        Button myScore;
+        ImageView goBack;
 
         dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
         dialog_rank.setContentView(R.layout.ranking_popup);
