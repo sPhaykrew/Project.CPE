@@ -25,7 +25,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     @NonNull
     @Override
     public HorizonViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_horizontal,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.myscore_item_horizontal,viewGroup,false);
         return new HorizonViewHolder(view);
     }
 

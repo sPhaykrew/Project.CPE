@@ -114,20 +114,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(editProfile);
                 break;
             case R.id.data:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_data()).addToBackStack(null).commit();
+                Intent myScpre = new Intent(getApplicationContext(), F_data.class);
+                startActivity(myScpre);
                 break;
-
-            case R.id.WordData:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_Word_data()).addToBackStack(null).commit();
-                break;
-
-            case R.id.SentenceData:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_Sentence_data()).addToBackStack(null).commit();
-                break;
-
             case R.id.EditUser:
                 Intent editUser = new Intent(getApplicationContext(), Call_GridAdapter_User.class);
                 startActivity(editUser);

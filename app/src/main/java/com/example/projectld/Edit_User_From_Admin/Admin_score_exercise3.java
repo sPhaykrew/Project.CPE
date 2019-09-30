@@ -1,13 +1,10 @@
 package com.example.projectld.Edit_User_From_Admin;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.My_Score.Ranking.Vertical_Ranking_Adapter;
@@ -37,7 +34,7 @@ public class Admin_score_exercise3 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_score_main);
+        setContentView(R.layout.myscore_main);
 
         Get_UserID = getIntent().getExtras().getString("UserID");
 

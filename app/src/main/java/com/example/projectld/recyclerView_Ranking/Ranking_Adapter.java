@@ -35,7 +35,7 @@ public class Ranking_Adapter extends RecyclerView.Adapter<Ranking_Adapter.Rankin
     @NonNull
     @Override
     public Ranking_Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ranking_item_recyclerview,viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.myscore_ranking_item,viewGroup, false);
         Ranking_Holder view = new Ranking_Holder(v);
         return view;
     }

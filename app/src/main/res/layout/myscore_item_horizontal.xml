@@ -10,11 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/word"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="word"
@@ -22,9 +22,9 @@
 
         <TextView
             android:id="@+id/sumScore"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="right"
             android:text="Score"
             android:textSize="15dp" />

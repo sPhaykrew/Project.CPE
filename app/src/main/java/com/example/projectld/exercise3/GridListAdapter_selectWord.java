@@ -1,6 +1,7 @@
 package com.example.projectld.exercise3;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class GridListAdapter_selectWord extends BaseAdapter {
     private Context context;
-    private ArrayList<String> arrayList;
+    private ArrayList<String> arrayList,GroupName;
     private LayoutInflater inflater;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
@@ -28,6 +29,7 @@ public class GridListAdapter_selectWord extends BaseAdapter {
         this.context = context;
         this.arrayList = arrayList;
         this.isListView = isListView;
+        this.GroupName = GroupName;
         inflater = LayoutInflater.from(context);
         mSelectedItemsIds = new SparseBooleanArray();
     }
@@ -49,7 +51,7 @@ public class GridListAdapter_selectWord extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
 
@@ -72,7 +74,11 @@ public class GridListAdapter_selectWord extends BaseAdapter {
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkCheckBox(i, !mSelectedItemsIds.get(i));
+                if (viewHolder.checkBox.isChecked()){
+                    viewHolder.checkBox.setChecked(false);
+                } else {
+                    checkCheckBox(i, !mSelectedItemsIds.get(i));
+                }
             }
         });
 

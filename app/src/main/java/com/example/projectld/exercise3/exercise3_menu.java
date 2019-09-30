@@ -30,7 +30,7 @@ public class exercise3_menu extends AppCompatActivity {
 
         TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("เลือกระดับ");
-        Title.setTextSize(16);
+        Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

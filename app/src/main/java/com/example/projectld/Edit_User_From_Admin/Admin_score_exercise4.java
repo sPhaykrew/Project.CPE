@@ -1,7 +1,5 @@
 package com.example.projectld.Edit_User_From_Admin;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +35,7 @@ public class Admin_score_exercise4 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_score_main);
+        setContentView(R.layout.myscore_main);
 
         Get_UserID = getIntent().getExtras().getString("UserID");
 

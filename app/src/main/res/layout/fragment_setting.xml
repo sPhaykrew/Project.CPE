@@ -18,6 +18,7 @@
             android:text="ตั้งค่าแบบฝึก"
             android:textColor="#00BCD4"
             android:layout_marginTop="15dp"
+            android:textSize="16dp"
             android:layout_marginStart="15dp"/>
 
         <Button
@@ -28,6 +29,7 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -38,6 +40,7 @@
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบง่าย"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -48,6 +51,7 @@
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบปกติ"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -58,6 +62,7 @@
             android:text="ตั้งค่าแบบฝึกเรียงตัวอักษรแบบยาก"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -75,6 +80,7 @@
             android:textColor="#00BCD4"
             android:text="ฐานข้อมูล"
             android:layout_marginTop="10dp"
+            android:textSize="16dp"
             android:layout_marginStart="15dp"/>
 
         <Button
@@ -85,6 +91,7 @@
             android:layout_marginTop="10dp"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -95,6 +102,7 @@
             android:text="เพิ่มประโยค"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 

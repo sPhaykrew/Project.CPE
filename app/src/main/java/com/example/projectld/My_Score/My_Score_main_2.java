@@ -35,7 +35,7 @@ public class My_Score_main_2 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_score_main);
+        setContentView(R.layout.myscore_main);
 
         //Score
 

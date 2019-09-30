@@ -111,7 +111,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> words = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT Word.word From Setting_ex3_easy INNER join Word " +
-                "ON Setting_ex3_easy.wordID = Word.wordID where" + "\"group\"" +" ="+group,null);
+                "ON Setting_ex3_easy.wordID = Word.wordID where GroupName " +" = '"+group+"'",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(0));
@@ -125,7 +125,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> words = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT Sentence.sentence From "+table+" INNER join Sentence " +
-                "ON "+table+".sentenceID = Sentence.sentenceID where" + "\"group\"" +" ="+group,null);
+                "ON "+table+".sentenceID = Sentence.sentenceID where GroupName " +" = '"+group+"'",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             words.add(cursor.getString(0));
@@ -956,5 +956,38 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         db.close();
         return check_group;
+    }
+
+    public void delete_st(String Table,String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Table,"GroupName = '" + GroupName +"'",null);
+        db.close();
+    }
+
+    public void update_ex3_easy_st (String wordID,String newGroup,String oldGroup,String oldID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("wordID",wordID);
+        values.put("GroupName",newGroup);
+        db.update("Setting_ex3_easy",values,"wordID = " +  oldID +" and GroupName = '" + oldGroup +"'",null);
+        db.close();
+    }
+
+    public void update_ex3_normal_st (String sentenceID,String newGroup,String oldGroup,String oldID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sentenceID",sentenceID);
+        values.put("GroupName",newGroup);
+        db.update("Setting_ex3_normal",values,"sentenceID = " +  oldID +" and GroupName = '" + oldGroup +"'",null);
+        db.close();
+    }
+
+    public void update_ex3_hard_st (String sentenceID,String newGroup,String oldGroup,String oldID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sentenceID",sentenceID);
+        values.put("GroupName",newGroup);
+        db.update("Setting_ex3_hard",values,"sentenceID = " +  oldID +" and GroupName = '" + oldGroup +"'",null);
+        db.close();
     }
 }

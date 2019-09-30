@@ -87,7 +87,7 @@ public class ex3_hard_game_st extends AppCompatActivity {
 
         TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("เแบบฝึกเรียงตัวอักษร");
-        Title.setTextSize(16);
+        Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
         back_toolbar.setOnClickListener(new View.OnClickListener() {

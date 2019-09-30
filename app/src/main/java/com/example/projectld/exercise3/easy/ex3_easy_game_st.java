@@ -2,7 +2,6 @@ package com.example.projectld.exercise3.easy;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -34,7 +33,6 @@ import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.Score_ex3_word;
 import com.example.projectld.TTS;
-import com.example.projectld.exercise3.nomal.ex3_nomal_game;
 import com.example.projectld.exercise3.segmentation;
 import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
@@ -87,7 +85,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
 
         TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("เแบบฝึกเรียงตัวอักษร");
-        Title.setTextSize(16);
+        Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
         back_toolbar.setOnClickListener(new View.OnClickListener() {

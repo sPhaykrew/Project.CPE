@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
     android:layout_height="300dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:background="@drawable/relative_layout_radius"
     android:orientation="vertical">
@@ -178,7 +177,6 @@
             android:gravity="center">
 
             <android.support.v7.widget.AppCompatButton
-
                 android:theme="@style/DefaultButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

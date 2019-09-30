@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -114,19 +115,19 @@ public class GridviewAdapter extends BaseAdapter {
                         break;
                     case "st_easy" :
                         intent = new Intent(context, st_ex3_easy_inMenu.class);
-                        intent.putExtra("countarray",count);
+                        intent.putExtra("Groupname",finalButton.getText());
                         intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
                         context.startActivity(intent);
                         break;
                     case "st_normal" :
                         intent = new Intent(context, st_ex3_normal_inMenu.class);
-                        intent.putExtra("countarray",count);
+                        intent.putExtra("Groupname",finalButton.getText());
                         intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
                         context.startActivity(intent);
                         break;
                     case "st_hard" :
                         intent = new Intent(context, st_ex3_hard_inMenu.class);
-                        intent.putExtra("countarray",count);
+                        intent.putExtra("Groupname",finalButton.getText());
                         intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
                         context.startActivity(intent);
                         break;

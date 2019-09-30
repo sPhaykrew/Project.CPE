@@ -16,14 +16,6 @@
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="ข้อมูลผู้ใช้งาน" />
         <item
-            android:id="@+id/WordData"
-            android:icon="@drawable/ic_looks_one_black_24dp"
-            android:title="ข้อมูลคำศัพท์" />
-        <item
-            android:id="@+id/SentenceData"
-            android:icon="@drawable/ic_looks_two_black_24dp"
-            android:title="ข้อมูลประโยค" />
-        <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
             android:title="ออกจากระบบ" />

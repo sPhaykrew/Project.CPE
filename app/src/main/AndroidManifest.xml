@@ -88,6 +88,12 @@
         <activity android:name=".Export_Import.Export_ex4" />
         <activity android:name=".Export_Import.Export_ex5" />
         <activity android:name=".Export_Import.Import_db" />
+        <activity android:name=".navigationDrawer.F_data" />
+        <activity android:name=".navigationDrawer.F_Sentence_data" />
+        <activity android:name=".navigationDrawer.F_Word_data" />
+        <activity android:name=".exercise3.st_easy.st_ex3_easy_update" />
+        <activity android:name=".exercise3.st_nomal.st_ex3_normal_update" />
+        <activity android:name=".exercise3.st_hard.st_ex3_hard_update" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -26,7 +26,7 @@ public class Vertical_Ranking_Adapter extends RecyclerView.Adapter<Vertical_Rank
     @NonNull
     @Override
     public VerticalViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.my_score_ranking,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.myscore_ranking,viewGroup,false);
         return new VerticalViewHolder(view);
     }
 

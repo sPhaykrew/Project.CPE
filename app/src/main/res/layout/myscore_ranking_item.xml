@@ -8,9 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="50dp"
+        android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
@@ -18,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rank"
             android:layout_weight="1"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:text="Rank"/>
 
         <TextView
@@ -27,7 +26,7 @@
             android:id="@+id/name"
             android:gravity="center"
             android:layout_weight="1"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:text="Name"/>
 
         <TextView
@@ -36,7 +35,7 @@
             android:id="@+id/sumScore"
             android:gravity="right"
             android:layout_weight="1"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:text="Score"/>
 
     </LinearLayout>
