@@ -1,22 +1,21 @@
-package com.example.projectld.exercise2;
+package com.example.projectld.exercise2.st_ex2_adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.exercise3.GridListAdapter_selectWord;
-import com.example.projectld.exercise3.st_easy.grid_view_ex3_st_easy_selectWord;
-import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
-import com.example.projectld.exercise3.word;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,13 +26,30 @@ public class gridview_ex2_select_char extends AppCompatActivity {
     private ArrayList<String> arrayList;
     private DatabaseHelper databaseHelper;
 
-    EditText editText;
+    public static Activity close_activity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gridview_ex2_select_char);
-        editText = findViewById(R.id.setGroupName);
+
+        close_activity = this;
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("สร้างแบบทดสอบ");
+        Title.setTextSize(20);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loadGridView();
         onClickEvent();
@@ -52,7 +68,7 @@ public class gridview_ex2_select_char extends AppCompatActivity {
     }
 
     private void onClickEvent() {
-        findViewById(R.id.show_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.go_Select_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SparseBooleanArray selectedRows = adapter.getSelectedIds();//Get the selected ids from adapter
@@ -70,17 +86,10 @@ public class gridview_ex2_select_char extends AppCompatActivity {
                     }
                     if(selectedRows.size() != 5 || selectedRows.size() > 5){
                         Toast.makeText(getApplicationContext(), "กรุณาเลือก 5 คำ", Toast.LENGTH_SHORT).show();
-                    } else if (editText.getText().toString().length() < 3){
-                        Toast.makeText(getApplicationContext(), "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
-                    } else if (editText.getText().toString().length() > 8){
-                        Toast.makeText(getApplicationContext(), "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }  else {
 
-                        //do something
-
-                        Intent intent = new Intent(gridview_ex2_select_char.this, main_select_image.class);
+                        Intent intent = new Intent(gridview_ex2_select_char.this, ex2_select_image.class);
                         intent.putExtra("Character",Character);
-                        intent.putExtra("Groupname",String.valueOf(editText.getText()));
                         startActivity(intent);
                         finish();
                     }

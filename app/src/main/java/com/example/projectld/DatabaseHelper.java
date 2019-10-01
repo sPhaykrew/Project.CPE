@@ -990,4 +990,38 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.update("Setting_ex3_hard",values,"sentenceID = " +  oldID +" and GroupName = '" + oldGroup +"'",null);
         db.close();
     }
+
+    public ArrayList<String> ex2_char_inGroup (String GroupName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> Char = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select Character_ex2.Char , COUNT(*) count\n" +
+                "from Setting_ex2 \n" +
+                "INNER JOIN Character_ex2 \n" +
+                "on Setting_ex2.choiceID = Character_ex2.choiceID\n" +
+                "where Setting_ex2.GroupName = '" +GroupName+ "'\n" +
+                "GROUP BY Character_ex2.Char\n" +
+                "Having COUNT(*) > 1 ",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Char.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        db.close();
+        return Char;
+    }
+
+    public ArrayList<String> st_ex2_get_ImageChar(String GroupName){
+        ArrayList<String> get_ImageChar = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select Character_ex2.Image_Char from Setting_ex2 INNER JOIN Character_ex2 \n" +
+                "on Setting_ex2.choiceID = Character_ex2.choiceID\n" +
+                "where Setting_ex2.GroupName = '" +GroupName+ "'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            get_ImageChar.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        db.close();
+        return get_ImageChar;
+    }
 }

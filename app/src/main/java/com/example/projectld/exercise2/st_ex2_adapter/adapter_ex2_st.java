@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,15 @@ import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
+import com.example.projectld.exercise3.st_easy.st_ex3_easy_update;
 
 import java.util.ArrayList;
 
-public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder> {
+public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_ViewHolder> {
     private ArrayList<Item_st_ex2> mExampleList;
     private SparseBooleanArray mSelectedItemsIds;
+    ArrayList<String> Check_Select;
+    String Old_Group;
     Context context;
     Button button;
 
@@ -43,11 +47,14 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
         }
     }
 
-    public adapter_ex2(ArrayList<Item_st_ex2> exampleList,Context context,Button button) {
+    public adapter_ex2_st(ArrayList<Item_st_ex2> exampleList,Context context,Button button,
+                          ArrayList<String> Check_Select,String Old_Group) {
         this.mExampleList = exampleList;
         this.context = context;
         this.button = button;
         mSelectedItemsIds = new SparseBooleanArray();
+        this.Check_Select = Check_Select;
+        this.Old_Group = Old_Group;
     }
 
     @Override
@@ -76,6 +83,31 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
         holder.checkBox1.setChecked(mSelectedItemsIds.get(position));
         holder.checkBox2.setChecked(mSelectedItemsIds.get(position));
         holder.checkBox3.setChecked(mSelectedItemsIds.get(position));
+
+        for(int i=0;i<Check_Select.size();i++){
+            if (Check_Select.get(i).equals(currentItem.getName_image1())){
+                holder.checkBox1.setChecked(true);
+                currentItem.setCheck(currentItem.getCheck()+1);
+                String image = String.valueOf(currentItem.getName_image1());
+                currentItem.setCheck1(image);
+//                holder.checkBox1.setChecked(!holder.checkBox1.isChecked());
+//                holder.mImageView1.performClick();//สั้งให้ checkbox click
+            } if (Check_Select.get(i).equals(currentItem.getName_image2())){
+                holder.checkBox2.setChecked(true);
+                currentItem.setCheck(currentItem.getCheck()+1);
+                String image = String.valueOf(currentItem.getName_image2());
+                currentItem.setCheck2(image);
+//                holder.checkBox2.setChecked(!holder.checkBox2.isChecked());
+//                holder.mImageView2.performClick();//สั้งให้ checkbox click
+            } if (Check_Select.get(i).equals(currentItem.getName_image3())){
+                holder.checkBox3.setChecked(true);
+                currentItem.setCheck(currentItem.getCheck()+1);
+                String image = String.valueOf(currentItem.getName_image3());
+                currentItem.setCheck3(image);
+//                holder.checkBox3.setChecked(!holder.checkBox3.isChecked());
+//                holder.mImageView3.performClick();//สั้งให้ checkbox click
+            }
+        }
 
 
         holder.mImageView1.setOnClickListener(new View.OnClickListener() {
@@ -127,15 +159,15 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
             @Override
             public void onClick(View v) {
 
-//                Log.d("0", String.valueOf(mExampleList.get(0).getCheck()));
-//                Log.d("1", String.valueOf(mExampleList.get(1).getCheck()));
-//                Log.d("2", String.valueOf(mExampleList.get(2).getCheck()));
-//                Log.d("3", String.valueOf(mExampleList.get(3).getCheck()));
-//                Log.d("4", String.valueOf(mExampleList.get(4).getCheck()));
+                Log.d("0", String.valueOf(mExampleList.get(0).getCheck()));
+                Log.d("1", String.valueOf(mExampleList.get(1).getCheck()));
+                Log.d("2", String.valueOf(mExampleList.get(2).getCheck()));
+                Log.d("3", String.valueOf(mExampleList.get(3).getCheck()));
+                Log.d("4", String.valueOf(mExampleList.get(4).getCheck()));
 
                 if (mExampleList.get(0).getCheck() == 2 && mExampleList.get(1).getCheck() == 2 &&
-                mExampleList.get(2).getCheck() == 2 && mExampleList.get(3).getCheck() == 2 &&
-                mExampleList.get(4).getCheck() == 2) {
+                        mExampleList.get(2).getCheck() == 2 && mExampleList.get(3).getCheck() == 2 &&
+                        mExampleList.get(4).getCheck() == 2) {
 
                     //insert db
                     final ArrayList<String> setChar = new ArrayList<>();
@@ -208,24 +240,33 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                         @Override
                         public void onClick(View v) {
 
-                             if (Groupname.getText().toString().length() < 3){
+                            String Check_Group = databaseHelper.check_groupname_import(String.valueOf(Groupname.getText()),"Setting_ex2");
+
+                            if (Groupname.getText().toString().length() < 3){
                                 Toast.makeText(context, "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
                             } else if (Groupname.getText().toString().length() > 8){
                                 Toast.makeText(context, "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
-                            } else {
-                                 for (int i=0;i<setChar.size();i++){
-                                     databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
-                                 }
-                                 dialog.dismiss();
+                            }  else {
 
-                                 gridview_ex2_select_char.close_activity.finish();
-                                 st_ex2_menu.close_activity.finish();
-                                 ex2_select_image.close_activity.finish();
-                                 Intent intent = new Intent(context,st_ex2_menu.class);
-                                 context.startActivity(intent);
+                                if (Check_Group == null) {
+                                    for (int i=0;i<setChar.size();i++){
+                                        databaseHelper.delete_st("Setting_ex2",Old_Group);
+                                        databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
+                                    }
+                                    dialog.dismiss();
 
-                                 Toast.makeText(context,"เพิ่มข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
-                             }
+                                    st_ex2_menu.close_activity.finish();
+                                    st_ex2_inMenu.close_activity.finish();
+                                    st_ex2_selct_char_update.close_activity.finish();
+                                    st_ex2_select_image_update.close_activity.finish();
+                                    Intent intent = new Intent(context,st_ex2_menu.class);
+                                    context.startActivity(intent);
+
+                                    Toast.makeText(context,"เพิ่มข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context,"ชื่อแบบทดสอบซ่ำกัน กรุณาเปลี่ยนชื่อแบบทดสอบ",Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
                     });
                 } else {

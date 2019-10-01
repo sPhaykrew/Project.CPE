@@ -19,6 +19,7 @@ import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise2.ex2_game_st;
 import com.example.projectld.exercise2.exercise2_game;
+import com.example.projectld.exercise2.st_ex2_adapter.st_ex2_inMenu;
 import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.easy.ex3_easy_game_st;
 import com.example.projectld.exercise3.hard.ex3_hard_game;
@@ -110,6 +111,12 @@ public class GridviewAdapter extends BaseAdapter {
                     case "hard" :
                         intent =  new Intent(context, ex3_hard_game.class);
                         intent.putExtra("countarray",count);
+                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
+                        context.startActivity(intent);
+                        break;
+                    case "st_ex2" :
+                        intent = new Intent(context, st_ex2_inMenu.class);
+                        intent.putExtra("Groupname",finalButton.getText());
                         intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
                         context.startActivity(intent);
                         break;

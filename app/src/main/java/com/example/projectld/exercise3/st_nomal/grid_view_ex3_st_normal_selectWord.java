@@ -90,9 +90,9 @@ public class grid_view_ex3_st_normal_selectWord extends AppCompatActivity {
         final SparseBooleanArray selectedRows = adapter.getSelectedIds();//Get the selected ids from adapter
 
         if(selectedRows.size() != 5 || selectedRows.size() > 5 ) {
-            Groupname.setHint("กรุณาเลือก 5 คำ");
-            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
-            Groupname.setText("");
+//            Groupname.setHint("กรุณาเลือก 5 คำ");
+//            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
+//            Groupname.setText("");
             Toast.makeText(grid_view_ex3_st_normal_selectWord.this, "กรุณาเลือก 5 คำ", Toast.LENGTH_SHORT).show();
         } else {
 

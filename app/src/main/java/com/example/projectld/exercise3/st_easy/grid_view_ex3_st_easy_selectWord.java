@@ -90,14 +90,13 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
         final SparseBooleanArray selectedRows = adapter.getSelectedIds();//Get the selected ids from adapter
 
         if(selectedRows.size() != 5 || selectedRows.size() > 5 ) {
-            Groupname.setHint("กรุณาเลือก 5 คำ");
-            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
-            Groupname.setText("");
+//            Groupname.setHint("กรุณาเลือก 5 คำ");
+//            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
+//            Groupname.setText("");
             Toast.makeText(grid_view_ex3_st_easy_selectWord.this, "กรุณาเลือก 5 คำ", Toast.LENGTH_SHORT).show();
         } else {
 
             dialog.show();
-
             close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -143,7 +142,8 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                     }
                 }
             }
-        });  }
+        });
+        }
     }
 
     public String CheckWordID(String word,ArrayList<word> word_id){ // หา word ว่าเท่ากับ wordid ที่เท่าไหร

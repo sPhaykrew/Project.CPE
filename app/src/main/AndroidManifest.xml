@@ -76,9 +76,9 @@
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise5" />
         <activity android:name=".exercise2.exercise2_game" />
         <activity android:name=".exercise2.exercise2_menu" />
-        <activity android:name=".exercise2.st_exercise2_menu" />
-        <activity android:name=".exercise2.gridview_ex2_select_char" />
-        <activity android:name=".exercise2.main_select_image" />
+        <activity android:name=".exercise2.st_ex2_adapter.st_ex2_menu" />
+        <activity android:name=".exercise2.st_ex2_adapter.gridview_ex2_select_char" />
+        <activity android:name=".exercise2.st_ex2_adapter.ex2_select_image" />
         <activity android:name=".exercise2.ex2_game_st" />
         <activity android:name=".My_Score.My_Score_main_2" />
         <activity android:name=".navigationDrawer.F_setting" />
@@ -94,6 +94,9 @@
         <activity android:name=".exercise3.st_easy.st_ex3_easy_update" />
         <activity android:name=".exercise3.st_nomal.st_ex3_normal_update" />
         <activity android:name=".exercise3.st_hard.st_ex3_hard_update" />
+        <activity android:name=".exercise2.st_ex2_adapter.st_ex2_inMenu" />
+        <activity android:name=".exercise2.st_ex2_adapter.st_ex2_selct_char_update" />
+        <activity android:name=".exercise2.st_ex2_adapter.st_ex2_select_image_update" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

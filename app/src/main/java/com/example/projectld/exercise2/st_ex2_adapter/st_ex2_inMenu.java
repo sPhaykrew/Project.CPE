@@ -1,12 +1,14 @@
-package com.example.projectld.exercise3.st_nomal;
+package com.example.projectld.exercise2.st_ex2_adapter;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,18 +20,17 @@ import com.example.projectld.exercise3.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class st_ex2_inMenu extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
     MyRecyclerViewAdapter adapter;
     Bundle group;
     String GroupName;
     Button delete,update;
-    DatabaseHelper databaseHelper;
 
     public static Activity close_activity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.st_ex3_inmenu);
 
@@ -40,7 +41,7 @@ public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecycle
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("รายการประโยค");
+        Title.setText("รายการคำศัพท์");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
@@ -54,10 +55,11 @@ public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecycle
         ArrayList<String> st = new ArrayList<>();
         group = getIntent().getExtras();
 
-        databaseHelper = new DatabaseHelper(this);
+        final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         // data to populate the RecyclerView with
         GroupName = String.valueOf(group.getString("Groupname")); //รับค่า GroupName มาจากหน้า Gridviewadpater
-        st = databaseHelper.group_st_normal(GroupName,"Setting_ex3_normal");
+        st = databaseHelper.ex2_char_inGroup(GroupName);
+
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvAnimals);
 
@@ -76,8 +78,8 @@ public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecycle
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), st_ex3_normal_update.class);
-                intent.putExtra("Groupname",GroupName);
+                Intent intent = new Intent(getApplicationContext(), st_ex2_selct_char_update.class);
+                intent.putExtra("Groupname", GroupName);
                 startActivity(intent);
             }
         });
@@ -85,18 +87,16 @@ public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecycle
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.delete_st("Setting_ex3_normal",GroupName);
+                databaseHelper.delete_st("Setting_ex2", GroupName);
 
-                st_ex3_normal_menu.close_activity.finish();
+                st_ex2_menu.close_activity.finish();
 
-                Intent intent = new Intent(getApplicationContext(),st_ex3_normal_menu.class);
+                Intent intent = new Intent(getApplicationContext(), st_ex2_menu.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
-    }
+        }
 
     @Override
     public void onItemClick(View view, int position) {

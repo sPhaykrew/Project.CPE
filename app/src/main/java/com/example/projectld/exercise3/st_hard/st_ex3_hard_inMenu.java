@@ -40,7 +40,7 @@ public class st_ex3_hard_inMenu extends AppCompatActivity implements MyRecyclerV
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("รายการคำศัพท์");
+        Title.setText("รายการประโยค");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
