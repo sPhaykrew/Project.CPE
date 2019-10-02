@@ -77,6 +77,47 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
         holder.checkBox2.setChecked(mSelectedItemsIds.get(position));
         holder.checkBox3.setChecked(mSelectedItemsIds.get(position));
 
+        holder.checkBox1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox1.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image1());
+                    currentItem.setCheck1(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck1(null);
+                }
+            }
+        });
+
+        holder.checkBox2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox2.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image2());
+                    currentItem.setCheck2(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck2(null);
+                }
+            }
+        });
+
+        holder.checkBox3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox3.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image3());
+                    currentItem.setCheck3(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck3(null);
+                }
+            }
+        });
 
         holder.mImageView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,24 +249,30 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                         @Override
                         public void onClick(View v) {
 
-                             if (Groupname.getText().toString().length() < 3){
+                            String Check_Group = databaseHelper.check_groupname_import(String.valueOf(Groupname.getText()),"Setting_ex2");
+
+                            if (Groupname.getText().toString().length() < 3){
                                 Toast.makeText(context, "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
                             } else if (Groupname.getText().toString().length() > 8){
                                 Toast.makeText(context, "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
                             } else {
-                                 for (int i=0;i<setChar.size();i++){
-                                     databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
-                                 }
-                                 dialog.dismiss();
+                                if (Check_Group == null) {
+                                    for (int i = 0; i < setChar.size(); i++) {
+                                        databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
+                                    }
+                                    dialog.dismiss();
 
-                                 gridview_ex2_select_char.close_activity.finish();
-                                 st_ex2_menu.close_activity.finish();
-                                 ex2_select_image.close_activity.finish();
-                                 Intent intent = new Intent(context,st_ex2_menu.class);
-                                 context.startActivity(intent);
+                                    gridview_ex2_select_char.close_activity.finish();
+                                    st_ex2_menu.close_activity.finish();
+                                    ex2_select_image.close_activity.finish();
+                                    Intent intent = new Intent(context, st_ex2_menu.class);
+                                    context.startActivity(intent);
 
-                                 Toast.makeText(context,"เพิ่มข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
-                             }
+                                    Toast.makeText(context, "เพิ่มข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context,"ชื่อแบบทดสอบซ่ำกัน กรุณาเปลี่ยนชื่อแบบทดสอบ",Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
                     });
                 } else {

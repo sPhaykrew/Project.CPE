@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.exercise3.GridListAdapter_selectWord;
 import com.example.projectld.R;
+import com.example.projectld.exercise3.st_easy.grid_view_ex3_st_easy_selectWord;
 import com.example.projectld.exercise3.word;
 
 import java.util.ArrayList;
@@ -122,24 +123,31 @@ public class grid_view_ex3_st_normal_selectWord extends AppCompatActivity {
                         }
 
                         if (Groupname.getText().toString().length() < 3){
-                            Groupname.setHint("ชื่อสั้นเกินไป");
-                            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
-                            Groupname.setText("");
-                            //Toast.makeText(grid_view_ex3_st_easy_selectWord.this, "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
+//                            Groupname.setHint("ชื่อสั้นเกินไป");
+//                            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
+//                            Groupname.setText("");
+                            Toast.makeText(grid_view_ex3_st_normal_selectWord.this, "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
                         } else if (Groupname.getText().toString().length() > 8){
-                            Groupname.setHint("ชื่อยาวเกินไป");
-                            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
-                            Groupname.setText("");
-                            //Toast.makeText(grid_view_ex3_st_easy_selectWord.this, "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
+//                            Groupname.setHint("ชื่อยาวเกินไป");
+//                            Groupname.setHintTextColor(Color.parseColor("#EF5350"));
+//                            Groupname.setText("");
+                            Toast.makeText(grid_view_ex3_st_normal_selectWord.this, "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
                         } else {
-                            for (String word : wordid_group){
-                                String sentence = CheckWordID(word,query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
-                                String GroupName =  String.valueOf(Groupname.getText()); //ตั้งชื่อให้กับ Group
-                                databaseHelper.insert_group(sentence,GroupName,"Setting_ex3_normal","sentenceID");
+                            String GroupName =  String.valueOf(Groupname.getText()); //ตั้งชื่อให้กับ Group
+                            String Check_Group = databaseHelper.check_groupname_import(GroupName,"Setting_ex3_normal");
+                            if(Check_Group == null) {
+                                for (String word : wordid_group) {
+                                    String sentence = CheckWordID(word, query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
+                                    databaseHelper.insert_group(sentence, GroupName, "Setting_ex3_normal", "sentenceID");
+                                }
+                                Toast.makeText(grid_view_ex3_st_normal_selectWord.this, "เพิ่มข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
+                                st_ex3_normal_menu.close_activity.finish();
+                                Intent intent = new Intent(grid_view_ex3_st_normal_selectWord.this, st_ex3_normal_menu.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(grid_view_ex3_st_normal_selectWord.this,"ชื่อแบบทดสอบซ่ำกัน กรุณาเปลี่ยนชื่อแบบทดสอบ",Toast.LENGTH_LONG).show();
                             }
-                            Intent intent = new Intent(grid_view_ex3_st_normal_selectWord.this,st_ex3_normal_menu.class);
-                            startActivity(intent);
-                            finish();
                         }
                     }
                 }

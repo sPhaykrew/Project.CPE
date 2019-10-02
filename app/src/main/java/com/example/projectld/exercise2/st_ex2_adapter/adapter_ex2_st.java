@@ -90,25 +90,60 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
                 currentItem.setCheck(currentItem.getCheck()+1);
                 String image = String.valueOf(currentItem.getName_image1());
                 currentItem.setCheck1(image);
-//                holder.checkBox1.setChecked(!holder.checkBox1.isChecked());
-//                holder.mImageView1.performClick();//สั้งให้ checkbox click
             } if (Check_Select.get(i).equals(currentItem.getName_image2())){
                 holder.checkBox2.setChecked(true);
                 currentItem.setCheck(currentItem.getCheck()+1);
                 String image = String.valueOf(currentItem.getName_image2());
                 currentItem.setCheck2(image);
-//                holder.checkBox2.setChecked(!holder.checkBox2.isChecked());
-//                holder.mImageView2.performClick();//สั้งให้ checkbox click
             } if (Check_Select.get(i).equals(currentItem.getName_image3())){
                 holder.checkBox3.setChecked(true);
                 currentItem.setCheck(currentItem.getCheck()+1);
                 String image = String.valueOf(currentItem.getName_image3());
                 currentItem.setCheck3(image);
-//                holder.checkBox3.setChecked(!holder.checkBox3.isChecked());
-//                holder.mImageView3.performClick();//สั้งให้ checkbox click
             }
         }
 
+        holder.checkBox1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox1.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image1());
+                    currentItem.setCheck1(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck1(null);
+                }
+            }
+        });
+
+        holder.checkBox2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox2.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image2());
+                    currentItem.setCheck2(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck2(null);
+                }
+            }
+        });
+
+        holder.checkBox3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox3.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image3());
+                    currentItem.setCheck3(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck3(null);
+                }
+            }
+        });
 
         holder.mImageView1.setOnClickListener(new View.OnClickListener() {
             @Override

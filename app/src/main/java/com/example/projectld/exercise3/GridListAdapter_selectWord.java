@@ -74,11 +74,11 @@ public class GridListAdapter_selectWord extends BaseAdapter {
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewHolder.checkBox.isChecked()){
-                    viewHolder.checkBox.setChecked(false);
-                } else {
+//                if (viewHolder.checkBox.isChecked()){
+//                    viewHolder.checkBox.setChecked(false);
+//                } else {
                     checkCheckBox(i, !mSelectedItemsIds.get(i));
-                }
+//                }
             }
         });
 
