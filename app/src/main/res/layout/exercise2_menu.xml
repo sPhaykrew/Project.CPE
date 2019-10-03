@@ -93,7 +93,7 @@
                 android:id="@+id/noEX"
                 android:textSize="16dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:visibility="visible">
             </TextView>
 

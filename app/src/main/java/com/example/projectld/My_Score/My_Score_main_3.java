@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.projectld.DatabaseHelper;
@@ -46,7 +48,7 @@ public class My_Score_main_3 extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("เแบบฝึกถามตอบ");
+        Title.setText("คะแนนของฉัน");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
@@ -76,6 +78,11 @@ public class My_Score_main_3 extends AppCompatActivity {
         RankRecyclerView.setAdapter(vertical_ranking_adapter);
         setData_Rank();
 
+        TextView textHide = findViewById(R.id.noEX);
+
+        if (verticalModels.size() != 0){
+            textHide.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void setData_Score(){
@@ -84,18 +91,21 @@ public class My_Score_main_3 extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         ArrayList Groupname = databaseHelper.SearchGroupName_easy(user.getString("UserID",null));
 
-        for (int i=0;i<Groupname.size();i++){
-            VerticalModel verticalModel = new VerticalModel();
-            verticalModel.setTitle(String.valueOf(Groupname.get(i)));
-            verticalModel.setAvgScore(String.valueOf(i));
+        if (Groupname != null) {
 
-            ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_easy
-                    (user.getString("UserID",null), String.valueOf(Groupname.get(i)));
+            for (int i = 0; i < Groupname.size(); i++) {
+                VerticalModel verticalModel = new VerticalModel();
+                verticalModel.setTitle(String.valueOf(Groupname.get(i)));
+                verticalModel.setAvgScore(String.valueOf(i));
 
-            verticalModel.setArrayList(horizontalModels);
-            verticalModels.add(verticalModel);
+                ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_easy
+                        (user.getString("UserID", null), String.valueOf(Groupname.get(i)));
+
+                verticalModel.setArrayList(horizontalModels);
+                verticalModels.add(verticalModel);
+            }
+            verticalRecyclerViewAdapter.notifyDataSetChanged();
         }
-        verticalRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void setData_Rank(){
@@ -104,14 +114,16 @@ public class My_Score_main_3 extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         ArrayList Groupname = databaseHelper.SearchGroupName_easy(user.getString("UserID",null));
 
-        for (int i=0;i<Groupname.size();i++){
-            Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
-            ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_easy(String.valueOf(Groupname.get(i)));
+        if (Groupname != null) {
 
-            verticalModel.setArrayList(horizontalModels);
-            vertical_ranking_models.add(verticalModel);
+            for (int i = 0; i < Groupname.size(); i++) {
+                Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
+                ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_easy(String.valueOf(Groupname.get(i)));
+
+                verticalModel.setArrayList(horizontalModels);
+                vertical_ranking_models.add(verticalModel);
+            }
+            vertical_ranking_adapter.notifyDataSetChanged();
         }
-        vertical_ranking_adapter.notifyDataSetChanged();
     }
-
 }

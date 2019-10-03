@@ -285,7 +285,7 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
 
                                 if (Check_Group == null) {
                                     for (int i=0;i<setChar.size();i++){
-                                        databaseHelper.delete_st("Setting_ex2",Old_Group);
+                                        databaseHelper.delete_st_ex2(Old_Group);
                                         databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
                                     }
                                     dialog.dismiss();

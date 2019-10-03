@@ -6,16 +6,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.exercise3.GridviewAdapter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class F_Sentence_data extends AppCompatActivity {
 
@@ -29,6 +33,21 @@ public class F_Sentence_data extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_sentence_data);
 
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("ข้อมูลประโยค");
+        Title.setTextSize(20);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
         gridView = findViewById(R.id.GridView_Sentence);

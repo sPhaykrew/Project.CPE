@@ -55,6 +55,12 @@ public class st_ex2_menu extends AppCompatActivity {
         GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_ex2",R.drawable.radius_button_color2);
         gridView.setAdapter(gridviewAdapter);
 
+        TextView textHide = findViewById(R.id.noEX);
+
+        if (Groupname.size() != 0){
+            textHide.setVisibility(View.INVISIBLE);
+        }
+
         FloatingActionButton Add = findViewById(R.id.Add);
         Add.setOnClickListener(new View.OnClickListener() {
             @Override

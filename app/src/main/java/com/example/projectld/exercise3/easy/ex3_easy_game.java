@@ -278,9 +278,6 @@ public class ex3_easy_game extends AppCompatActivity {
                     //view being dragged and dropped
                     TextView dropped = (TextView) view;
 
-                    Log.i("droptarget", String.valueOf(dropTarget.getTag()));
-                    Log.i("dropped", String.valueOf(dropped.getTag()));
-
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
@@ -289,21 +286,6 @@ public class ex3_easy_game extends AppCompatActivity {
                         view.setVisibility(View.INVISIBLE);
                         //update the text in the target view to reflect the data being dropped
                         dropTarget.setText(dropped.getText());
-
-                        //make it bold to highlight the fact that an item has been dropped
-                        //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);  //font style **
-
-                        //if an item has already been dropped here, there will be a tag
-//                        Object tag = dropTarget.getTag();
-                        //if there is already an item here, set it back visible in its original place
-
-//                        if(tag!=null)
-//                        {
-//                            //the tag is the view id already dropped here
-//                            int existingID = (Integer)tag;
-//                            //set the original view visible again
-//                            findViewById(existingID).setVisibility(View.VISIBLE);
-//                        }
 
                         //set the tag in the target view being dropped on - to the ID of the view being dropped
                         dropTarget.setTag(dropped.getId());
@@ -337,29 +319,6 @@ public class ex3_easy_game extends AppCompatActivity {
             }
             return true;
         }
-    }
-
-    public void reset(View view)
-    {
-//        option1.setVisibility(TextView.VISIBLE);
-//        option2.setVisibility(TextView.VISIBLE);
-//        option3.setVisibility(TextView.VISIBLE);
-//
-//        choice1.setText("A for ");
-//        choice2.setText("O for ");
-//        choice3.setText("B for ");
-//
-//        choice1.setTag(null);
-//        choice2.setTag(null);
-//        choice3.setTag(null);
-//
-//        choice1.setTypeface(Typeface.DEFAULT);
-//        choice2.setTypeface(Typeface.DEFAULT);
-//        choice3.setTypeface(Typeface.DEFAULT);
-//
-//        choice1.setOnDragListener(new ChoiceDragListener());
-//        choice2.setOnDragListener(new ChoiceDragListener());
-//        choice3.setOnDragListener(new ChoiceDragListener());
     }
 
     public ArrayList<String> random (ArrayList<String> result, int i){

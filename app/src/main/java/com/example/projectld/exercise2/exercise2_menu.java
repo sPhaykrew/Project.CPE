@@ -67,9 +67,9 @@ public class exercise2_menu extends AppCompatActivity {
 
         if (gridviewAdapter_admin.getCount() != 0){
             textHide.setVisibility(View.INVISIBLE);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,0,0,0);
-            textHide.setLayoutParams(params);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            params.setMargins(0,0,0,0);
+//            textHide.setLayoutParams(params);
         }
 
     }

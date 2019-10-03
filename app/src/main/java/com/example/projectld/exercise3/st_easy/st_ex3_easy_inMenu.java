@@ -85,7 +85,7 @@ public class st_ex3_easy_inMenu extends AppCompatActivity implements MyRecyclerV
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.delete_st("Setting_ex3_easy",GroupName);
+                databaseHelper.delete_st_ex3(GroupName);
 
                 st_ex3_easy_menu.close_activity.finish();
 

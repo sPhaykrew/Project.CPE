@@ -85,7 +85,7 @@ public class st_ex3_normal_inMenu extends AppCompatActivity implements MyRecycle
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.delete_st("Setting_ex3_normal",GroupName);
+                databaseHelper.delete_st_ex4(GroupName);
 
                 st_ex3_normal_menu.close_activity.finish();
 

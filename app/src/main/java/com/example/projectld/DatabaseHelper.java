@@ -958,11 +958,74 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return check_group;
     }
 
-    public void delete_st(String Table,String GroupName){
+    public void delete_st_ex2(String GroupName){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Table,"GroupName = '" + GroupName +"'",null);
+        ArrayList<String> delete_score = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select st_ex2_id from Setting_ex2 where GroupName = '"+GroupName+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            delete_score.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        for (int i=0;i<delete_score.size();i++){
+            db.delete("Score_ex2","st_ex2_id = "+delete_score.get(i),null);
+        }
+
+        db.delete("Setting_ex2","GroupName = '" + GroupName +"'",null);
         db.close();
     }
+
+    public void delete_st_ex3(String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> delete_score = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select st_ex3_easy_id from Setting_ex3_easy where GroupName = '"+GroupName+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            delete_score.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        for (int i=0;i<delete_score.size();i++){
+            db.delete("Score_ex3_easy","st_ex3_easy_id = "+delete_score.get(i),null);
+        }
+
+        db.delete("Setting_ex3_easy","GroupName = '" + GroupName +"'",null);
+        db.close();
+    }
+
+    public void delete_st_ex4(String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> delete_score = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select st_ex3_normal_id from Setting_ex3_normal where GroupName = '"+GroupName+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            delete_score.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        for (int i=0;i<delete_score.size();i++){
+            db.delete("Score_ex3_normal","st_ex3_normal_id = "+delete_score.get(i),null);
+        }
+
+        db.delete("Setting_ex3_normal","GroupName = '" + GroupName +"'",null);
+        db.close();
+    }
+
+    public void delete_st_ex5(String GroupName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> delete_score = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select st_ex3_hard_id from Setting_ex3_hard where GroupName = '"+GroupName+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            delete_score.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        for (int i=0;i<delete_score.size();i++){
+            db.delete("Score_ex3_hard","st_ex3_hard_id = "+delete_score.get(i),null);
+        }
+
+        db.delete("Setting_ex3_hard","GroupName = '" + GroupName +"'",null);
+        db.close();
+    }
+
 
     public void update_ex3_easy_st (String wordID,String newGroup,String oldGroup,String oldID){
         SQLiteDatabase db = this.getWritableDatabase();

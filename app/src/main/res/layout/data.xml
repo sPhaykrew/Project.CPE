@@ -19,7 +19,7 @@
             android:text="ดูข้อมูลคะแนน"
             android:textColor="#00BCD4"
             android:layout_marginTop="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:layout_marginStart="15dp"/>
 
         <Button
@@ -30,7 +30,7 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -42,7 +42,7 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -54,7 +54,7 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -66,7 +66,7 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -75,7 +75,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_height="1dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="#DBDBDB"/>
 
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="#00BCD4"
             android:text="ฐานข้อมูล"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"/>
 
@@ -96,7 +96,7 @@
             android:layout_marginTop="10dp"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 
@@ -108,7 +108,7 @@
             android:layout_marginTop="10dp"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:background="@android:color/white"
             android:gravity="left|center_vertical" />
 

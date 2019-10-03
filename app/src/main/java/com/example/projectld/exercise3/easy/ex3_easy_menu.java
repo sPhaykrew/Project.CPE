@@ -57,6 +57,10 @@ public class ex3_easy_menu extends AppCompatActivity {
         gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_easy_game_st",R.drawable.radius_button_color1);
         gridView_admin.setAdapter(gridviewAdapter_admin);
 
+        TextView textHide = findViewById(R.id.noEX);
 
+        if (st.size() != 0){
+            textHide.setVisibility(View.INVISIBLE);
+        }
     }
 }

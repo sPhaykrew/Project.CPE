@@ -87,7 +87,7 @@ public class st_ex2_inMenu extends AppCompatActivity implements MyRecyclerViewAd
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.delete_st("Setting_ex2", GroupName);
+                databaseHelper.delete_st_ex2(GroupName);
 
                 st_ex2_menu.close_activity.finish();
 
