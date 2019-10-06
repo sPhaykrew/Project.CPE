@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:layout_gravity="center"
     android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:id="@+id/this_back"
+        android:elevation="4dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_close_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,12 +33,15 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="พิมพ์เฉพาะตัวอักษรไทย"
         android:layout_marginTop="8dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:id="@+id/Add_Word"/>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
+        android:theme="@style/DefaultButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ตกลง"
@@ -32,6 +50,5 @@
         android:layout_marginBottom="8dp"
         android:id="@+id/CF"/>
 
-
-
-</android.support.v7.widget.LinearLayoutCompat>
+    </LinearLayout>
+</RelativeLayout>

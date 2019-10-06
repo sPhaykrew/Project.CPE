@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.projectld.Export_Import.Import_object;
@@ -281,8 +282,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
                 Val.put("Score", 0);
                 Val.put("UserID", UserID);
                 if(yes % 2 == 0) {
-                    //is Even
+                    Log.d("Even", String.valueOf(yes));
+                    Val.put("this_Score","no"); //odd
                 } else {
+                    Log.d("odd", String.valueOf(yes));
                     Val.put("this_Score","yes"); //odd
                 }
                 long rows = db.insert("Score_ex2", null, Val);
@@ -520,10 +523,41 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public void delete_word (String word,String table,String column){
+    public boolean delete_word (String word){
+        boolean delete;
         SQLiteDatabase db = this.getReadableDatabase();
-        db.delete(table,column + " = '" + word +"'",null);
+        Cursor cursor = db.rawQuery("select Setting_ex3_easy.wordID from Word INNER join Setting_ex3_easy \n" +
+                "on (Setting_ex3_easy.wordID = Word.wordID)\n" +
+                "where Word.word = '"+word+"'",null);
+        if (cursor.getCount() == 0 || cursor == null) {
+            db.delete("Word","word = '" + word +"'",null);
+            delete = true;
+        } else {
+            Toast.makeText(context,"พบคำศัพท์ในแบบทดสอบกรุณาลบแบบทดสอบก่อน",Toast.LENGTH_SHORT).show();
+            delete = false;
+        }
         db.close();
+        return delete;
+    }
+
+    public boolean delete_sentence (String sentence){
+        Boolean delete;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor normal = db.rawQuery("select Setting_ex3_normal.sentenceID from Sentence INNER join Setting_ex3_normal \n" +
+                "on (Setting_ex3_normal.sentenceID = Sentence.sentenceID)\n" +
+                "where Sentence.sentence = '"+sentence+"'",null);
+        Cursor hard = db.rawQuery("select Setting_ex3_hard.sentenceID from Sentence INNER join Setting_ex3_hard \n" +
+                "on (Setting_ex3_hard.sentenceID = Sentence.sentenceID)\n" +
+                "where Sentence.sentence = '"+sentence+"'",null);
+        if (normal.getCount() == 0 || normal == null || hard.getCount() == 0 || hard == null) {
+            db.delete("Sentence", "sentence = '" + sentence +"'",null);
+            delete = true;
+        } else {
+            Toast.makeText(context,"พบคำประโยคในแบบทดสอบกรุณาลบแบบทดสอบก่อน",Toast.LENGTH_SHORT).show();
+            delete = false;
+        }
+        db.close();
+        return delete;
     }
 
     public void update_word (String word,String mod,String table,String column){

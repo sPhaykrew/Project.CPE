@@ -2,6 +2,7 @@ package com.example.projectld.exercise2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -36,6 +37,9 @@ public class exercise2_game extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise2_game);
+
+        final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -109,6 +113,7 @@ public class exercise2_game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(0) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
@@ -123,6 +128,7 @@ public class exercise2_game extends AppCompatActivity {
                     }
 
                 } else {
+                    incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -132,6 +138,7 @@ public class exercise2_game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(1) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
@@ -146,6 +153,7 @@ public class exercise2_game extends AppCompatActivity {
                     }
 
                 } else {
+                    incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -155,6 +163,7 @@ public class exercise2_game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(2) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
@@ -169,6 +178,7 @@ public class exercise2_game extends AppCompatActivity {
                     }
 
                 } else {
+                    incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
             }

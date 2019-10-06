@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -46,7 +47,7 @@ public class ex2_game_st extends AppCompatActivity {
     ArrayList<String> Char_set = new ArrayList<>();
     DatabaseHelper databaseHelper;
 
-    Dialog dialog,dialog_rank; //popup score
+    Dialog dialog,dialog_rank,dialog_correct; //popup score
 
     private RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
@@ -54,10 +55,18 @@ public class ex2_game_st extends AppCompatActivity {
 
     private int Score = 100;
 
+    ArrayList<String> cerrent_Char = new ArrayList<>();
+    ArrayList<String> cerrent_Score = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise2_game);
+
+        final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+
+        Button set_Answer = findViewById(R.id.setAnswer);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -77,6 +86,7 @@ public class ex2_game_st extends AppCompatActivity {
 
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
+        dialog_correct = new Dialog(this);
 
         final TTS tts = new TTS(this);
         databaseHelper = new DatabaseHelper(this);
@@ -106,6 +116,7 @@ public class ex2_game_st extends AppCompatActivity {
             LoadArray();
             String[] playlists = ArraySet.split(",");
             Char_set.addAll(Arrays.asList(playlists));
+            Load_Array_Score();
         }
 
         imageView = findViewById(R.id.picture);
@@ -150,12 +161,17 @@ public class ex2_game_st extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(0) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+                    Popup_Correct();
+                    cerrent_Score.add(String.valueOf(Score));
+                    cerrent_Char.add(Char_set.get(count));
+                    SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try { //ถ้าไม่ทำ try catch ไว้ กดถูกไปเรื่อยๆหน้าสุดท้ายจะ error เนื่องจาก index ของ count
                         //update score
-                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("exception",e.toString());
@@ -173,12 +189,13 @@ public class ex2_game_st extends AppCompatActivity {
                         SaveArray(Sumwordset.toString());
 
                         SaveInt(count);
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+//                        Intent intent = getIntent();
+//                        finish();
+//                        startActivity(intent);
                     }
 
                 } else {
+                    incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -189,12 +206,17 @@ public class ex2_game_st extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(1) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+                    Popup_Correct();
+                    cerrent_Score.add(String.valueOf(Score));
+                    cerrent_Char.add(Char_set.get(count));
+                    SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
                         //update score
-                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("exception ",e.toString());
@@ -212,12 +234,13 @@ public class ex2_game_st extends AppCompatActivity {
                         SaveArray(Sumwordset.toString());
 
                         SaveInt(count);
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+//                        Intent intent = getIntent();
+//                        finish();
+//                        startActivity(intent);
                     }
 
                 } else {
+                    incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -228,12 +251,17 @@ public class ex2_game_st extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (random.get(2) == cha1){
+                    correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+                    Popup_Correct();
+                    cerrent_Score.add(String.valueOf(Score));
+                    cerrent_Char.add(Char_set.get(count));
+                    SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
                         //update score
-                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
+//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
+//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("Exception",e.toString());
@@ -251,12 +279,13 @@ public class ex2_game_st extends AppCompatActivity {
                         SaveArray(Sumwordset.toString());
 
                         SaveInt(count);
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+//                        Intent intent = getIntent();
+//                        finish();
+//                        startActivity(intent);
                     }
 
                 } else {
+                    incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -270,7 +299,7 @@ public class ex2_game_st extends AppCompatActivity {
                 if(count >= Char_set.size()){
                     Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
                     count--;
-                    Popup_score();
+//                    Popup_score();
                 } else {
 
                     StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
@@ -310,6 +339,20 @@ public class ex2_game_st extends AppCompatActivity {
             }
         });
 
+        set_Answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i=0;i<cerrent_Char.size();i++) {
+                    if (!cerrent_Char.get(i).equals("null")) {
+                        String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
+                        databaseHelper.update_score_ex2(user.getString("UserID", null),
+                                Integer.parseInt(cerrent_Score.get(i)), stID);
+                    }
+                }
+                Popup_score();
+            }
+        });
+
 
     }
 
@@ -344,8 +387,36 @@ public class ex2_game_st extends AppCompatActivity {
         ArraySet = sharedPreferences.getString("array", "Hello!");
     }
 
+    public void SaveArray_Score(ArrayList<String> Char,ArrayList<String> score){ //เก็บคะแนนไว้ในอาเรย์กับตัวอักษรของคะแนนนั้น แล้วส่ง update ทีเดียว
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        StringBuilder character = new StringBuilder(); // เซฟ arrray Char_set
+        for (int i = 0; i < Char.size(); i++) {
+            character.append(Char.get(i)).append(",");
+        }
+
+        StringBuilder Array_Score = new StringBuilder(); // เซฟ arrray ของคะแนนตัวอักษรปัจจุบัน
+        for (int i = 0; i < score.size(); i++) {
+            Array_Score.append(score.get(i)).append(",");
+        }
+
+        editor.putString("Charecter_Score", String.valueOf(character));
+        editor.putString("Score", String.valueOf(Array_Score));
+
+        editor.commit();
+    }
+
+    public void Load_Array_Score(){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String[] Char = sharedPreferences.getString("Charecter_Score","null").split(",");
+        String[] Score = sharedPreferences.getString("Score","null").split(",");
+        cerrent_Char.addAll(Arrays.asList(Char));
+        cerrent_Score.addAll(Arrays.asList(Score));
+    }
+
     public void Popup_score(){
-        TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
+        TextView Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
         Button goRank;
         ImageView goBack;
 
@@ -389,6 +460,7 @@ public class ex2_game_st extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 finish();
             }
         });
@@ -430,6 +502,7 @@ public class ex2_game_st extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog_rank.dismiss();
                 finish();
             }
         });
@@ -444,6 +517,47 @@ public class ex2_game_st extends AppCompatActivity {
 
         dialog_rank.setCanceledOnTouchOutside(false);
         dialog_rank.show();
+    }
+
+    public void Popup_Correct(){
+        dialog_correct.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+        dialog_correct.setContentView(R.layout.correct_popup);
+        Button button = dialog_correct.findViewById(R.id.go_next);
+        ImageView back = dialog_correct.findViewById(R.id.this_back);
+        TextView textView = dialog_correct.findViewById(R.id.score_correct);
+        textView.setText(String.valueOf(Score+" คะแนน"));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(count >= Char_set.size()){
+                    dialog_correct.dismiss();
+                    for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
+                        if (!cerrent_Char.get(i).equals("null")) {
+                            String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
+                            databaseHelper.update_score_ex2(user.getString("UserID", null),
+                                    Integer.parseInt(cerrent_Score.get(i)), stID);
+                        }
+                    }
+                    Popup_score();
+                } else {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                    dialog_correct.dismiss();
+                }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_correct.dismiss();
+                finish();
+            }
+        });
+
+        dialog_correct.setCanceledOnTouchOutside(false);
+        dialog_correct.show();
     }
 
     public int Average (ArrayList<Integer> number){

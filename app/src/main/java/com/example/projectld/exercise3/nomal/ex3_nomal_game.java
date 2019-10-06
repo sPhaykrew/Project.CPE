@@ -2,6 +2,7 @@ package com.example.projectld.exercise3.nomal;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -9,6 +10,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.projectld.R;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.segmentation;
 
 import java.util.ArrayList;
@@ -52,12 +55,21 @@ public class ex3_nomal_game extends AppCompatActivity {
 
     int first = 0;
 
+    String status = null; // เก็บคำจาก view ที่คลิ๊ก
+    int status_id;
+    LinearLayout answer;
+
+    MediaPlayer correct,incorrect;
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_nomal_game);
+
+        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -111,6 +123,7 @@ public class ex3_nomal_game extends AppCompatActivity {
             valueQT.setText("__");
             valueQT.setId(i);
             valueQT.setTextSize(30);
+            valueQT.setOnClickListener(setAnswer(valueQT));
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -128,7 +141,7 @@ public class ex3_nomal_game extends AppCompatActivity {
         /**
          * answer views to ex3_easy_game
          */
-        LinearLayout answer = (LinearLayout) findViewById(R.id.answer);
+        answer = (LinearLayout) findViewById(R.id.answer);
         int loop = sentence.size();
         ArrayList<String> sentenceRD = random(sentence,loop);
 
@@ -142,7 +155,8 @@ public class ex3_nomal_game extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params.setMarginStart(20);
+            //params.setMarginStart(20);
+            params.setMargins(60,0,0,0);
             answerCH.setLayoutParams(params);
             answerCH.setOnTouchListener(new ChoiceTouchListener());
             answer.addView(answerCH);
@@ -198,21 +212,43 @@ public class ex3_nomal_game extends AppCompatActivity {
     private final class ChoiceTouchListener implements OnTouchListener {
         @SuppressLint("NewApi")
         @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                /*
-                 * Drag details: we only need default behavior
-                 * - clip data could be set to pass data as part of ex3_easy_game
-                 * - shadow can be tailored
-                 */
-                ClipData data = ClipData.newPlainText("", "");
-                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                //start dragging the item touched
-                view.startDrag(data, shadowBuilder, view, 0);
+        public boolean onTouch(final View view, MotionEvent motionEvent) {
+            Runnable rannable = new Runnable() { // include touch and click *ถ้าไม่มีจะทำงานร่วมกันไม่ได้
+                @Override
+                public void run() {
+                    /*
+                     * Drag details: we only need default behavior
+                     * - clip data could be set to pass data as part of ex3_easy_game
+                     * - shadow can be tailored
+                     */
+                    ClipData data = ClipData.newPlainText("", "");
+                    DragShadowBuilder shadowBuilder = new DragShadowBuilder(view);
+                    //start dragging the item touched
+                    view.startDrag(data, shadowBuilder, view, 0);
+                }
+            };
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) { //onClick
+
+                for (int i=0;i<answer.getChildCount();i++){ //setText size all view
+                    TextView textView = (TextView) answer.getChildAt(i);
+                    textView.setTextSize(30);
+                }
+                status = String.valueOf(((TextView) view).getTag());
+                status_id = ((TextView) view).getId();
+                ((TextView) view).setTextSize(60);
                 return true;
-            } else {
-                return false;
             }
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) { //onTouch
+                Handler handler = new Handler();
+                handler.postDelayed(rannable,100);
+                return true;
+            }
+
+            //else {
+            return false;
+            //}
         }
     }
 
@@ -252,27 +288,17 @@ public class ex3_nomal_game extends AppCompatActivity {
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
                         //update the text in the target view to reflect the data being dropped
                         dropTarget.setText(dropped.getText().toString());
                         //make it bold to highlight the fact that an item has been dropped
-                        dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
-                        //if an item has already been dropped here, there will be a tag
-//                        Object tag = dropTarget.getTag();
-                        //if there is already an item here, set it back visible in its original place
-
-//                        if(tag!=null)
-//                        {
-//                            //the tag is the view id already dropped here
-//                            int existingID = (Integer)tag;
-//                            //set the original view visible again
-//                            findViewById(existingID).setVisibility(View.VISIBLE);
-//                        }
-
+                        //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
                         //set the tag in the target view being dropped on - to the ID of the view being dropped
-                        dropTarget.setTag(dropped.getId());
+                        //dropTarget.setTag(dropped.getId());
+                        dropTarget.setTag("done");
                         //remove setOnDragListener by setting OnDragListener to null, so that no further ex3_easy_game & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
 
@@ -291,9 +317,11 @@ public class ex3_nomal_game extends AppCompatActivity {
                             }
                         }
                     }
-                    else
+                    else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
-                        Toast.makeText(ex3_nomal_game.this,"ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        incorrect.start();
+                        Toast.makeText(ex3_nomal_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
@@ -303,29 +331,6 @@ public class ex3_nomal_game extends AppCompatActivity {
             }
             return true;
         }
-    }
-
-    public void reset(View view)
-    {
-//        option1.setVisibility(TextView.VISIBLE);
-//        option2.setVisibility(TextView.VISIBLE);
-//        option3.setVisibility(TextView.VISIBLE);
-//
-//        choice1.setText("A for ");
-//        choice2.setText("O for ");
-//        choice3.setText("B for ");
-//
-//        choice1.setTag(null);
-//        choice2.setTag(null);
-//        choice3.setTag(null);
-//
-//        choice1.setTypeface(Typeface.DEFAULT);
-//        choice2.setTypeface(Typeface.DEFAULT);
-//        choice3.setTypeface(Typeface.DEFAULT);
-//
-//        choice1.setOnDragListener(new ChoiceDragListener());
-//        choice2.setOnDragListener(new ChoiceDragListener());
-//        choice3.setOnDragListener(new ChoiceDragListener());
     }
 
     public ArrayList<String> random (ArrayList<String> result, int i){
@@ -356,6 +361,47 @@ public class ex3_nomal_game extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("first",first);
         editor.commit();
+    }
+
+    View.OnClickListener setAnswer(final TextView textView)  {
+        return new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if (!textView.getTag().equals("done")){
+                    if (textView.getTag().equals(status)){
+                        correct.start();
+                        finish++; //เช็คว่าตอบคำถามครบหรือยัง
+                        textView.setText(status);
+                        textView.setOnDragListener(null);
+                        textView.setTag("done");
+                        TextView get_status = (TextView) answer.getChildAt(status_id);
+                        get_status.setVisibility(View.INVISIBLE);
+                        status = null;
+
+                        if (finish == start){
+                            Toast.makeText(ex3_nomal_game.this,"เสร็จสิ้น",Toast.LENGTH_SHORT).show();
+
+                            count++;
+                            if(count >= wordset.size()){
+                                Toast.makeText(ex3_nomal_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                                count--;
+                            } else {
+                                SaveInt(count);
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        }
+
+                    } else {
+                        if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            incorrect.start();
+                            Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        };
     }
 
 }

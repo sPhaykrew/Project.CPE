@@ -12,7 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.projectld.Add_Sentence;
+import com.example.projectld.Add_Word;
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Meaning;
 import com.example.projectld.R;
@@ -91,6 +95,8 @@ public class GridviewAdapter extends BaseAdapter {
                 editor.remove("key").apply();
                 editor.remove("first").apply();
                 editor.remove("array").apply();
+                editor.remove("Charecter_Score").apply();
+                editor.remove("Score").apply();
 
                 int count = (int) finalButton.getTag(); // count array wordset for next and back
                 wordset = (ArrayList<String>) lstSource;
@@ -169,35 +175,67 @@ public class GridviewAdapter extends BaseAdapter {
                         break;
 
                     case "Delete_Mod_Word" :
-                        Dialog dialog = new Dialog(context);
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
                         dialog.setContentView(R.layout.modify_delete_word_popup);
                         final DatabaseHelper databaseHelper = new DatabaseHelper(context);
 
                         final EditText editText = dialog.findViewById(R.id.Edit_Word);
                         Button delete = dialog.findViewById(R.id.Delete);
                         Button modify = dialog.findViewById(R.id.modify);
-
                         editText.setText(String.valueOf(finalButton.getText()));
+                        dialog.show();
 
                         modify.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String Word_Mod = String.valueOf(editText.getText());
-                                databaseHelper.update_word(String.valueOf(finalButton.getText()),Word_Mod,"Word","word");
+
+                                if (editText.getText().length() == 0) {
+                                    Toast.makeText(context,"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
+                                } else if (editText.getText().length() <= 2){
+                                    Toast.makeText(context,"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
+                                } else if (editText.getText().length() > 13){
+                                    Toast.makeText(context,"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String Word_Mod = String.valueOf(editText.getText());
+                                    databaseHelper.update_word(String.valueOf(finalButton.getText()), Word_Mod, "Word", "word");
+
+                                    Add_Word.close_activity.finish();
+                                    intent = new Intent(context, Add_Word.class);
+                                    context.startActivity(intent);
+                                    dialog.dismiss();
+                                }
                             }
                         });
 
                         delete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                databaseHelper.delete_word(String.valueOf(finalButton.getText()),"Word","word");
+                                Boolean delete = databaseHelper.delete_word(String.valueOf(finalButton.getText()));
+                                if (delete) {
+                                    Add_Word.close_activity.finish();
+                                    intent = new Intent(context,Add_Word.class);
+                                    context.startActivity(intent);
+                                    dialog.dismiss();
+                                }
                             }
                         });
-                        dialog.show();
+
+                        ImageView goBack = dialog.findViewById(R.id.this_back);
+                        goBack.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
                         break;
 
                     case "Delete_Mod_Sentence" :
-                        Dialog dialog_sentence = new Dialog(context);
+                        final Dialog dialog_sentence = new Dialog(context);
+                        dialog_sentence.setCanceledOnTouchOutside(false);
+                        dialog_sentence.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
                         dialog_sentence.setContentView(R.layout.modify_delete_word_popup);
                         final DatabaseHelper databaseHelper_sentence = new DatabaseHelper(context);
 
@@ -206,22 +244,51 @@ public class GridviewAdapter extends BaseAdapter {
                         Button modify_sentence = dialog_sentence.findViewById(R.id.modify);
 
                         editText_sentence.setText(String.valueOf(finalButton.getText()));
+                        dialog_sentence.show();
 
                         modify_sentence.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String Word_Mod = String.valueOf(editText_sentence.getText());
-                                databaseHelper_sentence.update_word(String.valueOf(finalButton.getText()),Word_Mod,"Sentence","sentence");
+
+                                if (editText_sentence.getText().length() == 0) {
+                                    Toast.makeText(context,"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
+                                } else if (editText_sentence.getText().length() <= 5){
+                                    Toast.makeText(context,"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
+                                } else if (editText_sentence.getText().length() > 30){
+                                    Toast.makeText(context,"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String Word_Mod = String.valueOf(editText_sentence.getText());
+                                    databaseHelper_sentence.update_word(String.valueOf(finalButton.getText()), Word_Mod, "Sentence", "sentence");
+
+                                    Add_Sentence.close_activity.finish();
+                                    intent = new Intent(context, Add_Sentence.class);
+                                    context.startActivity(intent);
+                                    dialog_sentence.dismiss();
+                                }
                             }
                         });
 
                         delete_sentence.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                databaseHelper_sentence.delete_word(String.valueOf(finalButton.getText()),"Sentence","sentence");
+                                Boolean delete = databaseHelper_sentence.delete_sentence(String.valueOf(finalButton.getText()));
+                                if (delete) {
+                                    Add_Sentence.close_activity.finish();
+                                    intent = new Intent(context, Add_Sentence.class);
+                                    context.startActivity(intent);
+                                    dialog_sentence.dismiss();
+                                }
                             }
                         });
-                        dialog_sentence.show();
+
+                        ImageView goBack_sentence = dialog_sentence.findViewById(R.id.this_back);
+                        goBack_sentence.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog_sentence.dismiss();
+                            }
+                        });
+
                         break;
 
                     case "exercise2_game" :

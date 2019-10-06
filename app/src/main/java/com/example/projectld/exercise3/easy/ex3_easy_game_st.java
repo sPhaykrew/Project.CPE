@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,12 +78,17 @@ public class ex3_easy_game_st extends AppCompatActivity {
     int status_id;
     LinearLayout answer;
 
+    MediaPlayer correct,incorrect;
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_easy_game);
+
+        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -314,15 +320,17 @@ public class ex3_easy_game_st extends AppCompatActivity {
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
                         //update the text in the target view to reflect the data being dropped
                         dropTarget.setText(dropped.getText().toString());
                         //make it bold to highlight the fact that an item has been dropped
-                        dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
+                        //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
                         //set the tag in the target view being dropped on - to the ID of the view being dropped
-                        dropTarget.setTag(dropped.getId());
+                        //dropTarget.setTag(dropped.getId());
+                        dropTarget.setTag("done");
                         //remove setOnDragListener by setting OnDragListener to null, so that no further ex3_easy_game & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
 
@@ -357,7 +365,8 @@ public class ex3_easy_game_st extends AppCompatActivity {
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
                         Score = Score - 5;
-                        Toast.makeText(ex3_easy_game_st.this, dropped.getText().toString() + " ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        incorrect.start();
+                        Toast.makeText(ex3_easy_game_st.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -369,7 +378,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
             return true;
         }
     }
-    
+
     public ArrayList<String> random (ArrayList<String> result, int i){
         Random rd = new Random();
         ArrayList<String> list = new ArrayList<>();
@@ -416,17 +425,50 @@ public class ex3_easy_game_st extends AppCompatActivity {
     View.OnClickListener setAnswer(final TextView textView)  {
         return new View.OnClickListener() {
             public void onClick(View v) {
-
                 if (!textView.getTag().equals("done")){
                     if (textView.getTag().equals(status)){
+                        correct.start();
+                        finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         textView.setText(status);
                         textView.setOnDragListener(null);
                         textView.setTag("done");
                         TextView get_status = (TextView) answer.getChildAt(status_id);
                         get_status.setVisibility(View.INVISIBLE);
+                        status = null;
+
+                        if (finish == start){
+                            Toast.makeText(ex3_easy_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+
+                            String stID = databaseHelper.Find_stID_word(wordset.get(count),Groupname);
+                            databaseHelper.update_score_ex3_easy(user.getString("UserID",null),Score,stID); //update score
+
+                            wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
+                            //count++;
+                            SaveInt(count);
+
+                            StringBuilder Sumwordset = new StringBuilder();
+                            for (int i = 0; i < wordset.size(); i++) {
+                                Sumwordset.append(wordset.get(i)).append(",");
+                            }
+                            SaveArray(Sumwordset.toString());
+
+                            if (wordset.size() != 0) {
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            } else {
+                                Popup_score();
+                            }
+
+                            //Toast.makeText(ex3_easy_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
+
+                        }
 
                     } else {
-                        Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                        if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            incorrect.start();
+                            Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

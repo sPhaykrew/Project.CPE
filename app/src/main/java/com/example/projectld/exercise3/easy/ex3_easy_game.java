@@ -2,6 +2,7 @@ package com.example.projectld.exercise3.easy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -58,12 +59,17 @@ public class ex3_easy_game extends AppCompatActivity {
     String status = null; // เก็บคำจาก view ที่คลิ๊ก
     int status_id;
 
+    MediaPlayer correct,incorrect;
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_easy_game);
+
+        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -278,9 +284,13 @@ public class ex3_easy_game extends AppCompatActivity {
                     //view being dragged and dropped
                     TextView dropped = (TextView) view;
 
+                    Log.i("droptarget", String.valueOf(dropTarget.getTag()));
+                    Log.i("dropped", String.valueOf(dropped.getTag()));
+
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
@@ -288,7 +298,8 @@ public class ex3_easy_game extends AppCompatActivity {
                         dropTarget.setText(dropped.getText());
 
                         //set the tag in the target view being dropped on - to the ID of the view being dropped
-                        dropTarget.setTag(dropped.getId());
+                        //dropTarget.setTag(dropped.getId());
+                        dropTarget.setTag("done");
                         //remove setOnDragListener by setting OnDragListener to null, so that no further ex3_easy_game & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
 
@@ -307,9 +318,11 @@ public class ex3_easy_game extends AppCompatActivity {
                             }
                         }
                     }
-                    else
+                    else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
                         Toast.makeText(ex3_easy_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        incorrect.start();
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     //no action necessary
@@ -357,14 +370,35 @@ public class ex3_easy_game extends AppCompatActivity {
 
                 if (!textView.getTag().equals("done")){
                     if (textView.getTag().equals(status)){
+                        correct.start();
+                        finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         textView.setText(status);
                         textView.setOnDragListener(null);
                         textView.setTag("done");
                         TextView get_status = (TextView) answer.getChildAt(status_id);
                         get_status.setVisibility(View.INVISIBLE);
+                        status = null;
+
+                        if (finish == start){
+                            Toast.makeText(ex3_easy_game.this,"เสร็จสิ้น",Toast.LENGTH_SHORT).show();
+
+                            count++;
+                            if(count >= wordset.size()){
+                                Toast.makeText(ex3_easy_game.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                                count--;
+                            } else {
+                                SaveInt(count);
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        }
 
                     } else {
-                        Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                        if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            incorrect.start();
+                            Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
