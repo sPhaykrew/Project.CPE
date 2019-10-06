@@ -169,29 +169,9 @@ public class ex2_game_st extends AppCompatActivity {
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try { //ถ้าไม่ทำ try catch ไว้ กดถูกไปเรื่อยๆหน้าสุดท้ายจะ error เนื่องจาก index ของ count
-                        //update score
-//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("exception",e.toString());
-                    }
-
-                    if(count >= Char_set.size()){
-                        Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        //count--;
-                    } else {
-
-                        StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
-                        for (int i = 0; i < Char_set.size(); i++) {
-                            Sumwordset.append(Char_set.get(i)).append(",");
-                        }
-                        SaveArray(Sumwordset.toString());
-
-                        SaveInt(count);
-//                        Intent intent = getIntent();
-//                        finish();
-//                        startActivity(intent);
                     }
 
                 } else {
@@ -214,29 +194,9 @@ public class ex2_game_st extends AppCompatActivity {
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
-                        //update score
-//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("exception ",e.toString());
-                    }
-
-                    if(count >= Char_set.size()){
-                        Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        //count--;
-                    } else {
-
-                        StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
-                        for (int i = 0; i < Char_set.size(); i++) {
-                            Sumwordset.append(Char_set.get(i)).append(",");
-                        }
-                        SaveArray(Sumwordset.toString());
-
-                        SaveInt(count);
-//                        Intent intent = getIntent();
-//                        finish();
-//                        startActivity(intent);
                     }
 
                 } else {
@@ -259,29 +219,9 @@ public class ex2_game_st extends AppCompatActivity {
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
-                        //update score
-//                        String stID = databaseHelper.Find_stID_Char(Char_set.get(count),Groupname);
-//                        databaseHelper.update_score_ex2(user.getString("UserID",null),Score,stID);
                         Char_set.remove(count);
                     } catch (Exception e) {
                         Log.d("Exception",e.toString());
-                    }
-
-                    if(count >= Char_set.size()){
-                        Toast.makeText(ex2_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
-                        //count--;
-                    } else {
-
-                        StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
-                        for (int i = 0; i < Char_set.size(); i++) {
-                            Sumwordset.append(Char_set.get(i)).append(",");
-                        }
-                        SaveArray(Sumwordset.toString());
-
-                        SaveInt(count);
-//                        Intent intent = getIntent();
-//                        finish();
-//                        startActivity(intent);
                     }
 
                 } else {
@@ -307,7 +247,6 @@ public class ex2_game_st extends AppCompatActivity {
                         Sumwordset.append(Char_set.get(i)).append(",");
                     }
                     SaveArray(Sumwordset.toString());
-
                     SaveInt(count);
                     Intent intent = getIntent();
                     finish();
@@ -530,7 +469,6 @@ public class ex2_game_st extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(count >= Char_set.size()){
-                    dialog_correct.dismiss();
                     for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
                         if (!cerrent_Char.get(i).equals("null")) {
                             String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
@@ -538,8 +476,16 @@ public class ex2_game_st extends AppCompatActivity {
                                     Integer.parseInt(cerrent_Score.get(i)), stID);
                         }
                     }
+                    dialog_correct.dismiss();
                     Popup_score();
                 } else {
+                    StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
+                    for (int i = 0; i < Char_set.size(); i++) {
+                        Sumwordset.append(Char_set.get(i)).append(",");
+                    }
+                    SaveArray(Sumwordset.toString());
+                    SaveInt(count);
+
                     Intent intent = getIntent();
                     finish();
                     startActivity(intent);

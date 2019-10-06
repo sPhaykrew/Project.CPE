@@ -66,7 +66,7 @@ public class ex3_hard_game_st extends AppCompatActivity {
 
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
 
-    Dialog dialog,dialog_rank; //popup score
+    Dialog dialog,dialog_rank,dialog_correct; //popup score
     DatabaseHelper databaseHelper;
     SharedPreferences user;
 
@@ -82,12 +82,17 @@ public class ex3_hard_game_st extends AppCompatActivity {
 
     MediaPlayer correct,incorrect;
 
+    ArrayList<String> cerrent_Char = new ArrayList<>();
+    ArrayList<String> cerrent_Score = new ArrayList<>();
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ex3_easy_game);
+        setContentView(R.layout.ex3_hard_game);
+
+        ImageView set_Answer = findViewById(R.id.setAnswer);
 
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
@@ -111,6 +116,7 @@ public class ex3_hard_game_st extends AppCompatActivity {
         user = getSharedPreferences("User", Context.MODE_PRIVATE);
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
+        dialog_correct = new Dialog(this);
 
         voice = findViewById(R.id.voice_tts);
         next = findViewById(R.id.next);
@@ -131,6 +137,7 @@ public class ex3_hard_game_st extends AppCompatActivity {
             LoadArray();
             String[] playlists = ArraySet.split(",");
             wordset.addAll(Arrays.asList(playlists));
+            Load_Array_Score();
         }
 
         /**
@@ -203,9 +210,8 @@ public class ex3_hard_game_st extends AppCompatActivity {
             public void onClick(View v) {
                 count++;
                 if(count >= wordset.size()){
-                    //Toast.makeText(ex3_easy_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ex3_hard_game_st.this,"ไม่พบคำถัดไป",Toast.LENGTH_SHORT).show();
                     count--;
-                    Popup_score();
                 } else {
 
                     StringBuilder Sumwordset = new StringBuilder();
@@ -213,7 +219,6 @@ public class ex3_hard_game_st extends AppCompatActivity {
                         Sumwordset.append(wordset.get(i)).append(",");
                     }
                     SaveArray(Sumwordset.toString());
-
                     SaveInt(count);
                     Intent intent = getIntent();
                     finish();
@@ -235,6 +240,20 @@ public class ex3_hard_game_st extends AppCompatActivity {
                     finish();
                     startActivity(intent);
                 }
+            }
+        });
+
+        set_Answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i=0;i<cerrent_Char.size();i++) {
+                    if (!cerrent_Char.get(i).equals("null")) {
+                        String stID = databaseHelper.Find_stID_sentence(cerrent_Char.get(i),Groupname,"Setting_ex3_hard","st_ex3_hard_id");
+                        databaseHelper.update_score_ex3_hard(user.getString("UserID", null),
+                                Integer.parseInt(cerrent_Score.get(i)), stID);
+                    }
+                }
+                Popup_score();
             }
         });
     }
@@ -324,45 +343,17 @@ public class ex3_hard_game_st extends AppCompatActivity {
                     {
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
-                        //stop displaying the view where it was before it was dragged
                         view.setVisibility(View.INVISIBLE);
-                        //update the text in the target view to reflect the data being dropped
                         dropTarget.setText(dropped.getText().toString());
-                        //make it bold to highlight the fact that an item has been dropped
-                        //dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
-                        //set the tag in the target view being dropped on - to the ID of the view being dropped
-                        //dropTarget.setTag(dropped.getId());
                         dropTarget.setTag("done");
-                        //remove setOnDragListener by setting OnDragListener to null, so that no further ex3_easy_game & dropping on this TextView can be done
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-
-                            Toast.makeText(ex3_hard_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
-
-                            String stID = databaseHelper.Find_stID_sentence(wordset.get(count),Groupname,"Setting_ex3_hard","st_ex3_hard_id");
-                            databaseHelper.update_score_ex3_hard(user.getString("UserID",null),Score,stID); //update score
-
-                            wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
-                            //count++;
-                            SaveInt(count);
-
-                            StringBuilder Sumwordset = new StringBuilder();
-                            for (int i = 0; i < wordset.size(); i++) {
-                                Sumwordset.append(wordset.get(i)).append(",");
-                            }
-                            SaveArray(Sumwordset.toString());
-
-                            if (wordset.size() != 0) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            } else {
-                                Popup_score();
-                            }
-
-                            //Toast.makeText(ex3_easy_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
-
+                            //Toast.makeText(ex3_hard_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+                            cerrent_Char.add(wordset.get(count));
+                            cerrent_Score.add(String.valueOf(Score));
+                            SaveArray_Score(cerrent_Char,cerrent_Score);
+                            Popup_Correct();
                         }
                     }
                     else {
@@ -551,31 +542,11 @@ public class ex3_hard_game_st extends AppCompatActivity {
                         status = null;
 
                         if (finish == start){
-                            Toast.makeText(ex3_hard_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
-
-                            String stID = databaseHelper.Find_stID_sentence(wordset.get(count),Groupname,"Setting_ex3_hard","st_ex3_hard_id");
-                            databaseHelper.update_score_ex3_normal(user.getString("UserID",null),Score,stID); //update score
-
-                            wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
-                            //count++;
-                            SaveInt(count);
-
-                            StringBuilder Sumwordset = new StringBuilder();
-                            for (int i = 0; i < wordset.size(); i++) {
-                                Sumwordset.append(wordset.get(i)).append(",");
-                            }
-                            SaveArray(Sumwordset.toString());
-
-                            if (wordset.size() != 0) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            } else {
-                                Popup_score();
-                            }
-
-                            //Toast.makeText(ex3_easy_game_st.this,"Finish",Toast.LENGTH_SHORT).show();
-
+                            //Toast.makeText(ex3_hard_game_st.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+                            cerrent_Char.add(wordset.get(count));
+                            cerrent_Score.add(String.valueOf(Score));
+                            SaveArray_Score(cerrent_Char,cerrent_Score);
+                            Popup_Correct();
                         }
 
                     } else {
@@ -587,5 +558,83 @@ public class ex3_hard_game_st extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    public void SaveArray_Score(ArrayList<String> Char,ArrayList<String> score){ //เก็บคะแนนไว้ในอาเรย์กับตัวอักษรของคะแนนนั้น แล้วส่ง update ทีเดียว
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        StringBuilder character = new StringBuilder(); // เซฟ arrray Char_set
+        for (int i = 0; i < Char.size(); i++) {
+            character.append(Char.get(i)).append(",");
+        }
+
+        StringBuilder Array_Score = new StringBuilder(); // เซฟ arrray ของคะแนนตัวอักษรปัจจุบัน
+        for (int i = 0; i < score.size(); i++) {
+            Array_Score.append(score.get(i)).append(",");
+        }
+
+        editor.putString("Charecter_Score", String.valueOf(character));
+        editor.putString("Score", String.valueOf(Array_Score));
+
+        editor.commit();
+    }
+
+    public void Load_Array_Score(){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String[] Char = sharedPreferences.getString("Charecter_Score","null").split(",");
+        String[] Score = sharedPreferences.getString("Score","null").split(",");
+        cerrent_Char.addAll(Arrays.asList(Char));
+        cerrent_Score.addAll(Arrays.asList(Score));
+    }
+
+    public void Popup_Correct(){
+        dialog_correct.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+        dialog_correct.setContentView(R.layout.correct_popup);
+        Button button = dialog_correct.findViewById(R.id.go_next);
+        ImageView back = dialog_correct.findViewById(R.id.this_back);
+        TextView textView = dialog_correct.findViewById(R.id.score_correct);
+        textView.setText(String.valueOf(Score+" คะแนน"));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                if(count >= wordset.size()){
+                    for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
+                        if (!cerrent_Char.get(i).equals("null")) {
+                            String stID = databaseHelper.Find_stID_sentence(cerrent_Char.get(i),Groupname,"Setting_ex3_hard","st_ex3_hard_id");
+                            databaseHelper.update_score_ex3_hard(user.getString("UserID", null),
+                                    Integer.parseInt(cerrent_Score.get(i)), stID);
+                        }
+                    }
+                    dialog_correct.dismiss();
+                    Popup_score();
+                } else {
+                    count--;
+                    wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
+                    StringBuilder Sumwordset = new StringBuilder(); //เก็บคำศัพท์ปัจจุบันที่ลบคำไปแล้ว
+                    for (int i = 0; i < wordset.size(); i++) {
+                        Sumwordset.append(wordset.get(i)).append(",");
+                    }
+                    SaveInt(count);
+                    SaveArray(Sumwordset.toString());
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                    dialog_correct.dismiss();
+                }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_correct.dismiss();
+                finish();
+            }
+        });
+
+        dialog_correct.setCanceledOnTouchOutside(false);
+        dialog_correct.show();
     }
 }

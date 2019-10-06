@@ -71,6 +71,9 @@ public class ex3_easy_game extends AppCompatActivity {
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
+        ImageView set_Answer = findViewById(R.id.setAnswer);
+        set_Answer.setVisibility(View.GONE);
+
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

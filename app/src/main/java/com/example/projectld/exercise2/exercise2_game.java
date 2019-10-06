@@ -41,6 +41,9 @@ public class exercise2_game extends AppCompatActivity {
         final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
+        ImageView set_Answer = findViewById(R.id.setAnswer);
+        set_Answer.setVisibility(View.GONE);
+
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
