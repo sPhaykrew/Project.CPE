@@ -66,7 +66,7 @@ public class ex2_game_st extends AppCompatActivity {
         final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
-        Button set_Answer = findViewById(R.id.setAnswer);
+        ImageView set_Answer = findViewById(R.id.setAnswer);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
