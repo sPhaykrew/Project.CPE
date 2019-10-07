@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,12 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.Add_Sentence;
 import com.example.projectld.Add_Word;
 import com.example.projectld.DatabaseHelper;
-import com.example.projectld.Meaning;
+import com.example.projectld.Database_Meaning;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise2.ex2_game_st;
@@ -98,7 +98,7 @@ public class GridviewAdapter extends BaseAdapter {
                 editor.remove("Charecter_Score").apply();
                 editor.remove("Score").apply();
 
-                int count = (int) finalButton.getTag(); // count array wordset for next and back
+                final int count = (int) finalButton.getTag(); // count array wordset for next and back
                 wordset = (ArrayList<String>) lstSource;
 
                 switch (mode){
@@ -169,9 +169,55 @@ public class GridviewAdapter extends BaseAdapter {
                         tts.speak(String.valueOf(finalButton.getText()));
                         break;
                     case "Word_data" :
-                        intent = new Intent(context, Meaning.class);
-                        intent.putExtra("Word_data",String.valueOf(finalButton.getText()));
-                        context.startActivity(intent);
+                        final Dialog meaning = new Dialog(context);
+                        meaning.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                        meaning.setContentView(R.layout.meaning_popup);
+                        ImageView close = meaning.findViewById(R.id.this_back);
+                        ImageView word_Image = meaning.findViewById(R.id.word_Image);
+                        ImageView voice_word = meaning.findViewById(R.id.voice_word);
+                        ImageView voice_mean = meaning.findViewById(R.id.voice_mean);
+                        TextView word = meaning.findViewById(R.id.word);
+                        TextView mean = meaning.findViewById(R.id.meaning);
+
+                        final TTS tts = new TTS(context);
+                        DatabaseHelper db = new DatabaseHelper(context);
+                        Database_Meaning db_mean = new Database_Meaning(context);
+
+                        final String get_word = String.valueOf(finalButton.getText());
+                        final String get_mean = db_mean.Meaning(get_word);
+                        word.setText(get_word);
+                        mean.setText(get_mean);
+
+                        String path_image= db.get_Image_word(get_word);
+                        int set_image = context.getResources().getIdentifier(path_image , "drawable", context.getPackageName());
+                        word_Image.setImageResource(set_image);
+
+                        voice_word.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                tts.speak(get_word);
+                            }
+                        });
+
+                        voice_mean.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                tts.speak(get_mean);
+                            }
+                        });
+
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                meaning.dismiss();
+                            }
+                        });
+
+                        meaning.show();
+
+//                        intent = new Intent(context, Meaning.class);
+//                        intent.putExtra("Word_data",String.valueOf(finalButton.getText()));
+//                        context.startActivity(intent);
                         break;
 
                     case "Delete_Mod_Word" :

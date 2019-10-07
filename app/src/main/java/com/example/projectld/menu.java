@@ -164,6 +164,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 Intent Logout = new Intent(getApplicationContext(),login.class);
                 startActivity(Logout);
                 break;
+            case R.id.StopMusic:
+                mServ.stopMusic();
+                break;
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -230,7 +234,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 getSystemService(Context.POWER_SERVICE);
         boolean isScreenOn = false;
         if (pm != null) {
-            isScreenOn = pm.isScreenOn();
+            isScreenOn = pm.isInteractive();
         }
 
         if (!isScreenOn) {

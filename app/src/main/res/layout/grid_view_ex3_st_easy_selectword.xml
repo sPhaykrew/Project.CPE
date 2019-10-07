@@ -20,11 +20,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/menuword"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/menuword"-->
+<!--            android:orientation="vertical">-->
 
         <GridView
             android:id="@+id/grid_view"
@@ -41,7 +41,7 @@
             android:stretchMode="columnWidth"
             android:gravity="top|center" />
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <android.support.v7.widget.AppCompatButton
                 style="@style/Widget.AppCompat.Button.Colored"

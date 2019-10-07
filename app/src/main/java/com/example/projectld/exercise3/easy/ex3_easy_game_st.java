@@ -64,7 +64,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
 
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
 
-    Dialog dialog,dialog_rank,dialog_correct; //popup score
+    Dialog dialog,dialog_rank,dialog_correct,popup_Image; //popup score
     DatabaseHelper databaseHelper;
     SharedPreferences user;
 
@@ -90,6 +90,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_easy_game);
 
+        ImageView show_Image = findViewById(R.id.show_image);
         ImageView set_Answer = findViewById(R.id.setAnswer);
 
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
@@ -115,6 +116,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
         dialog_correct = new Dialog(this);
+        popup_Image = new Dialog(this);
 
         next = findViewById(R.id.next);
         back = findViewById(R.id.back_this);
@@ -252,6 +254,28 @@ public class ex3_easy_game_st extends AppCompatActivity {
                     }
                 }
                 Popup_score();
+            }
+        });
+
+        show_Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                popup_Image.setContentView(R.layout.show_image_popup);
+                ImageView word_Image = popup_Image.findViewById(R.id.word_Image);
+                ImageView close = popup_Image.findViewById(R.id.this_back);
+
+                String path_image= databaseHelper.get_Image_word(wordset.get(count));
+                int set_image = getResources().getIdentifier(path_image , "drawable", getPackageName());
+                word_Image.setImageResource(set_image);
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup_Image.dismiss();
+                    }
+                });
+                popup_Image.show();
             }
         });
     }
@@ -430,6 +454,7 @@ public class ex3_easy_game_st extends AppCompatActivity {
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
                             incorrect.start();
+                            Score = Score - 5;
                             Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }
                     }

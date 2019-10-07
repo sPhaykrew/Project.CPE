@@ -88,11 +88,15 @@ public class Add_Word extends AppCompatActivity {
                 } else if (editText.getText().length() > 13){
                     Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
                 } else {
-                    databaseHelper.AddWord(String.valueOf(editText.getText()),"Word");
-                    dialog.dismiss();
-                    finish();
-                    Intent intent = new Intent(getApplicationContext(),Add_Word.class);
-                    startActivity(intent);
+                    Boolean Check_Word = databaseHelper.AddWord(String.valueOf(editText.getText()),"Word");
+                    if (Check_Word) {
+                        dialog.dismiss();
+                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Add_Word.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(),"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

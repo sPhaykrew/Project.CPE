@@ -46,7 +46,8 @@ public class exercise2_menu extends AppCompatActivity {
             }
         });
 
-        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช"};
+        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช","ซ","ฌ","ญ","ฎ","ฏ","ฐ","ฑ","ฒ","ณ","ด",
+                "ต","ถ","ท","ธ","น","บ","ป","ผ","ฝ","พ","ฟ","ภ","ม","ย","ร","ล","ว","ศ","ษ","ส","ห","ฬ","อ","ฮ"};
         arrayList = new ArrayList<>();
         arrayList.addAll(Arrays.asList(Char));
 

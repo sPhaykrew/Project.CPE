@@ -20,17 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/menuword"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/menuword"-->
+<!--                android:orientation="vertical">-->
 
                 <GridView
                     android:id="@+id/grid_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/set_Groupanme"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginTop="10dp"
@@ -39,9 +38,10 @@
                     android:numColumns="3"
                     android:verticalSpacing="12dp"
                     android:stretchMode="columnWidth"
+                    android:layout_above="@id/go_Select_image"
                     android:gravity="top|center" />
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <android.support.v7.widget.AppCompatButton
                 style="@style/Widget.AppCompat.Button.Colored"

@@ -60,7 +60,8 @@ public class gridview_ex2_select_char extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         arrayList = new ArrayList<>();
 
-        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช"};
+        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช","ซ","ฌ","ญ","ฎ","ฏ","ฐ","ฑ","ฒ","ณ","ด",
+                "ต","ถ","ท","ธ","น","บ","ป","ผ","ฝ","พ","ฟ","ภ","ม","ย","ร","ล","ว","ศ","ษ","ส","ห","ฬ","อ","ฮ"};
         arrayList.addAll(Arrays.asList(Char));
 
         adapter = new GridListAdapter_selectWord(this, arrayList, false);

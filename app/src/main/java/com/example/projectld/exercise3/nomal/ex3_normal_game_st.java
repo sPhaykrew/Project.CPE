@@ -399,6 +399,7 @@ public class ex3_normal_game_st extends AppCompatActivity {
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
                             incorrect.start();
+                            Score = Score - 5;
                             Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }
                     }

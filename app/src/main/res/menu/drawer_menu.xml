@@ -19,6 +19,11 @@
             android:id="@+id/logout"
             android:icon="@drawable/logout"
             android:title="ออกจากระบบ" />
+        <item
+            android:id="@+id/StopMusic"
+            android:icon="@drawable/ic_volume_off_black_24dp"
+            android:title="ปิดเสียงดนตรี" />
+
     </group>
     <item android:title="Admin"
         tools:ignore="HardcodedText">

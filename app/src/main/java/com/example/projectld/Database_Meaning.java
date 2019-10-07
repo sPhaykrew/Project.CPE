@@ -25,7 +25,11 @@ public class Database_Meaning extends SQLiteAssetHelper {
         String Meaning = null;
         Cursor cursor = db.rawQuery("Select sdef From lexitron where sentry = '"+word+"'" ,null);
         cursor.moveToFirst();
-        Meaning = (cursor.getString(0));
+        if (cursor.getCount() == 0 ) {
+            Meaning = "-";
+        } else {
+            Meaning = (cursor.getString(0));
+        }
         db.close();
         return Meaning;
     }

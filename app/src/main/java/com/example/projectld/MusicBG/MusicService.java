@@ -38,7 +38,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
         if (mPlayer != null) {
             mPlayer.setLooping(true);
-            mPlayer.setVolume(40, 40);
+            mPlayer.setVolume(0.18f , 0.18f);
         }
 
 
@@ -85,7 +85,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
         if (mPlayer != null) {
             mPlayer.setLooping(true);
-            mPlayer.setVolume(40, 40);
+            mPlayer.setVolume(0.18f, 0.18f);
             mPlayer.start();
         }
 
@@ -96,6 +96,15 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             mPlayer.stop();
             mPlayer.release();
             mPlayer = null;
+        } else {
+            mPlayer = MediaPlayer.create(this, R.raw.bateatbanana);
+            mPlayer.setOnErrorListener(this);
+
+            if (mPlayer != null) {
+                mPlayer.setLooping(true);
+                mPlayer.setVolume(0.18f, 0.18f);
+                mPlayer.start();
+            }
         }
     }
 

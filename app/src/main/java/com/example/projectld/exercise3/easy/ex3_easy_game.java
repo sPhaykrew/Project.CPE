@@ -1,5 +1,6 @@
 package com.example.projectld.exercise3.easy;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
@@ -71,8 +73,11 @@ public class ex3_easy_game extends AppCompatActivity {
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
+        ImageView show_Image = findViewById(R.id.show_image);
         ImageView set_Answer = findViewById(R.id.setAnswer);
         set_Answer.setVisibility(View.GONE);
+
+        final Dialog popup_Image = new Dialog(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -96,6 +101,8 @@ public class ex3_easy_game extends AppCompatActivity {
         arrayset = getIntent().getExtras();
 
         tts = new TTS(this);
+
+        final DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
         LoadInt();
 
@@ -205,6 +212,28 @@ public class ex3_easy_game extends AppCompatActivity {
                     finish();
                     startActivity(intent);
                 }
+            }
+        });
+
+        show_Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                popup_Image.setContentView(R.layout.show_image_popup);
+                ImageView word_Image = popup_Image.findViewById(R.id.word_Image);
+                ImageView close = popup_Image.findViewById(R.id.this_back);
+
+                String path_image= databaseHelper.get_Image_word(wordset.get(count));
+                int set_image = getResources().getIdentifier(path_image , "drawable", getPackageName());
+                word_Image.setImageResource(set_image);
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup_Image.dismiss();
+                    }
+                });
+                popup_Image.show();
             }
         });
     }

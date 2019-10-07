@@ -49,9 +49,9 @@ public class F_Word_data extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
         gridView = findViewById(R.id.GridView_Sentence);
-        ArrayList Word = databaseHelper.queryword("Word");
+        ArrayList<String> Word = databaseHelper.queryword("Word");
 
-        gridviewAdapter = new GridviewAdapter(Word,getApplicationContext(),"Word_data",R.drawable.radius_button_color1);
+        gridviewAdapter = new GridviewAdapter(Word,F_Word_data.this,"Word_data",R.drawable.radius_button_color1);
         gridView.setAdapter(gridviewAdapter);
     }
 }

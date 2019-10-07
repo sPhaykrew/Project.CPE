@@ -572,16 +572,23 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public void AddWord (String word,String table){
+    public boolean AddWord (String word,String table){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
-        Val.put("word",word);
+        Boolean check_word;
+        switch (table) {
+            case "Word" : Val.put("Word",word); break;
+            case "Sentence" : Val.put("Sentence",word); break;
+        }
+//        Val.put("word",word);
         try {
-            long rows = db.insertOrThrow(table, null, Val);
+            db.insertOrThrow(table, null, Val);
+            check_word = true;
         } catch (Exception e) {
-            Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+            check_word = false;
         }
         db.close();
+        return check_word;
     }
 
     public ArrayList<Ranking_Item> rank_ex2 (String group){
@@ -1120,5 +1127,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         db.close();
         return get_ImageChar;
+    }
+
+    public String get_Image_word(String word){
+        String Image;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select Image from Word where word = '"+word+"'",null);
+        cursor.moveToFirst();
+        Image = cursor.getString(0);
+        return Image;
     }
 }

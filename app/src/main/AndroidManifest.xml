@@ -66,7 +66,6 @@
         <activity android:name=".exercise3.exercise3_menu"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".Meaning" />
         <activity android:name=".Add_Word"/>
         <activity android:name=".Add_Sentence" />
         <activity android:name=".My_Score.My_Score_main_3"/>

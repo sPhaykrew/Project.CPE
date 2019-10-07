@@ -87,11 +87,15 @@ public class Add_Sentence extends AppCompatActivity {
                 } else if (editText.getText().length() > 30){
                     Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
                 } else {
-                    databaseHelper.AddWord(String.valueOf(editText.getText()),"Word");
-                    dialog.dismiss();
-                    finish();
-                    Intent intent = new Intent(getApplicationContext(),Add_Sentence.class);
-                    startActivity(intent);
+                    Boolean Check_Sentence = databaseHelper.AddWord(String.valueOf(editText.getText()),"Sentence");
+                    if (Check_Sentence) {
+                        dialog.dismiss();
+                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Add_Sentence.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(),"มีประโยคในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
