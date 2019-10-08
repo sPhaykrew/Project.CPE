@@ -260,6 +260,7 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                                     for (int i = 0; i < setChar.size(); i++) {
                                         databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
                                     }
+                                    databaseHelper.insert_score_ex2(String.valueOf(Groupname.getText()));
                                     dialog.dismiss();
 
                                     gridview_ex2_select_char.close_activity.finish();

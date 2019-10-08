@@ -214,10 +214,6 @@ public class GridviewAdapter extends BaseAdapter {
                         });
 
                         meaning.show();
-
-//                        intent = new Intent(context, Meaning.class);
-//                        intent.putExtra("Word_data",String.valueOf(finalButton.getText()));
-//                        context.startActivity(intent);
                         break;
 
                     case "Delete_Mod_Word" :

@@ -258,6 +258,7 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
                     dialog.setContentView(R.layout.st_confirm_popup);
                     dialog.setCanceledOnTouchOutside(false);
                     final EditText Groupname = dialog.findViewById(R.id.Groupname);
+                    Groupname.setText(Old_Group);
                     Button button = dialog.findViewById(R.id.CF);
                     ImageView close = dialog.findViewById(R.id.this_back);
                     dialog.show();
@@ -275,7 +276,8 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
                         @Override
                         public void onClick(View v) {
 
-                            String Check_Group = databaseHelper.check_groupname_import(String.valueOf(Groupname.getText()),"Setting_ex2");
+                            String GroupName = String.valueOf(Groupname.getText());
+                            String Check_Group = databaseHelper.check_groupname_import(GroupName,"Setting_ex2");
 
                             if (Groupname.getText().toString().length() < 3){
                                 Toast.makeText(context, "ชื่อสั้นเกินไป", Toast.LENGTH_SHORT).show();
@@ -283,9 +285,9 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
                                 Toast.makeText(context, "ชื่อยาวเกินไป", Toast.LENGTH_SHORT).show();
                             }  else {
 
-                                if (Check_Group == null) {
+                                if (Check_Group == null || GroupName.equals(Old_Group)) {
+                                    databaseHelper.delete_st_ex2(Old_Group);
                                     for (int i=0;i<setChar.size();i++){
-                                        databaseHelper.delete_st_ex2(Old_Group);
                                         databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
                                     }
                                     dialog.dismiss();

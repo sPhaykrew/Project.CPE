@@ -85,12 +85,18 @@ public class Register extends AppCompatActivity {
                         }
                     //แปลงรูปเป็น byte ก่อน insert เข้า database
                     inputData = convertBitmapIntoByteArray();
-                    //insert table user
-                    databaseHelper.insert_user(user.getText().toString(),password.getText().toString(),name.getText().toString(),
-                            Integer.parseInt(age.getText().toString()),sex,inputData);
-                            finish();
-                    Toast.makeText(Register.this,"เพิ่มผู้ใช้งานแล้ว",Toast.LENGTH_SHORT).show();
 
+                    Boolean Check_userID = databaseHelper.Check_IDUser(user.getText().toString());
+                    if (Check_userID) {
+                        //insert table user
+                        databaseHelper.insert_user(user.getText().toString(), password.getText().toString(), name.getText().toString(),
+                                Integer.parseInt(age.getText().toString()), sex, inputData);
+                        databaseHelper.insert_allScore(name.getText().toString());
+                        finish();
+                        Toast.makeText(Register.this, "เพิ่มผู้ใช้งานแล้ว", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Register.this, "ชื่อผู้ใช้งางนี้มีคนใช้แล้ว กรุณาเปลี่ยนชื่อผู้ใช้งาน", Toast.LENGTH_SHORT).show();
+                    }
                     }
                 }
             }

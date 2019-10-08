@@ -48,6 +48,14 @@ public class Call_GridAdapter_User extends AppCompatActivity {
         Log.d("Userid",UserID.toString());
         ArrayList<Bitmap> images = databaseHelper.getAll_User_Picture();
 
+        values.remove(0);
+        UserID.remove(0);
+        try {
+            images.remove(0);
+        } catch (Exception e){
+
+        }
+
         gridView = (GridView) findViewById(R.id.griview);
 
         GridAdapter_User gridAdapter = new GridAdapter_User(this, values, images,UserID);

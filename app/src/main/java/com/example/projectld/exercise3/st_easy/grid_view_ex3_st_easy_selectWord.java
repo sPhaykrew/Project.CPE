@@ -139,6 +139,7 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
                                  String wordID = CheckWordID(word,query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
                                  databaseHelper.insert_group(wordID,GroupName,"Setting_ex3_easy","wordID");
                              }
+                             databaseHelper.insert_score_easy(GroupName);
                              Toast.makeText(grid_view_ex3_st_easy_selectWord.this, "เพิ่มข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
                              st_ex3_easy_menu.close_activity.finish();
                              Intent intent = new Intent(grid_view_ex3_st_easy_selectWord.this,st_ex3_easy_menu.class);

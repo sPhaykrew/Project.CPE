@@ -64,7 +64,8 @@ public class st_ex2_selct_char_update extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         arrayList = new ArrayList<>();
 
-        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช"};
+        String[] Char = {"ก","ข","ฃ","ค","ฅ","ฆ","ง","จ","ฉ","ช","ซ","ฌ","ญ","ฎ","ฏ","ฐ","ฑ","ฒ","ณ","ด",
+                "ต","ถ","ท","ธ","น","บ","ป","ผ","ฝ","พ","ฟ","ภ","ม","ย","ร","ล","ว","ศ","ษ","ส","ห","ฬ","อ","ฮ"};
         arrayList.addAll(Arrays.asList(Char));
         ArrayList<String> get_Group = databaseHelper.ex2_char_inGroup(GroupName);
 

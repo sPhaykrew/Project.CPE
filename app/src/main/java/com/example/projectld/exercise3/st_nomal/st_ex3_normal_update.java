@@ -162,7 +162,7 @@ public class st_ex3_normal_update extends AppCompatActivity {
                             // เช็คว่าชื่อ Groupname ซ่ำกันหรือไม่
                             String GroupName =  String.valueOf(Groupname.getText()); //ตั้งชื่อให้กับ Group
                             String Check_Group = databaseHelper.check_groupname_import(GroupName,"Setting_ex3_normal");
-                            if (Check_Group == null) {
+                            if (Check_Group == null || GroupName.equals(old_GroupName)) {
                                 for(int i=0;i<wordid_group.size();i++) {
                                     String sentenceID = CheckWordID(wordid_group.get(i),query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
                                     databaseHelper.update_ex3_normal_st(sentenceID,GroupName,old_GroupName,old_IdWord.get(i));
