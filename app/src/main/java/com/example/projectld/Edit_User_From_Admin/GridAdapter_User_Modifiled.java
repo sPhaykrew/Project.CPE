@@ -7,11 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
@@ -21,13 +23,14 @@ import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class GridAdapter_User_Modifiled extends AppCompatActivity {
 
     EditText Username,Fullname,Age;
     ImageView profile;
     RadioButton male,female;
-    Button update, updatePicture,delete;
+    Button update,delete;
     String getsex,sex;
     String getUsername;
     String getFullname;
@@ -42,6 +45,22 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gridadapter_user_modifiled);
 
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("แก้ไขข้อมูลผู้ใช้งาน");
+        Title.setTextSize(20);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         final String Get_UserID = getIntent().getExtras().getString("UserID");
         User user = databaseHelper.ModifileUser(Get_UserID);
@@ -53,7 +72,6 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
         update = findViewById(R.id.update);
-        updatePicture = findViewById(R.id.updatePicture);
         delete = findViewById(R.id.delete);
 
         Picture = user.getPicture();
@@ -99,14 +117,14 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
 
                     finish();
                     Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(GridAdapter_User_Modifiled.this, menu.class);
-                    menu.getInstance().finish(); //ปิดหน้าเมนู รีโหลด
+                    Intent intent = new Intent(GridAdapter_User_Modifiled.this, Call_GridAdapter_User.class);
+                    Call_GridAdapter_User.close_activity.finish();//ปิดหน้าเมนู รีโหลด
                     startActivity(intent);
                 }
             }
         });
 
-        updatePicture.setOnClickListener(new View.OnClickListener() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -120,6 +138,11 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 databaseHelper.delete_user(Get_UserID);
+                Intent intent = new Intent(GridAdapter_User_Modifiled.this,Call_GridAdapter_User.class);
+                startActivity(intent);
+                finish();
+                Call_GridAdapter_User.close_activity.finish();
+                Toast.makeText(getApplicationContext(),"ลบผู้ใช้งานแล้ว",Toast.LENGTH_SHORT).show();
             }
         });
 

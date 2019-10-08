@@ -1,5 +1,6 @@
 package com.example.projectld;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +45,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     public TextView toolbar_text;
 
-    static menu menu;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
+    public static Activity close_activity;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
     HomeWatcher mHomeWatcher;
 
@@ -52,6 +53,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        close_activity = this;
 
         ////service Music Start!
         doBindService();
@@ -76,8 +79,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
         mHomeWatcher.startWatch();
-
-        menu = this; //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
         toolbar_text = findViewById(R.id.titel_toolbar);
         toolbar_text.setText("เลือกแบบฝึก");
@@ -133,8 +134,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new F_menu_home()).addToBackStack(null).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new F_menu_home()).addToBackStack(null).commit();
+                Intent main = new Intent(getApplicationContext(),menu.class);
+                startActivity(main);
+                finish();
                 break;
             case R.id.setting:
                 Intent setting = new Intent(getApplicationContext(),F_setting.class);
@@ -180,10 +184,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         } else {
             super.onBackPressed();
         }
-    }
-
-    public static menu getInstance(){ //ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
-        return   menu;
     }
 
     ////service Music Start!

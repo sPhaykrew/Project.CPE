@@ -19,14 +19,15 @@
         <item name="actionMenuTextColor">@android:color/black</item>
     </style>
 
-<!--    <style name="ddd" parent="Widget.AppCompat.Button.Colored">-->
-<!--        <item name="android:colorButtonNormal">#00BCD4</item>-->
-<!--        <item name="android:textColor">#ffffff</item>-->
-<!--    </style>-->
-
     <style name="DefaultButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal">#ffffff</item>
 <!--        <item name="android:textColor">#ffffff</item>-->
+    </style>
+
+    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
 </resources>

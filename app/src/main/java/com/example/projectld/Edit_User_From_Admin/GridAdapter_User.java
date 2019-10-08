@@ -88,7 +88,11 @@ public class GridAdapter_User extends BaseAdapter {
                                 intent.putExtra("UserID", UserID.get(position));
                                 context.startActivity(intent);
                                 return true;
-
+                            case R.id.admin_score_ex2:
+                                Intent intent_score2 = new Intent(context, Admin_score_exercise2.class);
+                                intent_score2.putExtra("UserID", UserID.get(position));
+                                context.startActivity(intent_score2);
+                                return true;
                             case R.id.admin_score_ex3:
                                 Intent intent_score3 = new Intent(context, Admin_score_exercise3.class);
                                 intent_score3.putExtra("UserID", UserID.get(position));

@@ -130,7 +130,7 @@ public class F_profile extends AppCompatActivity {
                     finish();
                     Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(F_profile.this, menu.class);
-                    menu.getInstance().finish(); //ปิดหน้าเมนู รีโหลด
+                    menu.close_activity.finish(); //ปิดหน้าเมนู รีโหลด
                     startActivity(intent);
                 }
             }

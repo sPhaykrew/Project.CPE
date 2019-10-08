@@ -1,5 +1,6 @@
 package com.example.projectld.Edit_User_From_Admin;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class Call_GridAdapter_User extends AppCompatActivity {
 
     GridView gridView;
+    public static Activity close_activity;//ปิดหน้าเมนูในหน้าแก้ไขโปรไฟล์
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class Call_GridAdapter_User extends AppCompatActivity {
                 finish();
             }
         });
+
+        close_activity = this;
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
 

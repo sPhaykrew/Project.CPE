@@ -6,6 +6,10 @@
         android:title="แก้ไขโปรไฟล์">
     </item>
     <item
+        android:id="@+id/admin_score_ex2"
+        android:title="ดูคะแนนแบบฝึกที่ 2">
+    </item>
+    <item
         android:id="@+id/admin_score_ex3"
         android:title="ดูคะแนนแบบฝึกที่ 3">
     </item>

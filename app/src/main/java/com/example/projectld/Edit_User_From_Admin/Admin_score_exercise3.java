@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.My_Score.Ranking.Vertical_Ranking_Adapter;
@@ -16,6 +20,7 @@ import com.example.projectld.R;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Admin_score_exercise3 extends AppCompatActivity {
 
@@ -35,6 +40,22 @@ public class Admin_score_exercise3 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myscore_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        TextView Title = toolbar.findViewById(R.id.title);
+        Title.setText("คะแนนของผู้ใช้งาน");
+        Title.setTextSize(20);
+
+        ImageView back = toolbar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Get_UserID = getIntent().getExtras().getString("UserID");
 
@@ -71,14 +92,6 @@ public class Admin_score_exercise3 extends AppCompatActivity {
 
             ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_easy
                     (Get_UserID, String.valueOf(Groupname.get(i)));
-
-//            for (int j=0;j<5;j++){
-//                HorizontalModel horizontalModel = new HorizontalModel();
-//                horizontalModel.setWord("name " + j);
-//                horizontalModel.setScore("score " + j);
-//
-//                horizontalModels.add(horizontalModel);
-//            }
             verticalModel.setArrayList(horizontalModels);
             verticalModels.add(verticalModel);
         }
@@ -93,14 +106,6 @@ public class Admin_score_exercise3 extends AppCompatActivity {
         for (int i=0;i<Groupname.size();i++){
             Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
             ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_easy(String.valueOf(Groupname.get(i)));
-
-//            for (int j=0;j<5;j++){
-//                HorizontalModel horizontalModel = new HorizontalModel();
-//                horizontalModel.setWord("name " + j);
-//                horizontalModel.setScore("score " + j);
-//
-//                horizontalModels.add(horizontalModel);
-//            }
             verticalModel.setArrayList(horizontalModels);
             vertical_ranking_models.add(verticalModel);
         }

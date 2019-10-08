@@ -1,12 +1,13 @@
 package com.example.projectld.Edit_User_From_Admin;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import com.example.projectld.recyclerView_Ranking.Ranking_Item;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Admin_score_exercise4 extends AppCompatActivity {
+public class Admin_score_exercise2  extends AppCompatActivity {
 
     //score
     RecyclerView ScoreRecyclerView;
@@ -79,56 +80,54 @@ public class Admin_score_exercise4 extends AppCompatActivity {
         RankRecyclerView.setAdapter(vertical_ranking_adapter);
         setData_Rank();
 
+        TextView textHide = findViewById(R.id.noEX);
+
+        if (verticalModels.size() != 0){
+            textHide.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     public void setData_Score(){
 
+        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        ArrayList Groupname = databaseHelper.SearchGroupName_normal(Get_UserID);
+        ArrayList Groupname = databaseHelper.SearchGroupName_ex2(Get_UserID);
 
-        for (int i=0;i<Groupname.size();i++){
-            VerticalModel verticalModel = new VerticalModel();
-            verticalModel.setTitle(String.valueOf(Groupname.get(i)));
-            verticalModel.setAvgScore(String.valueOf(i));
+        if (Groupname != null) {
 
-            ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_normal
-                    (Get_UserID, String.valueOf(Groupname.get(i)));
+            for (int i = 0; i < Groupname.size(); i++) {
+                VerticalModel verticalModel = new VerticalModel();
+                verticalModel.setTitle(String.valueOf(Groupname.get(i)));
+                verticalModel.setAvgScore(String.valueOf(i));
 
-//            for (int j=0;j<5;j++){
-//                HorizontalModel horizontalModel = new HorizontalModel();
-//                horizontalModel.setWord("name " + j);
-//                horizontalModel.setScore("score " + j);
-//
-//                horizontalModels.add(horizontalModel);
-//            }
-            verticalModel.setArrayList(horizontalModels);
-            verticalModels.add(verticalModel);
+                ArrayList<HorizontalModel> horizontalModels = databaseHelper.item_word_Ranking_ex2
+                        (Get_UserID, String.valueOf(Groupname.get(i)));
+
+                verticalModel.setArrayList(horizontalModels);
+                verticalModels.add(verticalModel);
+            }
+            verticalRecyclerViewAdapter.notifyDataSetChanged();
         }
-        verticalRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     public void setData_Rank(){
 
+        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        ArrayList Groupname = databaseHelper.SearchGroupName_normal(Get_UserID);
+        ArrayList Groupname = databaseHelper.SearchGroupName_ex2(Get_UserID);
 
-        for (int i=0;i<Groupname.size();i++){
-            Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
-            ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex3_normal(String.valueOf(Groupname.get(i)));
+        if (Groupname != null) {
 
-            Log.d("Horizon", horizontalModels.toString());
+            for (int i = 0; i < Groupname.size(); i++) {
+                Vertical_Ranking_Model verticalModel = new Vertical_Ranking_Model();
+                ArrayList<Ranking_Item> horizontalModels = databaseHelper.rank_ex2(String.valueOf(Groupname.get(i)));
 
-//            for (int j=0;j<5;j++){
-//                HorizontalModel horizontalModel = new HorizontalModel();
-//                horizontalModel.setWord("name " + j);
-//                horizontalModel.setScore("score " + j);
-//
-//                horizontalModels.add(horizontalModel);
-//            }
-            verticalModel.setArrayList(horizontalModels);
-            vertical_ranking_models.add(verticalModel);
+                verticalModel.setArrayList(horizontalModels);
+                vertical_ranking_models.add(verticalModel);
+            }
+            vertical_ranking_adapter.notifyDataSetChanged();
         }
-        vertical_ranking_adapter.notifyDataSetChanged();
     }
 
 }

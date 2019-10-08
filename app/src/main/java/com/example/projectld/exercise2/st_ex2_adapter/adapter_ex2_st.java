@@ -290,6 +290,7 @@ public class adapter_ex2_st extends RecyclerView.Adapter<adapter_ex2_st.ex2_View
                                     for (int i=0;i<setChar.size();i++){
                                         databaseHelper.insert_char(setChar.get(i), String.valueOf(Groupname.getText()));
                                     }
+                                    databaseHelper.insert_score_ex2(GroupName); ///ต้องเพิ่มสกอด้วยเนื่องจากอันนี้ ไม่ได้ใช้  update ใช้ delete แล้วเพิ่มใหม่ เพราะยังไม่ได้ update
                                     dialog.dismiss();
 
                                     st_ex2_menu.close_activity.finish();
