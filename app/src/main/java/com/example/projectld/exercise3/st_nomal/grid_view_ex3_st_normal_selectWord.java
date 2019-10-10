@@ -75,7 +75,7 @@ public class grid_view_ex3_st_normal_selectWord extends AppCompatActivity {
             arrayList.add(a.getWord());
         }
 
-        adapter = new GridListAdapter_selectWord(this, arrayList, false);
+        adapter = new GridListAdapter_selectWord(this, arrayList, false,14);
         gridView.setAdapter(adapter);
     }
 

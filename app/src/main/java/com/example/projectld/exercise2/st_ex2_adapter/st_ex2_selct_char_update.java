@@ -69,7 +69,7 @@ public class st_ex2_selct_char_update extends AppCompatActivity {
         arrayList.addAll(Arrays.asList(Char));
         ArrayList<String> get_Group = databaseHelper.ex2_char_inGroup(GroupName);
 
-        adapter = new GridListAdapter_selectWord(this, arrayList, false);
+        adapter = new GridListAdapter_selectWord(this, arrayList, false,26);
         for(int i=0;i<arrayList.size();i++){
             for (int j=0;j<get_Group.size();j++){
                 if (get_Group.get(j).equals(arrayList.get(i))){

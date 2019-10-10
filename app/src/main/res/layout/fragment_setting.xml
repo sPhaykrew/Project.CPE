@@ -107,10 +107,43 @@
             android:gravity="left|center_vertical" />
 
         <Button
-            android:id="@+id/Export_db"
+            android:id="@+id/Export_ex2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="นำออกข้อมูลการตั้งค่า"
+            android:text="นำออกข้อมูลแบบฝึกที่ 2"
+            android:textSize="16dp"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/Export_ex3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="นำออกข้อมูลแบบฝึกที่ 3"
+            android:textSize="16dp"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/Export_ex4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="นำออกข้อมูลแบบฝึกที่ 4"
+            android:textSize="16dp"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/white"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/Export_ex5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="นำออกข้อมูลแบบฝึกที่ 5"
             android:textSize="16dp"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"
@@ -121,7 +154,7 @@
             android:id="@+id/Import_db"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="นำออกข้อมูลเข้า"
+            android:text="นำเข้าข้อมูล"
             android:textSize="16dp"
             android:stateListAnimator="@null"
             android:layout_marginStart="15dp"

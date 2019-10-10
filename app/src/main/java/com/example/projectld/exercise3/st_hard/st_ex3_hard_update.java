@@ -94,7 +94,7 @@ public class st_ex3_hard_update extends AppCompatActivity {
             arrayList.add(Sentence);
         }
 
-        adapter = new GridListAdapter_selectWord(this, arrayList, false);
+        adapter = new GridListAdapter_selectWord(this, arrayList, false,14);
 
         for (int k=0;k<Sentence_index.size();k++){ //วนรูป set check true ใน gridview
             adapter.checkCheckBox(Sentence_index.get(k),true);

@@ -24,14 +24,16 @@ public class GridListAdapter_selectWord extends BaseAdapter {
     private LayoutInflater inflater;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
+    private int TextSize;
 
-    public GridListAdapter_selectWord(Context context, ArrayList<String> arrayList, boolean isListView) {
+    public GridListAdapter_selectWord(Context context, ArrayList<String> arrayList, boolean isListView,int TextSize) {
         this.context = context;
         this.arrayList = arrayList;
         this.isListView = isListView;
         this.GroupName = GroupName;
         inflater = LayoutInflater.from(context);
         mSelectedItemsIds = new SparseBooleanArray();
+        this.TextSize = TextSize;
     }
 
     @Override
@@ -63,6 +65,8 @@ public class GridListAdapter_selectWord extends BaseAdapter {
 
             viewHolder.label = (TextView) view.findViewById(R.id.label);
             viewHolder.checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+
+            viewHolder.label.setTextSize(TextSize);
 
             view.setTag(viewHolder);
         } else

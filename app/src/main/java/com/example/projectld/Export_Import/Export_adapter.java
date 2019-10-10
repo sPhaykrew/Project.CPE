@@ -17,7 +17,7 @@ public class Export_adapter extends RecyclerView.Adapter<Export_holder> {
 
     Context context;
     ArrayList<String> Groupname;
-    ArrayList<String> Check_Group = new ArrayList<>();
+    public ArrayList<String> Check_Group = new ArrayList<>();
 
     public Export_adapter(Context context,ArrayList<String> Groupname){
         this.context = context;

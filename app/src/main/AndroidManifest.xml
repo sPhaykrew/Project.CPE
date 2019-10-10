@@ -82,12 +82,6 @@
         <activity android:name=".exercise2.ex2_game_st" />
         <activity android:name=".My_Score.My_Score_main_2" />
         <activity android:name=".navigationDrawer.F_setting" />
-        <activity android:name=".Export_Import.Export_menu" />
-        <activity android:name=".Export_Import.Export_ex2" />
-        <activity android:name=".Export_Import.Export_ex3" />
-        <activity android:name=".Export_Import.Export_ex4" />
-        <activity android:name=".Export_Import.Export_ex5" />
-        <activity android:name=".Export_Import.Import_db" />
         <activity android:name=".navigationDrawer.F_data" />
         <activity android:name=".navigationDrawer.F_Sentence_data" />
         <activity android:name=".navigationDrawer.F_Word_data" />

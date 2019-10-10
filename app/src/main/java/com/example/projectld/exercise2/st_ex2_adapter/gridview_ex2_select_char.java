@@ -64,7 +64,7 @@ public class gridview_ex2_select_char extends AppCompatActivity {
                 "ต","ถ","ท","ธ","น","บ","ป","ผ","ฝ","พ","ฟ","ภ","ม","ย","ร","ล","ว","ศ","ษ","ส","ห","ฬ","อ","ฮ"};
         arrayList.addAll(Arrays.asList(Char));
 
-        adapter = new GridListAdapter_selectWord(this, arrayList, false);
+        adapter = new GridListAdapter_selectWord(this, arrayList, false,26);
         gridView.setAdapter(adapter);
     }
 

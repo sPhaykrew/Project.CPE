@@ -92,7 +92,7 @@ public class st_ex3_easy_update extends AppCompatActivity {
             arrayList.add(word);
         }
 
-        adapter = new GridListAdapter_selectWord(this, arrayList, false);
+        adapter = new GridListAdapter_selectWord(this, arrayList, false,14);
 
         for (int k=0;k<word_index.size();k++){ //วนรูป set check true ใน gridview
             adapter.checkCheckBox(word_index.get(k),true);
