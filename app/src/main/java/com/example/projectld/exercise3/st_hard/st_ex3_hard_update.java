@@ -51,6 +51,8 @@ public class st_ex3_hard_update extends AppCompatActivity {
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

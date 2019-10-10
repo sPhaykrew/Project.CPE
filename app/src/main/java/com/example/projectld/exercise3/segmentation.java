@@ -11,7 +11,7 @@ public class segmentation {
     private String replace;
     private static String word1 = null;
     private String word;
-    private String[] symbols = {"ั","็","ิ","่","ํ","ุ","ู","้","๊","๋","ี","์","ำ"};
+    private String[] symbols = {"ั","็","ิ","่","ํ","ุ","ู","้","๊","๋","ี","์","ำ","ื"};
 
     public  String Break(String i){
 

@@ -5,14 +5,18 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -29,13 +34,17 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
+import com.example.projectld.MusicBG.HomeWatcher;
+import com.example.projectld.MusicBG.MusicService;
 import com.example.projectld.R;
 import com.example.projectld.Score_ex3_word;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise3.easy.ex3_easy_game;
 import com.example.projectld.exercise3.nomal.ex3_normal_game_st;
 import com.example.projectld.exercise3.segmentation;
 import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
@@ -48,7 +57,7 @@ import java.util.Random;
 
 
 @SuppressLint("NewApi")
-public class ex3_hard_game_st extends AppCompatActivity {
+public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     com.example.projectld.exercise3.segmentation segmentation;
     TTS tts;
@@ -85,12 +94,38 @@ public class ex3_hard_game_st extends AppCompatActivity {
     ArrayList<String> cerrent_Char = new ArrayList<>();
     ArrayList<String> cerrent_Score = new ArrayList<>();
 
+    HomeWatcher mHomeWatcher;
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex3_hard_game);
+
+        ////service Music Start!
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+
+        ////service Music Start!
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new HomeWatcher.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+            @Override
+            public void onHomeLongPressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+        });
+        mHomeWatcher.startWatch();
 
         ImageView set_Answer = findViewById(R.id.setAnswer);
 
@@ -106,10 +141,22 @@ public class ex3_hard_game_st extends AppCompatActivity {
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+
         back_toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        show_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
+                popupMenu.inflate(R.menu.menu_toolbar);
+                popupMenu.setOnMenuItemClickListener(ex3_hard_game_st.this);
+                popupMenu.show();
             }
         });
 
@@ -256,6 +303,17 @@ public class ex3_hard_game_st extends AppCompatActivity {
                 Popup_score();
             }
         });
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.close_music :
+                mServ.stopMusic();
+                return true;
+
+            default: return false;
+        }
     }
 
     /**
@@ -417,7 +475,7 @@ public class ex3_hard_game_st extends AppCompatActivity {
     }
 
     public void Popup_score(){
-        TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
+        TextView Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
         Button goRank;
         ImageView goBack;
 
@@ -637,5 +695,75 @@ public class ex3_hard_game_st extends AppCompatActivity {
 
         dialog_correct.setCanceledOnTouchOutside(false);
         dialog_correct.show();
+    }
+
+    ////service Music Start!
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        PowerManager pm = (PowerManager)
+                getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = false;
+        if (pm != null) {
+            isScreenOn = pm.isInteractive();
+        }
+
+        if (!isScreenOn) {
+            if (mServ != null) {
+                mServ.pauseMusic();
+            }
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        doUnbindService();
+        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        stopService(music);
+
     }
 }

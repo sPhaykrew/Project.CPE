@@ -1,28 +1,38 @@
 package com.example.projectld.exercise2;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
+import com.example.projectld.MusicBG.HomeWatcher;
+import com.example.projectld.MusicBG.MusicService;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
+import com.example.projectld.exercise3.easy.ex3_easy_game;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class exercise2_game extends AppCompatActivity {
+public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     ImageView imageView,ch1,ch2,ch3;
     ImageView next,back,voice;
@@ -33,10 +43,36 @@ public class exercise2_game extends AppCompatActivity {
     SharedPreferences sharedPreferences; //เก็บค่า I ไม่ให้หาย
     ArrayList<String> char_array = new ArrayList<>();
 
+    HomeWatcher mHomeWatcher;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise2_game);
+
+        ////service Music Start!
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+
+        ////service Music Start!
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new HomeWatcher.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+            @Override
+            public void onHomeLongPressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+        });
+        mHomeWatcher.startWatch();
 
         final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
@@ -53,10 +89,22 @@ public class exercise2_game extends AppCompatActivity {
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+
         back_toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        show_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
+                popupMenu.inflate(R.menu.menu_toolbar);
+                popupMenu.setOnMenuItemClickListener(exercise2_game.this);
+                popupMenu.show();
             }
         });
 
@@ -248,4 +296,84 @@ public class exercise2_game extends AppCompatActivity {
         editor.commit();
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.close_music :
+                mServ.stopMusic();
+                return true;
+
+            default: return false;
+        }
+    }
+
+    ////service Music Start!
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        PowerManager pm = (PowerManager)
+                getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = false;
+        if (pm != null) {
+            isScreenOn = pm.isInteractive();
+        }
+
+        if (!isScreenOn) {
+            if (mServ != null) {
+                mServ.pauseMusic();
+            }
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        doUnbindService();
+        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        stopService(music);
+
+    }
 }
