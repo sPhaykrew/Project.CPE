@@ -3,6 +3,7 @@ package com.example.projectld.Export_Import;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,6 @@ public class Export_Import {
         data.append("\n"+"choiceID,GroupName");
         objects.clear();
 
-        Log.d("fffffffff", String.valueOf(GroupName));
 
         for (int i=0;i<GroupName.size();i++){
             objects = databaseHelper.export_ex2(GroupName.get(i));
@@ -87,6 +87,19 @@ public class Export_Import {
         }
 
         try{
+            //test
+            String directory_path = Environment.getExternalStorageDirectory().getPath()+"/MyDocument/";
+            File file = new File(directory_path);
+            if (!file.exists()){
+                file.mkdir();
+                file.canExecute();
+            }
+            String file_name = directory_path + export_name+".csv";
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+            fileOutputStream.write(data.toString().getBytes());
+            fileOutputStream.close();
+
+
             //saving the file into device
             FileOutputStream out = context.openFileOutput(export_name+".csv", Context.MODE_PRIVATE);
             //OutputStream out = new FileOutputStream("data");

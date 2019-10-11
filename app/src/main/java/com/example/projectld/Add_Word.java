@@ -45,6 +45,8 @@ public class Add_Word extends AppCompatActivity {
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +74,7 @@ public class Add_Word extends AppCompatActivity {
     public void Add_word(){
         dialog.setContentView(R.layout.addword_popup);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         final EditText editText = dialog.findViewById(R.id.Add_Word);
         Button button = dialog.findViewById(R.id.CF);
         dialog.show();
