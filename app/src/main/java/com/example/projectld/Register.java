@@ -6,10 +6,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Register extends AppCompatActivity {
@@ -85,12 +91,15 @@ public class Register extends AppCompatActivity {
                         }
                     //แปลงรูปเป็น byte ก่อน insert เข้า database
                     inputData = convertBitmapIntoByteArray();
+                    String path_image = null; //เก็บ path รูป
+                    path_image = export_image(inputData);
+
 
                     Boolean Check_userID = databaseHelper.Check_IDUser(user.getText().toString());
                     if (Check_userID) {
                         //insert table user
                         databaseHelper.insert_user(user.getText().toString(), password.getText().toString(), name.getText().toString(),
-                                Integer.parseInt(age.getText().toString()), sex, inputData);
+                                Integer.parseInt(age.getText().toString()), sex, path_image);
                         databaseHelper.insert_allScore(name.getText().toString());
                         finish();
                         Toast.makeText(Register.this, "เพิ่มผู้ใช้งานแล้ว", Toast.LENGTH_SHORT).show();
@@ -152,4 +161,31 @@ public class Register extends AppCompatActivity {
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
     }
+
+    public String export_image(byte[] data){
+
+        String file_name = null;
+
+        //date_time
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        //สร้างรูปใน Mydoc
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdir();
+            file.canExecute();
+        }
+        try {
+            file_name = directory_path  + timeStamp + ".jpeg";
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+            Toast.makeText(getApplicationContext(), "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.d("error", e.toString());
+        }
+        return file_name;
+    }
+
 }

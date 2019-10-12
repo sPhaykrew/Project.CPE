@@ -3,9 +3,9 @@ package com.example.projectld;
 public class User {
     private String Username,Password,UserID,Fullname,sex,Permission;
     private Integer Age;
-    private byte[] Picture;
+    private String Picture;
 
-    public User(String Username, String Password,String UserID,String Fullname,Integer Age,String sex,String Permission,byte[] Picture) {
+    public User(String Username, String Password,String UserID,String Fullname,Integer Age,String sex,String Permission,String Picture) {
         this.Username = Username;
         this.Password = Password;
         this.UserID = UserID;
@@ -73,11 +73,11 @@ public class User {
         Age = age;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return Picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         Picture = picture;
     }
 }

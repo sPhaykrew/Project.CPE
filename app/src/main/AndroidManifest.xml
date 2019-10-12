@@ -92,6 +92,7 @@
         <activity android:name=".exercise2.st_ex2_adapter.st_ex2_selct_char_update" />
         <activity android:name=".exercise2.st_ex2_adapter.st_ex2_select_image_update" />
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise2" />
+        <activity android:name=".test" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

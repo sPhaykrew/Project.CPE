@@ -81,7 +81,7 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
 
     private void onClickEvent() {
 
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog.setContentView(R.layout.st_confirm_popup);
         dialog.setCanceledOnTouchOutside(false);
         final EditText Groupname = dialog.findViewById(R.id.Groupname);

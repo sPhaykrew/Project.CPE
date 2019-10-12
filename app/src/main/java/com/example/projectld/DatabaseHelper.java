@@ -50,13 +50,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (cursor != null && cursor.getCount() > 0) {
             user = new User(cursor.getString(1), cursor.getString(2),cursor.getString(0)
             ,cursor.getString(3),cursor.getInt(4),cursor.getString(5)
-            ,cursor.getString(6),cursor.getBlob(7));
+            ,cursor.getString(6),cursor.getString(7));
         }
         db.close();
         return user;
     }
 
-    public void insert_user (String user,String password,String name,int age,String sex,byte[] Picture){
+    public void insert_user (String user,String password,String name,int age,String sex,String Picture){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         Val.put("Username",user);
@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return Check;
     }
 
-    public void update_user (String user,String name,int age,String sex,byte[] Picture,String UserID){
+    public void update_user (String user,String name,int age,String sex,String Picture,String UserID){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         Val.put("Username",user);
@@ -482,16 +482,16 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return User;
     }
 
-    public ArrayList<Bitmap> getAll_User_Picture(){
+    public ArrayList<String> getAll_User_Picture(){
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<Bitmap> Picture = new ArrayList<>();
+        ArrayList<String> Picture = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT Picture From User ORDER BY UserID",null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            byte[] bytes = cursor.getBlob(0);
-            if (bytes != null) {
-                Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-                Picture.add(bmp);
+            String path = cursor.getString(0);
+            if (path != null) {
+//                Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+                Picture.add(path);
             }
             cursor.moveToNext();
         }
@@ -511,7 +511,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (cursor != null && cursor.getCount() > 0) {
             user = new User(cursor.getString(1), cursor.getString(2),cursor.getString(0)
                     ,cursor.getString(3),cursor.getInt(4),cursor.getString(5)
-                    ,cursor.getString(6),cursor.getBlob(7));
+                    ,cursor.getString(6),cursor.getString(7));
         }
         db.close();
         return user;

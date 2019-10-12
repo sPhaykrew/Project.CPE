@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,11 @@ import com.example.projectld.User;
 import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class GridAdapter_User_Modifiled extends AppCompatActivity {
@@ -35,7 +41,7 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
     String getUsername;
     String getFullname;
     String getAge;
-    byte[] Picture;
+    String Picture;
     static final int SELECT_PICTURE = 100;
     Bitmap image = null;
     boolean selectpicture = true;
@@ -81,8 +87,10 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         getsex = user.getSex();
 
         try{ //กรณีแอดไม่ได้ใส่รูป defual ไม่มีรูป
-            Bitmap bmp= BitmapFactory.decodeByteArray(Picture, 0 , Picture.length);
-            profile.setImageBitmap(bmp);
+//            Bitmap bmp= BitmapFactory.decodeByteArray(Picture, 0 , Picture.length);
+            File file = new File(Picture);
+            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            profile.setImageBitmap(myBitmap);
         } catch (Exception e){
 
         }
@@ -108,12 +116,15 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"ไม่พบการเปลี่ยนแปลง",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    byte[] inputData = Picture; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
+                    String path_image = null; //เก็บ path รูป
+                    byte[] inputData; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
                     if (image != null) {
                         inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                        path_image = export_image(inputData);
+
                     }
                     databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, Get_UserID);
+                            ,Integer.parseInt(Age.getText().toString()),sex,path_image, Get_UserID);
 
                     finish();
                     Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
@@ -186,5 +197,31 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
         image.compress(Bitmap.CompressFormat.JPEG, 50, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
+    }
+
+    public String export_image(byte[] data){
+
+        String file_name = null;
+
+        //date_time
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        //สร้างรูปใน Mydoc
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdir();
+            file.canExecute();
+        }
+        try {
+            file_name = directory_path  + timeStamp + ".jpeg";
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+            Toast.makeText(getApplicationContext(), "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.d("error", e.toString());
+        }
+        return file_name;
     }
 }

@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.example.projectld.navigationDrawer.F_data;
 import com.example.projectld.navigationDrawer.F_profile;
 import com.example.projectld.navigationDrawer.F_setting;
 
+import java.io.File;
 import java.util.Objects;
 
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -115,9 +117,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         //Profile header
         ImageView imageView = header.findViewById(R.id.Profile);
         if (user.getString("Picture",null) != null){
-        byte[] bytes = Base64.decode(user.getString("Picture",null), Base64.DEFAULT); //แปลง String เป็น byte
-            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-            imageView.setImageBitmap(bmp); }
+//        byte[] bytes = Base64.decode(user.getString("Picture",null), Base64.DEFAULT); //แปลง String เป็น byte
+//            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+
+            File file = new File(user.getString("Picture",null));
+            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap(myBitmap);
+        }
 
 
         if (savedInstanceState == null) {

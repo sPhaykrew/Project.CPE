@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,11 @@ import com.example.projectld.R;
 import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class F_profile extends AppCompatActivity {
@@ -89,9 +95,11 @@ public class F_profile extends AppCompatActivity {
         UserID = user.getString("UserID",null);
 
         if(Picture != null){
-            bytes = Base64.decode(Picture,Base64.DEFAULT); //แปลง String เป็น byte
-            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-            profile.setImageBitmap(bmp); }
+//            bytes = Base64.decode(Picture,Base64.DEFAULT); //แปลง String เป็น byte
+//            Bitmap bmp= BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+            File file = new File(Picture);
+            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            profile.setImageBitmap(myBitmap); }
 
         Username.setText(getUsername);
         Fullname.setText(getFullname);
@@ -113,20 +121,22 @@ public class F_profile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"ไม่พบการเปลี่ยนแปลง",Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    String path_image = null; //เก็บ path รูป
                     byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
                     if (image != null) {
                         inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                        path_image = export_image(inputData);
                     }
                     databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                            ,Integer.parseInt(Age.getText().toString()),sex,inputData, UserID);
+                            ,Integer.parseInt(Age.getText().toString()),sex,path_image, UserID);
 
                     editor.putString("Username",Username.getText().toString());
                     editor.putString("Fullname",Fullname.getText().toString());
                     editor.putInt("Age", Integer.parseInt(Age.getText().toString()));
                     editor.putString("sex",sex);
                     if(image != null){
-                        String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
-                        editor.putString("Picture",saveThis);}
+                        //String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
+                        editor.putString("Picture",path_image);}
                     editor.commit();
 
                     finish();
@@ -156,6 +166,7 @@ public class F_profile extends AppCompatActivity {
         {
             if(data == null) return;
             Uri imageUri = data.getData();
+            Log.d("tttttttttttt", String.valueOf(imageUri));
             try {
                 image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
                 profile.setImageBitmap(image);
@@ -185,8 +196,34 @@ public class F_profile extends AppCompatActivity {
 
     private byte[] convertBitmapIntoByteArray() { //ลดขนาดรูป แปลงรูป
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 10, stream);//ขนาดภาพที่ลดลง
+        image.compress(Bitmap.CompressFormat.JPEG, 50, stream);//ขนาดภาพที่ลดลง
         byte imageInByte[] = stream.toByteArray();
         return imageInByte;
+    }
+
+    public String export_image(byte[] data){
+
+        String file_name = null;
+
+        //date_time
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        //สร้างรูปใน Mydoc
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdir();
+            file.canExecute();
+        }
+        try {
+            file_name = directory_path  + timeStamp + ".jpeg";
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+            Toast.makeText(getApplicationContext(), "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.d("error", e.toString());
+        }
+        return file_name;
     }
 }

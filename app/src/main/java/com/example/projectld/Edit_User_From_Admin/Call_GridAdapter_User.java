@@ -50,7 +50,7 @@ public class Call_GridAdapter_User extends AppCompatActivity {
         ArrayList<String> values = databaseHelper.getAll_User("Fullname");
         ArrayList<String> UserID = databaseHelper.getAll_User("UserID");
         Log.d("Userid",UserID.toString());
-        ArrayList<Bitmap> images = databaseHelper.getAll_User_Picture();
+        ArrayList<String> images = databaseHelper.getAll_User_Picture();
 
         values.remove(0);
         UserID.remove(0);

@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
@@ -30,7 +31,7 @@ public class Export_Import {
         this.context = context;
     }
 
-    public void export_ex2(ArrayList<String> GroupName,String export_name){
+    public void export_ex2(ArrayList<String> GroupName,String export_name,String Click){
 
         databaseHelper = new DatabaseHelper(context);
 
@@ -48,34 +49,59 @@ public class Export_Import {
             }
         }
 
-        try{
-            //saving the file into device
-            FileOutputStream out = context.openFileOutput(export_name+".csv", Context.MODE_PRIVATE);
-            //OutputStream out = new FileOutputStream("data");
-            out.write((data.toString()).getBytes());
-            out.close();
+        switch (Click) {
 
-            //exporting
-            File filelocation = new File(context.getFilesDir(), export_name+".csv");
-            Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
-            Intent fileIntent = new Intent(Intent.ACTION_SEND);
-            fileIntent.setType("text/csv");
-            fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
-            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-            context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
-        }
-        catch(Exception e){
-            e.printStackTrace();
+            case "export" :
+
+            //export ไปที่เครื่อง
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+            File file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdir();
+                file.canExecute();
+            }
+            try {
+                String file_name = directory_path + export_name + ".csv";
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                fileOutputStream.write(data.toString().getBytes());
+                fileOutputStream.close();
+                Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.d("error", e.toString());
+            }
+            break;
+
+            case "share" :
+
+            try {
+                //saving the file into device
+                FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                //OutputStream out = new FileOutputStream("data");
+                out.write((data.toString()).getBytes());
+                out.close();
+
+                //exporting
+                File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                fileIntent.setType("text/csv");
+                fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+            } catch (Exception e) {
+                Log.d("error", e.toString());
+            }
+            break;
         }
     }
 
-    public void export_ex3(ArrayList<String> GroupName, String export_name){
+    public void export_ex3(ArrayList<String> GroupName, final String export_name,String Click){
 
         databaseHelper = new DatabaseHelper(context);
 
         //generate data
-        StringBuilder data = new StringBuilder();
+        final StringBuilder data = new StringBuilder();
         data.append("ex3");
         data.append("\n"+"WordID,GroupName");
 
@@ -86,42 +112,55 @@ public class Export_Import {
             }
         }
 
-        try{
-            //test
-            String directory_path = Environment.getExternalStorageDirectory().getPath()+"/MyDocument/";
-            File file = new File(directory_path);
-            if (!file.exists()){
-                file.mkdir();
-                file.canExecute();
+        switch (Click) {
+
+            case "export" :
+                //export ไปที่เครื่อง
+                String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+                File file = new File(directory_path);
+                if (!file.exists()) {
+                    file.mkdir();
+                    file.canExecute();
+                }
+                try {
+                    String file_name = directory_path + export_name + ".csv";
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                    fileOutputStream.write(data.toString().getBytes());
+                    fileOutputStream.close();
+                    Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.d("error", e.toString());
+                }
+                break;
+
+            case "share" :
+            try {
+                //saving the file into device
+                FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                //OutputStream out = new FileOutputStream("data");
+                out.write((data.toString()).getBytes());
+                out.close();
+
+                //exporting
+                File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                fileIntent.setType("text/csv");
+                fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                context.startActivity(Intent.createChooser(fileIntent, "แชร์ข้อมูลเสร็จสิ้น"));
+            } catch (Exception e) {
+                Log.d("error", e.toString());
             }
-            String file_name = directory_path + export_name+".csv";
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
-            fileOutputStream.write(data.toString().getBytes());
-            fileOutputStream.close();
-
-
-            //saving the file into device
-            FileOutputStream out = context.openFileOutput(export_name+".csv", Context.MODE_PRIVATE);
-            //OutputStream out = new FileOutputStream("data");
-            out.write((data.toString()).getBytes());
-            out.close();
-
-            //exporting
-            File filelocation = new File(context.getFilesDir(), export_name+".csv");
-            Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
-            Intent fileIntent = new Intent(Intent.ACTION_SEND);
-            fileIntent.setType("text/csv");
-            fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
-            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-            context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+            break;
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
 
-    public void export_ex4(ArrayList<String> GroupName,String export_name){
+        }
+
+
+
+    public void export_ex4(ArrayList<String> GroupName,String export_name,String Click){
 
         databaseHelper = new DatabaseHelper(context);
 
@@ -137,29 +176,53 @@ public class Export_Import {
             }
         }
 
-        try{
-            //saving the file into device
-            FileOutputStream out = context.openFileOutput(export_name+".csv", Context.MODE_PRIVATE);
-            //OutputStream out = new FileOutputStream("data");
-            out.write((data.toString()).getBytes());
-            out.close();
+        switch (Click) {
 
-            //exporting
-            File filelocation = new File(context.getFilesDir(), export_name+".csv");
-            Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
-            Intent fileIntent = new Intent(Intent.ACTION_SEND);
-            fileIntent.setType("text/csv");
-            fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
-            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-            context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
-        }
-        catch(Exception e){
-            e.printStackTrace();
+            case "export" :
+            //export ไปที่เครื่อง
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+            File file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdir();
+                file.canExecute();
+            }
+            try {
+                String file_name = directory_path + export_name + ".csv";
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                fileOutputStream.write(data.toString().getBytes());
+                fileOutputStream.close();
+                Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.d("error", e.toString());
+            }
+            break;
+
+            case "share" :
+
+            try {
+                //saving the file into device
+                FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                //OutputStream out = new FileOutputStream("data");
+                out.write((data.toString()).getBytes());
+                out.close();
+
+                //exporting
+                File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                fileIntent.setType("text/csv");
+                fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            break;
         }
     }
 
-    public void export_ex5(ArrayList<String> GroupName,String export_name){
+    public void export_ex5(ArrayList<String> GroupName,String export_name,String Click){
 
         databaseHelper = new DatabaseHelper(context);
 
@@ -175,25 +238,49 @@ public class Export_Import {
             }
         }
 
-        try{
-            //saving the file into device
-            FileOutputStream out = context.openFileOutput(export_name+".csv", Context.MODE_PRIVATE);
-            //OutputStream out = new FileOutputStream("data");
-            out.write((data.toString()).getBytes());
-            out.close();
+        switch (Click) {
 
-            //exporting
-            File filelocation = new File(context.getFilesDir(), export_name+".csv");
-            Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
-            Intent fileIntent = new Intent(Intent.ACTION_SEND);
-            fileIntent.setType("text/csv");
-            fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
-            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-            context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
-        }
-        catch(Exception e){
-            e.printStackTrace();
+            case "export" :
+            //export ไปที่เครื่อง
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+            File file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdir();
+                file.canExecute();
+            }
+            try {
+                String file_name = directory_path + export_name + ".csv";
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                fileOutputStream.write(data.toString().getBytes());
+                fileOutputStream.close();
+                Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.d("error", e.toString());
+            }
+            break;
+
+
+            case "share" :
+            try {
+                //saving the file into device
+                FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                //OutputStream out = new FileOutputStream("data");
+                out.write((data.toString()).getBytes());
+                out.close();
+
+                //exporting
+                File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                fileIntent.setType("text/csv");
+                fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            break;
         }
     }
 

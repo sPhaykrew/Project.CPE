@@ -151,6 +151,7 @@ public class F_setting extends AppCompatActivity {
                 textView = dialog.findViewById(R.id.text);
                 Button close = dialog.findViewById(R.id.close);
                 Button export = dialog.findViewById(R.id.export);
+                final Button share = dialog.findViewById(R.id.share);
 
                 if (GroupName.size() == 0){
                     export_name.setVisibility(View.GONE);
@@ -165,7 +166,24 @@ public class F_setting extends AppCompatActivity {
                         if (export_adapter.Check_Group.size() != 0) {
                             if (export_name.getText().length() > 0) {
                                 Select_Group.addAll(export_adapter.Check_Group);
-                                export_import.export_ex2(Select_Group, export_name.getText().toString());
+                                export_import.export_ex2(Select_Group, export_name.getText().toString(),"export");
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(),"กรุณาเลือกแบบทดสอบ",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (export_adapter.Check_Group.size() != 0) {
+                            if (export_name.getText().length() > 0) {
+                                Select_Group.addAll(export_adapter.Check_Group);
+                                export_import.export_ex2(Select_Group, export_name.getText().toString(),"share");
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
@@ -207,7 +225,8 @@ public class F_setting extends AppCompatActivity {
                 export_name = dialog.findViewById(R.id.export_name);
                 textView = dialog.findViewById(R.id.text);
                 Button close = dialog.findViewById(R.id.close);
-                Button export = dialog.findViewById(R.id.export);
+                final Button export = dialog.findViewById(R.id.export);
+                final Button share = dialog.findViewById(R.id.share);
 
                 if (GroupName.size() == 0){
                     export_name.setVisibility(View.GONE);
@@ -222,7 +241,24 @@ public class F_setting extends AppCompatActivity {
                         if (export_adapter.Check_Group.size() != 0) {
                             if (export_name.getText().length() > 0) {
                                 Select_Group.addAll(export_adapter.Check_Group);
-                                export_import.export_ex3(Select_Group, export_name.getText().toString());
+                                export_import.export_ex3(Select_Group, export_name.getText().toString(),"export");
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(),"กรุณาเลือกแบบทดสอบ",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (export_adapter.Check_Group.size() != 0) {
+                            if (export_name.getText().length() > 0) {
+                                Select_Group.addAll(export_adapter.Check_Group);
+                                export_import.export_ex3(Select_Group, export_name.getText().toString(),"share");
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
@@ -265,6 +301,7 @@ public class F_setting extends AppCompatActivity {
                 textView = dialog.findViewById(R.id.text);
                 Button close = dialog.findViewById(R.id.close);
                 Button export = dialog.findViewById(R.id.export);
+                final Button share = dialog.findViewById(R.id.share);
 
                 if (GroupName.size() == 0){
                     export_name.setVisibility(View.GONE);
@@ -279,7 +316,24 @@ public class F_setting extends AppCompatActivity {
                         if (export_adapter.Check_Group.size() != 0) {
                             if (export_name.getText().length() > 0) {
                                 Select_Group.addAll(export_adapter.Check_Group);
-                                export_import.export_ex4(Select_Group, export_name.getText().toString());
+                                export_import.export_ex4(Select_Group, export_name.getText().toString(),"export");
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(),"กรุณาเลือกแบบทดสอบ",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (export_adapter.Check_Group.size() != 0) {
+                            if (export_name.getText().length() > 0) {
+                                Select_Group.addAll(export_adapter.Check_Group);
+                                export_import.export_ex4(Select_Group, export_name.getText().toString(),"share");
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
@@ -322,6 +376,7 @@ public class F_setting extends AppCompatActivity {
                 textView = dialog.findViewById(R.id.text);
                 Button close = dialog.findViewById(R.id.close);
                 Button export = dialog.findViewById(R.id.export);
+                final Button share = dialog.findViewById(R.id.share);
 
                 if (GroupName.size() == 0){
                     export_name.setVisibility(View.GONE);
@@ -336,7 +391,24 @@ public class F_setting extends AppCompatActivity {
                         if (export_adapter.Check_Group.size() != 0) {
                             if (export_name.getText().length() > 0) {
                                 Select_Group.addAll(export_adapter.Check_Group);
-                                export_import.export_ex5(Select_Group, export_name.getText().toString());
+                                export_import.export_ex5(Select_Group, export_name.getText().toString(),"export");
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(),"กรุณาเลือกแบบทดสอบ",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (export_adapter.Check_Group.size() != 0) {
+                            if (export_name.getText().length() > 0) {
+                                Select_Group.addAll(export_adapter.Check_Group);
+                                export_import.export_ex5(Select_Group, export_name.getText().toString(),"share");
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ชื่อนำออกข้อมูล",Toast.LENGTH_SHORT).show();
