@@ -228,7 +228,7 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     }
 
                     final Dialog dialog = new Dialog(context);
-                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
                     dialog.setContentView(R.layout.st_confirm_popup);
                     dialog.setCanceledOnTouchOutside(false);
                     final EditText Groupname = dialog.findViewById(R.id.Groupname);

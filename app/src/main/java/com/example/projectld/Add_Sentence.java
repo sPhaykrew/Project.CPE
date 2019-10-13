@@ -72,7 +72,7 @@ public class Add_Sentence extends AppCompatActivity {
     }
 
     public void Add_word(){
-        dialog.setContentView(R.layout.addword_popup);
+        dialog.setContentView(R.layout.addsentence_popup);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         final EditText editText = dialog.findViewById(R.id.Add_Word);
@@ -82,22 +82,22 @@ public class Add_Sentence extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (editText.getText().length() == 0) {
-//                    Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
-//                } else if (editText.getText().length() <= 5){
-//                    Toast.makeText(getApplicationContext(),"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
-//                } else if (editText.getText().length() > 30){
-//                    Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
-//                } else {
-                    Boolean Check_Sentence = databaseHelper.AddWord(String.valueOf(editText.getText()),"Sentence");
+                if (editText.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
+                } else if (editText.getText().length() <= 5){
+                    Toast.makeText(getApplicationContext(),"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
+                } else if (editText.getText().length() > 30){
+                    Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
+                } else {
+                    Boolean Check_Sentence = databaseHelper.AddWord(String.valueOf(editText.getText()),"Sentence",null);
                     if (Check_Sentence) {
                         dialog.dismiss();
                         finish();
                         Intent intent = new Intent(getApplicationContext(), Add_Sentence.class);
                         startActivity(intent);
-//                    } else {
-//                        Toast.makeText(getApplicationContext(),"มีประโยคในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
-//                    }
+                    } else {
+                        Toast.makeText(getApplicationContext(),"มีประโยคในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

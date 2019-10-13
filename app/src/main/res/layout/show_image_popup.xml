@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="220dp"
-    android:background="@drawable/relative_layout_radius"
     android:orientation="vertical">
 
     <ImageView

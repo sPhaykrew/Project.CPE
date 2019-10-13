@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -46,7 +48,9 @@ import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
 import com.example.projectld.recyclerView_Ranking.Ranking_Adapter;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
+import com.example.projectld.word_Image_object;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -306,14 +310,24 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
         show_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
                 popup_Image.setContentView(R.layout.show_image_popup);
                 ImageView word_Image = popup_Image.findViewById(R.id.word_Image);
                 ImageView close = popup_Image.findViewById(R.id.this_back);
+                popup_Image.show();
 
-                String path_image= databaseHelper.get_Image_word(wordset.get(count));
-                int set_image = getResources().getIdentifier(path_image , "drawable", getPackageName());
-                word_Image.setImageResource(set_image);
+                ArrayList<word_Image_object> path_image= databaseHelper.get_Image_word(wordset.get(count));
+                if (path_image.get(0).getDefualt_Image() != null) {
+                    int set_image = getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", getPackageName());
+                    word_Image.setImageResource(set_image);
+                } else if (path_image.get(0).getPath_Image() != null){
+                    File file = new File(path_image.get(0).getPath_Image());
+                    Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    word_Image.setImageBitmap(myBitmap);
+                } else {
+                    Toast.makeText(getApplicationContext(),"ไม่พบรูปภาพ",Toast.LENGTH_SHORT).show();
+                    popup_Image.dismiss();
+                }
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -321,7 +335,6 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
                         popup_Image.dismiss();
                     }
                 });
-                popup_Image.show();
             }
         });
     }
@@ -521,11 +534,11 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
     }
 
     public void Popup_score(){
-        TextView Fullname,Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
+        TextView Sum_Score,text1,text2,text3,text4,text5,score1,score2,score3,score4,score5;
         Button goRank;
         ImageView goBack;
 
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog.setContentView(R.layout.score_popup);
 
         Score_ex3_word score = databaseHelper.Score_ex3_easy(Groupname,user.getString("UserID",null)
@@ -585,7 +598,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
         Button myScore;
         ImageView goBack;
 
-        dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog_rank.setContentView(R.layout.ranking_popup);
 
         ArrayList<Ranking_Item> ranking_items = databaseHelper.rank_ex3_easy(Groupname);

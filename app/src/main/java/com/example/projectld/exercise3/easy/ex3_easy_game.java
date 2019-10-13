@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,7 +44,9 @@ import com.example.projectld.MusicBG.MusicService;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise3.segmentation;
+import com.example.projectld.word_Image_object;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -265,14 +269,24 @@ public class ex3_easy_game extends AppCompatActivity implements PopupMenu.OnMenu
         show_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                popup_Image.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
                 popup_Image.setContentView(R.layout.show_image_popup);
                 ImageView word_Image = popup_Image.findViewById(R.id.word_Image);
                 ImageView close = popup_Image.findViewById(R.id.this_back);
+                popup_Image.show();
 
-                String path_image= databaseHelper.get_Image_word(wordset.get(count));
-                int set_image = getResources().getIdentifier(path_image , "drawable", getPackageName());
-                word_Image.setImageResource(set_image);
+                ArrayList<word_Image_object> path_image = databaseHelper.get_Image_word(wordset.get(count));
+                if (path_image.get(0).getDefualt_Image() != null) {
+                    int set_image = getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", getPackageName());
+                    word_Image.setImageResource(set_image);
+                } else if(path_image.get(0).getPath_Image() != null) {
+                    File file = new File(path_image.get(0).getPath_Image());
+                    Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    word_Image.setImageBitmap(myBitmap);
+                } else {
+                    Toast.makeText(getApplicationContext(),"ไม่พบรูปภาพ",Toast.LENGTH_SHORT).show();
+                    popup_Image.dismiss();
+                }
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -280,7 +294,6 @@ public class ex3_easy_game extends AppCompatActivity implements PopupMenu.OnMenu
                         popup_Image.dismiss();
                     }
                 });
-                popup_Image.show();
             }
         });
     }

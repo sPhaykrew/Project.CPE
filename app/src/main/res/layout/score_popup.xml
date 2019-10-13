@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="300dp"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@drawable/relative_layout_radius"
     android:orientation="vertical">
 
     <ImageView
@@ -18,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
@@ -171,18 +170,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
             android:layout_marginTop="20dp"
-            android:gravity="center">
+            android:gravity="end">
 
             <android.support.v7.widget.AppCompatButton
-                android:theme="@style/DefaultButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:theme="@style/PrimaryFlatButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/Rank"
                 android:text="คะแนนจัดอันดับ"
-                android:layout_gravity="center"/>
+                android:layout_gravity="end"/>
 
         </LinearLayout>
 

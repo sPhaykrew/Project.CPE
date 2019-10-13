@@ -745,12 +745,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-    public boolean AddWord (String word,String table){
+    public boolean AddWord (String word,String table,String path_image){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         Boolean check_word;
         switch (table) {
-            case "Word" : Val.put("Word",word); break;
+            case "Word" :
+                Val.put("Word",word);
+                Val.put("path_image",path_image);
+                break;
             case "Sentence" : Val.put("Sentence",word); break;
         }
 //        Val.put("word",word);
@@ -1307,12 +1310,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return get_ImageChar;
     }
 
-    public String get_Image_word(String word){
-        String Image;
+    public ArrayList<word_Image_object> get_Image_word(String word){
+        ArrayList<word_Image_object> Image = new ArrayList<>();
+        word_Image_object word_image_object = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select Image from Word where word = '"+word+"'",null);
+        Cursor cursor = db.rawQuery("select Image,path_image from Word where word = '"+word+"'",null);
         cursor.moveToFirst();
-        Image = cursor.getString(0);
+        word_image_object = new word_Image_object(cursor.getString(0),cursor.getString(1));
+        Image.add(word_image_object);
         return Image;
     }
 }

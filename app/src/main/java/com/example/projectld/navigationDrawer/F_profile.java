@@ -166,7 +166,6 @@ public class F_profile extends AppCompatActivity {
         {
             if(data == null) return;
             Uri imageUri = data.getData();
-            Log.d("tttttttttttt", String.valueOf(imageUri));
             try {
                 image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
                 profile.setImageBitmap(image);

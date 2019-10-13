@@ -406,7 +406,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         Button goRank;
         ImageView goBack;
 
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog.setContentView(R.layout.score_popup);
 
         Score_ex3_word score = databaseHelper.Score_ex2(Groupname,user.getString("UserID",null)
@@ -468,7 +468,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         Button myScore;
         ImageView goBack;
 
-        dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+        dialog_rank.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog_rank.setContentView(R.layout.ranking_popup);
 
         ArrayList<Ranking_Item> ranking_items = databaseHelper.rank_ex2(Groupname);

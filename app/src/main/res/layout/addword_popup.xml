@@ -30,22 +30,33 @@
         android:layout_gravity="center|top"
         android:layout_marginTop="8dp"/>
 
+     <ImageView
+         android:layout_width="150dp"
+         android:layout_height="150dp"
+         android:id="@+id/upload_image"
+         android:layout_gravity="center"
+         android:src="@drawable/ic_upload"
+         android:layout_marginTop="20dp">
+     </ImageView>
+
+
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="พิมพ์เฉพาะตัวอักษรไทย"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:id="@+id/Add_Word"/>
 
     <android.support.v7.widget.AppCompatButton
-        android:theme="@style/DefaultButton"
+        android:theme="@style/PrimaryFlatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ตกลง"
-        android:layout_gravity="center"
+        android:layout_gravity="end"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:id="@+id/CF"/>

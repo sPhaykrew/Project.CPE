@@ -4,7 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -33,7 +36,9 @@ import com.example.projectld.exercise3.nomal.ex3_normal_game_st;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_inMenu;
 import com.example.projectld.exercise3.st_hard.st_ex3_hard_inMenu;
 import com.example.projectld.exercise3.st_nomal.st_ex3_normal_inMenu;
+import com.example.projectld.word_Image_object;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,7 +175,7 @@ public class GridviewAdapter extends BaseAdapter {
                         break;
                     case "Word_data" :
                         final Dialog meaning = new Dialog(context);
-                        meaning.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                        meaning.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
                         meaning.setContentView(R.layout.meaning_popup);
                         ImageView close = meaning.findViewById(R.id.this_back);
                         ImageView word_Image = meaning.findViewById(R.id.word_Image);
@@ -188,9 +193,17 @@ public class GridviewAdapter extends BaseAdapter {
                         word.setText(get_word);
                         mean.setText(get_mean);
 
-                        String path_image= db.get_Image_word(get_word);
-                        int set_image = context.getResources().getIdentifier(path_image , "drawable", context.getPackageName());
-                        word_Image.setImageResource(set_image);
+                        ArrayList<word_Image_object> path_image = db.get_Image_word(get_word);
+                        if (path_image.get(0).getDefualt_Image() != null) {
+                            int set_image = context.getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", context.getPackageName());
+                            word_Image.setImageResource(set_image);
+                        } else if (path_image.get(0).getPath_Image() != null) {
+                            File file = new File(path_image.get(0).getPath_Image());
+                            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                            word_Image.setImageBitmap(myBitmap);
+                        } else {
+                            word_Image.setVisibility(View.GONE);
+                        }
 
                         voice_word.setOnClickListener(new View.OnClickListener() {
                             @Override
