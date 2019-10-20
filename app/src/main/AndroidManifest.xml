@@ -93,6 +93,8 @@
         <activity android:name=".exercise2.st_ex2_adapter.st_ex2_select_image_update" />
         <activity android:name=".Edit_User_From_Admin.Admin_score_exercise2" />
         <activity android:name=".test" />
+        <activity android:name=".Export_Import.Export_Word" />
+        <activity android:name=".Export_Import.Export_Sentence" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

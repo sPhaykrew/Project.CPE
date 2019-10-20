@@ -162,10 +162,13 @@ public class st_ex3_easy_update extends AppCompatActivity {
                             String GroupName =  String.valueOf(Groupname.getText()); //ตั้งชื่อให้กับ Group
                             String Check_Group = databaseHelper.check_groupname_import(GroupName,"Setting_ex3_easy");
                             if (Check_Group == null || GroupName.equals(old_GroupName)) {
+                                databaseHelper.delete_st_ex3(old_GroupName);
                                 for (int i = 0; i < wordid_group.size(); i++) {
                                     String wordID = CheckWordID(wordid_group.get(i), query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
-                                    databaseHelper.update_ex3_easy_st(wordID, GroupName, old_GroupName, old_IdWord.get(i));
+                                    //databaseHelper.update_ex3_easy_st(wordID, GroupName, old_GroupName, old_IdWord.get(i));
+                                    databaseHelper.insert_group(wordID,GroupName,"Setting_ex3_easy","wordID");
                                 }
+                                databaseHelper.insert_score_easy(GroupName);
                                 st_ex3_easy_inMenu.close_activity.finish();
                                 st_ex3_easy_menu.close_activity.finish();
                                 dialog.dismiss();

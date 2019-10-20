@@ -24,7 +24,7 @@ public class segmentation {
             int start = boundary.first();
             for (int next = boundary.next(); next != java.text.BreakIterator.DONE; start = next, next = boundary.next()) {
 
-                    th.append(replace.substring(start, next) + ",");
+                    th.append(replace.substring(start,next) + ",");
                     word = th.toString();
                     word1 = word; }
             }

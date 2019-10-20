@@ -165,10 +165,13 @@ public class st_ex3_hard_update extends AppCompatActivity {
                             String GroupName =  String.valueOf(Groupname.getText()); //ตั้งชื่อให้กับ Group
                             String Check_Group = databaseHelper.check_groupname_import(GroupName,"Setting_ex3_hard");
                             if (Check_Group == null || GroupName.equals(old_GroupName)) {
+                                databaseHelper.delete_st_ex5(old_GroupName);
                                 for(int i=0;i<wordid_group.size();i++) {
                                     String sentenceID = CheckWordID(wordid_group.get(i),query_word); //หา word ว่าเท่ากับ wordid ที่เท่าไหร
-                                    databaseHelper.update_ex3_hard_st(sentenceID,GroupName,old_GroupName,old_IdWord.get(i));
+                                    //databaseHelper.update_ex3_hard_st(sentenceID,GroupName,old_GroupName,old_IdWord.get(i));
+                                    databaseHelper.insert_group(sentenceID, GroupName, "Setting_ex3_hard", "sentenceID");
                                 }
+                                databaseHelper.insert_score_hard(GroupName);
                                 st_ex3_hard_inMenu.close_activity.finish();
                                 st_ex3_hard_menu.close_activity.finish();
                                 dialog.dismiss();

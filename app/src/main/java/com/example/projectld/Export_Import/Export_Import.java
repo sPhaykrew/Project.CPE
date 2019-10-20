@@ -284,6 +284,124 @@ public class Export_Import {
         }
     }
 
+    public void export_Word(ArrayList<String> word,String export_name,String Click){
+
+        databaseHelper = new DatabaseHelper(context);
+
+        //generate data
+        StringBuilder data = new StringBuilder();
+        data.append("word");
+        data.append("\n"+"id,word");
+
+        for (int i=0;i<word.size();i++){
+            data.append("\n"+i+","+word.get(i));
+        }
+
+        switch (Click) {
+
+            case "export" :
+                //export ไปที่เครื่อง
+                String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+                File file = new File(directory_path);
+                if (!file.exists()) {
+                    file.mkdir();
+                    file.canExecute();
+                }
+                try {
+                    String file_name = directory_path + export_name + ".csv";
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                    fileOutputStream.write(data.toString().getBytes());
+                    fileOutputStream.close();
+                    Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.d("error", e.toString());
+                }
+                break;
+
+
+            case "share" :
+                try {
+                    //saving the file into device
+                    FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                    //OutputStream out = new FileOutputStream("data");
+                    out.write((data.toString()).getBytes());
+                    out.close();
+
+                    //exporting
+                    File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                    Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                    Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                    fileIntent.setType("text/csv");
+                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                    fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                    context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    public void export_Sentence(ArrayList<String> sentence,String export_name,String Click){
+
+        databaseHelper = new DatabaseHelper(context);
+
+        //generate data
+        StringBuilder data = new StringBuilder();
+        data.append("sentence");
+        data.append("\n"+"id,sentence");
+
+        for (int i=0;i<sentence.size();i++){
+            data.append("\n"+i+","+sentence.get(i));
+        }
+
+        switch (Click) {
+
+            case "export" :
+                //export ไปที่เครื่อง
+                String directory_path = Environment.getExternalStorageDirectory().getPath() + "/MyDocument/";
+                File file = new File(directory_path);
+                if (!file.exists()) {
+                    file.mkdir();
+                    file.canExecute();
+                }
+                try {
+                    String file_name = directory_path + export_name + ".csv";
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
+                    fileOutputStream.write(data.toString().getBytes());
+                    fileOutputStream.close();
+                    Toast.makeText(context, "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.d("error", e.toString());
+                }
+                break;
+
+
+            case "share" :
+                try {
+                    //saving the file into device
+                    FileOutputStream out = context.openFileOutput(export_name + ".csv", Context.MODE_PRIVATE);
+                    //OutputStream out = new FileOutputStream("data");
+                    out.write((data.toString()).getBytes());
+                    out.close();
+
+                    //exporting
+                    File filelocation = new File(context.getFilesDir(), export_name + ".csv");
+                    Uri path = FileProvider.getUriForFile(context, "com.example.projectld.fileprovider", filelocation);
+                    Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                    fileIntent.setType("text/csv");
+                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, export_name);
+                    fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                    context.startActivity(Intent.createChooser(fileIntent, "นำข้อมูลออกเสร็จสิ้น"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
     public void import_csv (Uri uri){
 
         ArrayList<String> GroupName = new ArrayList<>();
@@ -369,10 +487,10 @@ public class Export_Import {
                             String groupname = object_ex2.get(i).getGroupname(); //get groupname from table setting2
                             databaseHelper.Import_ex3(choice,groupname);
                             Toast.makeText(context,"นำข้อมูลเข้าเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-
-                            for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
-                                databaseHelper.insert_score_easy(GroupName.get(j));
                             }
+
+                        for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
+                            databaseHelper.insert_score_easy(GroupName.get(j));
 
                         }
                     } else {
@@ -396,12 +514,13 @@ public class Export_Import {
                             String groupname = object_ex2.get(i).getGroupname(); //get groupname from table setting2
                             databaseHelper.Import_ex4(choice,groupname);
                             Toast.makeText(context,"นำข้อมูลเข้าเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-
-                            for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
-                                databaseHelper.insert_score_normal(GroupName.get(j));
-                            }
-
                         }
+
+
+                        for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
+                            databaseHelper.insert_score_normal(GroupName.get(j));
+                        }
+
                     } else {
                         Toast.makeText(context,"แบบทดสอบชื่อซ้ำกัน กรุณาเปลี่ยนชื่อแบบทดสอบในแอปพลิเคชัน",Toast.LENGTH_SHORT).show();
                     }
@@ -423,16 +542,32 @@ public class Export_Import {
                             String groupname = object_ex2.get(i).getGroupname(); //get groupname from table setting2
                             databaseHelper.Import_ex5(choice,groupname);
                             Toast.makeText(context,"นำข้อมูลเข้าเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-
-                            for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
-                                databaseHelper.insert_score_hard(GroupName.get(j));
-                            }
-
                         }
+
+                        for (int j=0;j<GroupName.size();j++){ //เพิ่ม score = 0
+                            databaseHelper.insert_score_hard(GroupName.get(j));
+                        }
+
                     } else {
                         Toast.makeText(context,"แบบทดสอบชื่อซ้ำกัน กรุณาเปลี่ยนชื่อแบบทดสอบในแอปพลิเคชัน",Toast.LENGTH_SHORT).show();
                     }
                     dataRead.close();
+                    break;
+
+                case "word" :
+                    for (int i=0;i<object_ex2.size();i++){
+                        String word = object_ex2.get(i).getGroupname();
+                        databaseHelper.AddWord(word,"Word",null);
+                        Toast.makeText(context,"นำข้อมูลเข้าเสร็จสิ้น",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case "sentence" :
+                    for (int i=0;i<object_ex2.size();i++){
+                        String sentence = object_ex2.get(i).getGroupname();
+                        databaseHelper.AddWord(sentence,"Sentence",null);
+                        Toast.makeText(context,"นำข้อมูลเข้าเสร็จสิ้น",Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 default : Toast.makeText(context,"ไม่พบแบบทดสอบ กรุณาเลือกไฟล์อื่น",Toast.LENGTH_SHORT).show();

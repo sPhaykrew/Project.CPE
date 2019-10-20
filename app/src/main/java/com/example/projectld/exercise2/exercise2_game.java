@@ -132,6 +132,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         Character character = databaseHelper.character(char_array.get(count));
+        Collections.shuffle(character.getChoice());
 
         //set image
         String get_image = character.getImage();

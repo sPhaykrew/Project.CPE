@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/rank"
             android:layout_weight="1"
-            android:layout_marginStart="40dp"
+            android:gravity="start"
             android:textSize="14dp"
             android:text="Rank"/>
 
@@ -34,8 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sumScore"
-            android:gravity="right"
-            android:layout_marginEnd="40dp"
+            android:gravity="end"
             android:layout_weight="1"
             android:textSize="14dp"
             android:text="Score"/>

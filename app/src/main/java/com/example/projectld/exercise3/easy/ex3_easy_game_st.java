@@ -53,6 +53,7 @@ import com.example.projectld.word_Image_object;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
@@ -226,11 +227,12 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
          */
         answer = (LinearLayout) findViewById(R.id.answer);
         int loop = sentence.size();
-        ArrayList<String> sentenceRD = random(sentence,loop);
+//        ArrayList<String> sentenceRD = random(sentence,loop);
+        Collections.shuffle(sentence);
 
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
-            answerCH.setText(sentenceRD.get(i));
+            answerCH.setText(sentence.get(i));
             answerCH.setTextSize(30);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());

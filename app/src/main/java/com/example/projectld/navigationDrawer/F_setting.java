@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Export_Import.Export_Import;
+import com.example.projectld.Export_Import.Export_Sentence;
+import com.example.projectld.Export_Import.Export_Word;
 import com.example.projectld.Export_Import.Export_adapter;
 import com.example.projectld.R;
 import com.example.projectld.exercise2.st_ex2_adapter.st_ex2_menu;
@@ -32,7 +34,8 @@ import java.util.ArrayList;
 
 public class F_setting extends AppCompatActivity {
 
-    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence,import_db,export_ex2,export_ex3,export_ex4,export_ex5;
+    Button ex2,ex3,ex4,ex5,Add_Word,Add_Sentence,import_db,export_ex2,
+            export_ex3,export_ex4,export_ex5,export_word,export_sentence;
 
     Export_adapter export_adapter;
     ArrayList<String> GroupName = new ArrayList<>();
@@ -77,6 +80,8 @@ public class F_setting extends AppCompatActivity {
         export_ex3 = findViewById(R.id.Export_ex3);
         export_ex4 = findViewById(R.id.Export_ex4);
         export_ex5 = findViewById(R.id.Export_ex5);
+        export_word = findViewById(R.id.Export_word);
+        export_sentence = findViewById(R.id.Export_sentence);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
         dialog = new Dialog(this);
@@ -127,6 +132,22 @@ public class F_setting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), com.example.projectld.Add_Sentence.class);
+                startActivity(intent);
+            }
+        });
+
+        export_word.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Export_Word.class);
+                startActivity(intent);
+            }
+        });
+
+        export_sentence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Export_Sentence.class);
                 startActivity(intent);
             }
         });
@@ -438,8 +459,8 @@ public class F_setting extends AppCompatActivity {
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/*");
                 startActivityForResult(intent,123);
-            }
-        });
+                }
+            });
         }
 
         @Override
