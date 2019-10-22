@@ -95,13 +95,13 @@ public class login extends AppCompatActivity {
                         Intent intent = new Intent(login.this, menu.class);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(login.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(login.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(login.this, "User not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(login.this, "รหัสผ่านไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
                         PW.setText("");
                     }
                 }else{
-                    Toast.makeText(login.this, "Empty Fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login.this, "ไม่พบผู้ใช้งาน", Toast.LENGTH_SHORT).show();
                 }
             }
         });

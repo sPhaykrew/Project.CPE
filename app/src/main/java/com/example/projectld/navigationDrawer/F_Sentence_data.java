@@ -55,7 +55,7 @@ public class F_Sentence_data extends AppCompatActivity {
         gridView = findViewById(R.id.GridView_Sentence);
         ArrayList Sentence = databaseHelper.queryword("Sentence");
 
-        gridviewAdapter = new GridviewAdapter(Sentence,getApplicationContext(),"Sentence_Data",R.drawable.radius_button_color2);
+        gridviewAdapter = new GridviewAdapter(Sentence,getApplicationContext(),"Sentence_Data",R.drawable.radius_button_color_ex2);
         gridView.setAdapter(gridviewAdapter);
     }
 

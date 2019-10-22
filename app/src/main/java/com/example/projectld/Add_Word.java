@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -72,7 +73,7 @@ public class Add_Word extends AppCompatActivity {
         gridView = findViewById(R.id.GridView_Sentence);
         ArrayList Word = databaseHelper.queryword("Word");
 
-        gridviewAdapter = new GridviewAdapter(Word,this,"Delete_Mod_Word",R.drawable.radius_button_color1);
+        gridviewAdapter = new GridviewAdapter(Word,this,"Delete_Mod_Word",R.drawable.radius_button_color_ex2);
         gridView.setAdapter(gridviewAdapter);
 
         FloatingActionButton Add = findViewById(R.id.Add);

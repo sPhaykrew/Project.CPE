@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.projectld.Export_Import.Import_object;
 import com.example.projectld.My_Score.Score.HorizontalModel;
 import com.example.projectld.exercise2.Character;
+import com.example.projectld.exercise2.Object_Choice;
 import com.example.projectld.exercise2.st_ex2_adapter.Item_st_ex2;
 import com.example.projectld.exercise3.word;
 import com.example.projectld.recyclerView_Ranking.Ranking_Item;
@@ -19,6 +20,8 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
 
@@ -467,6 +470,48 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         db.close();
         return get_groupname;
+    }
+
+    public ArrayList<Object_Choice> test(String Groupname, String UserID){
+        Object_Choice object_choice = null;
+        ArrayList<Object_Choice> arrayList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> Char_name = new ArrayList<>();
+        ArrayList<String> Choice = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("select Setting_ex2.st_ex2_id,Character_ex2.Char from Setting_ex2\n" +
+                "inner join Character_ex2 on Setting_ex2.choiceID = Character_ex2.choiceID\n" +
+                "where Setting_ex2.GroupName = '"+Groupname+"'",null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Choice.add(cursor.getString(0));
+            Char_name.add(cursor.getString(1));
+            cursor.moveToNext();
+        }
+
+        /**
+         * ลบคำซ่ำใน array charset
+         */
+        Set<String> set = new HashSet<>(Char_name);
+        Char_name.clear();
+        Char_name.addAll(set);
+
+        int index1 = 0;
+        int index2 = 1;
+        int indexChar = 0;
+
+        for (int i=0;i<Choice.size();i=i+2) {
+            object_choice = new Object_Choice(Choice.get(index1), Choice.get(index2),Char_name.get(indexChar));
+            arrayList.add(object_choice);
+
+            index1 = index1+2;
+            index2 = index2+2;
+            indexChar++;
+        }
+
+        db.close();
+        return arrayList;
     }
 
     public ArrayList<String> getAll_User(String select){
@@ -1037,6 +1082,29 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return Char;
     }
 
+    public Character get_choice_ex2_st(ArrayList<String> stID){
+        Character character = null;
+        String Image = null;
+        String Correct = null;
+        ArrayList<String> arrayList = new ArrayList<>();
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        for (int i=0;i<stID.size();i++) {
+            Cursor cursor = db.rawQuery("select Character_ex2.Image,Character_ex2.Image_char,Character_ex2.Anser FROM Setting_ex2 INNER JOIN Character_ex2 \n" +
+                    "on Setting_ex2.choiceID = Character_ex2.choiceID where Setting_ex2.st_ex2_id = '" + stID.get(i) + "'", null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                Image = cursor.getString(0);
+                arrayList.add(cursor.getString(1));
+                Correct = cursor.getString(2);
+                cursor.moveToNext();
+            }
+        }
+        db.close();
+        character = new Character(Image,arrayList,Correct);
+        return character;
+    }
+
     public Item_st_ex2 item_st_ex2(String Char){
         ArrayList<String> get_char = new ArrayList<>();
         String Character = null;
@@ -1050,7 +1118,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             cursor.moveToNext();
         }
         db.close();
-        item_st_ex2 = new Item_st_ex2(Character,get_char.get(0),get_char.get(1),get_char.get(2));
+        item_st_ex2 = new Item_st_ex2(Character,get_char.get(0),get_char.get(1),get_char.get(2),get_char.get(3));
         return item_st_ex2;
     }
 

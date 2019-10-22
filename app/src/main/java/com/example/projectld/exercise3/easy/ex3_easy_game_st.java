@@ -206,7 +206,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
             TextView valueQT = new TextView(this);
             valueQT.setText("__");
             valueQT.setId(i);
-            valueQT.setTextSize(30);
+            valueQT.setTextSize(32);
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -233,7 +233,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
             answerCH.setText(sentence.get(i));
-            answerCH.setTextSize(30);
+            answerCH.setTextSize(32);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -374,7 +374,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
 
                 for (int i=0;i<answer.getChildCount();i++){ //setText size all view
                     TextView textView = (TextView) answer.getChildAt(i);
-                    textView.setTextSize(30);
+                    textView.setTextSize(32);
                 }
                 status = String.valueOf(((TextView) view).getTag());
                 status_id = ((TextView) view).getId();
@@ -445,7 +445,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
                     else {
                         Score = Score - 5;
                         incorrect.start();
-                        Toast.makeText(ex3_easy_game_st.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ex3_easy_game_st.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -527,7 +527,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
                             incorrect.start();
                             Score = Score - 5;
-                            Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

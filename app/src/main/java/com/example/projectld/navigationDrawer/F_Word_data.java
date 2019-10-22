@@ -1,5 +1,8 @@
 package com.example.projectld.navigationDrawer;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,10 +29,13 @@ public class F_Word_data extends AppCompatActivity {
     GridView gridView;
     GridviewAdapter gridviewAdapter;
 
+    public static Activity f_word_data;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_word_data);
+
+        f_word_data = this;
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -53,7 +59,8 @@ public class F_Word_data extends AppCompatActivity {
         gridView = findViewById(R.id.GridView_Sentence);
         ArrayList<String> Word = databaseHelper.queryword("Word");
 
-        gridviewAdapter = new GridviewAdapter(Word,F_Word_data.this,"Word_data",R.drawable.radius_button_color1);
+        gridviewAdapter = new GridviewAdapter(Word,F_Word_data.this,"Word_data",R.drawable.radius_button_color_ex2);
         gridView.setAdapter(gridviewAdapter);
+
+        }
     }
-}

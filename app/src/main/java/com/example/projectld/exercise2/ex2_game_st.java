@@ -53,7 +53,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
     SharedPreferences sharedPreferences,user; //เก็บค่า I ไม่ให้หาย
     String Groupname,ArraySet;
 
-    ArrayList<String> Char_set = new ArrayList<>();
+    String Array_choice1,Array_choice2,Array_char;
+
+    ArrayList<Object_Choice> Char_set = new ArrayList<>();
     DatabaseHelper databaseHelper;
 
     Dialog dialog,dialog_rank,dialog_correct; //popup score
@@ -147,22 +149,32 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
 
         if (first == 0){
             //count = bundle.getInt("countarray");
-            Char_set = databaseHelper.get_Groupname_ex2_st(Groupname,user.getString("UserID",null));
+            Char_set = databaseHelper.test(Groupname,user.getString("UserID",null));
 
-            /**
-             * ลบคำซ่ำใน array charset
-             */
-            Set<String> set = new HashSet<>(Char_set);
-            Char_set.clear();
-            Char_set.addAll(set);
+//            /**
+//             * ลบคำซ่ำใน array charset
+//             */
+//            Set<String> set = new HashSet<>(Char_set);
+//            Char_set.clear();
+//            Char_set.addAll(set);
 
             first++;
             checkFIrst(first);
 
         } else {
             LoadArray();
-            String[] playlists = ArraySet.split(",");
-            Char_set.addAll(Arrays.asList(playlists));
+            String[] Char = Array_char.split(",");
+            String[] Choice1 = Array_choice1.split(",");
+            String[] Choice2 = Array_choice2.split(",");
+
+            ArrayList<String> Char_load = new ArrayList<>(Arrays.asList(Char));
+            ArrayList<String> Choice1_load = new ArrayList<>(Arrays.asList(Choice1));
+            ArrayList<String> Choice2_load = new ArrayList<>(Arrays.asList(Choice2));
+
+            for(int i=0;i<Char_load.size();i++){
+                Object_Choice object_choice = new Object_Choice(Choice1_load.get(i),Choice2_load.get(i),Char_load.get(i));
+                Char_set.add(object_choice);
+            }
             Load_Array_Score();
         }
 
@@ -175,7 +187,11 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         back = findViewById(R.id.back_this);
         voice = findViewById(R.id.voice);
 
-        Character character = databaseHelper.character(Char_set.get(count));
+        ArrayList<String> Choice = new ArrayList<>();
+        Choice.add(Char_set.get(count).getChoice1());
+        Choice.add(Char_set.get(count).getChoice2());
+
+        Character character = databaseHelper.get_choice_ex2_st(Choice);
 
         //set image
         String get_image = character.getImage();
@@ -212,7 +228,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
                     cerrent_Score.add(String.valueOf(Score));
-                    cerrent_Char.add(Char_set.get(count));
+                    cerrent_Char.add(Char_set.get(count).getChar());
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try { //ถ้าไม่ทำ try catch ไว้ กดถูกไปเรื่อยๆหน้าสุดท้ายจะ error เนื่องจาก index ของ count
@@ -237,7 +253,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
                     cerrent_Score.add(String.valueOf(Score));
-                    cerrent_Char.add(Char_set.get(count));
+                    cerrent_Char.add(Char_set.get(count).getChar());
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
@@ -262,7 +278,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
                     cerrent_Score.add(String.valueOf(Score));
-                    cerrent_Char.add(Char_set.get(count));
+                    cerrent_Char.add(Char_set.get(count).getChar());
                     SaveArray_Score(cerrent_Char,cerrent_Score);
 
                     try {
@@ -288,12 +304,20 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     count--;
 //                    Popup_score();
                 } else {
+                    StringBuilder Sum_Char = new StringBuilder(); // เซฟ arrray Char_set
+                    StringBuilder Sum_Choice1 = new StringBuilder(); // เซฟ arrray Char_set
+                    StringBuilder Sum_Choice2 = new StringBuilder(); // เซฟ arrray Char_set
 
-                    StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
                     for (int i = 0; i < Char_set.size(); i++) {
-                        Sumwordset.append(Char_set.get(i)).append(",");
-                    }
-                    SaveArray(Sumwordset.toString());
+                        Sum_Char.append(Char_set.get(i).getChar()).append(",");
+                        Sum_Choice1.append(Char_set.get(i).getChoice1()).append(",");
+                        Sum_Choice2.append(Char_set.get(i).getChoice2()).append(",");                    }
+                    //SaveArray(Sumwordset.toString());
+
+                    SaveArray_char(Sum_Char.toString());
+                    SaveArray_choice1(Sum_Choice1.toString());
+                    SaveArray_choice2(Sum_Choice2.toString());
+
                     SaveInt(count);
                     Intent intent = getIntent();
                     finish();
@@ -321,7 +345,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tts.speak(Char_set.get(count));
+                tts.speak(Char_set.get(count).getChar());
             }
         });
 
@@ -361,16 +385,33 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         editor.commit();
     }
 
-    public void SaveArray(String array){ //เซฟค่า count
+    public void SaveArray_char(String array){ //เซฟค่า count
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("array",array);
+        editor.putString("char",array);
+        editor.commit();
+    }
+
+    public void SaveArray_choice1(String array){ //เซฟค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("choice1",array);
+        editor.commit();
+    }
+
+    public void SaveArray_choice2(String array){ //เซฟค่า count
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("choice2",array);
         editor.commit();
     }
 
     public void LoadArray(){ // โหลดค่า count
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        ArraySet = sharedPreferences.getString("array", "Hello!");
+        Array_char = sharedPreferences.getString("char", "Hello!");
+        Array_choice1 = sharedPreferences.getString("choice1", "Hello!");
+        Array_choice2 = sharedPreferences.getString("choice2", "Hello!");
+
     }
 
     public void SaveArray_Score(ArrayList<String> Char,ArrayList<String> score){ //เก็บคะแนนไว้ในอาเรย์กับตัวอักษรของคะแนนนั้น แล้วส่ง update ทีเดียว
@@ -526,11 +567,23 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     dialog_correct.dismiss();
                     Popup_score();
                 } else {
-                    StringBuilder Sumwordset = new StringBuilder(); // เซฟ arrray Char_set
+                    StringBuilder Sum_Char = new StringBuilder(); // เซฟ arrray Char_set
+                    StringBuilder Sum_Choice1 = new StringBuilder(); // เซฟ arrray Char_set
+                    StringBuilder Sum_Choice2 = new StringBuilder(); // เซฟ arrray Char_set
+
                     for (int i = 0; i < Char_set.size(); i++) {
-                        Sumwordset.append(Char_set.get(i)).append(",");
+                        Sum_Char.append(Char_set.get(i).getChar()).append(",");
+                        Sum_Choice1.append(Char_set.get(i).getChoice1()).append(",");
+                        Sum_Choice2.append(Char_set.get(i).getChoice2()).append(",");
                     }
-                    SaveArray(Sumwordset.toString());
+
+//                    Log.d("rrrrrrrrr",Sum_Char.toString());
+//                    Log.d("rrrrrrrrr",Sum_Choice1.toString());
+//                    Log.d("rrrrrrrrr",Sum_Choice2.toString());
+
+                    SaveArray_char(Sum_Char.toString());
+                    SaveArray_choice1(Sum_Choice1.toString());
+                    SaveArray_choice2(Sum_Choice2.toString());
                     SaveInt(count);
 
                     Intent intent = getIntent();

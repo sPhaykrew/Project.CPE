@@ -65,7 +65,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        app:cardBackgroundColor="#42A5F5"
+        app:cardBackgroundColor="#0091EA"
         app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toTopOf="@+id/hard"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +140,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="แบบฝึกที่ 3 "
+                    android:text="แบบฝึกที่ \n3,4,5 "
                     android:textColor="#ffffff"
                     android:textSize="24dp"/>
 

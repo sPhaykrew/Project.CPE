@@ -6,16 +6,17 @@ public class Item_st_ex2 {
     private String name_char;
     private int check = 0;
 
-    private String check1,check2,check3;
-    private String name_image1,name_image2,name_image3;
+    private String check1,check2,check3,check4;
+    private String name_image1,name_image2,name_image3,name_image4;
 
 
 
-    public Item_st_ex2(String name_char,String name_image1,String name_image2 ,String name_image3){
+    public Item_st_ex2(String name_char,String name_image1,String name_image2 ,String name_image3,String name_image4){
         this.name_char = name_char;
         this.name_image1 = name_image1;
         this.name_image2 = name_image2;
         this.name_image3 = name_image3;
+        this.name_image4 = name_image4;
 
     }
 
@@ -81,5 +82,21 @@ public class Item_st_ex2 {
 
     public void setName_image3(String name_image3) {
         this.name_image3 = name_image3;
+    }
+
+    public String getCheck4() {
+        return check4;
+    }
+
+    public void setCheck4(String check4) {
+        this.check4 = check4;
+    }
+
+    public String getName_image4() {
+        return name_image4;
+    }
+
+    public void setName_image4(String name_image4) {
+        this.name_image4 = name_image4;
     }
 }

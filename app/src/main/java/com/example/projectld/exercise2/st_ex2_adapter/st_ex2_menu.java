@@ -52,7 +52,7 @@ public class st_ex2_menu extends AppCompatActivity {
         ArrayList<String> Groupname = dbHelper.GetGroupname("Setting_ex2","st_ex2_id");
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_ex2",R.drawable.radius_button_color2);
+        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_ex2",R.drawable.radius_button_color_ex2);
         gridView.setAdapter(gridviewAdapter);
 
         TextView textHide = findViewById(R.id.noEX);

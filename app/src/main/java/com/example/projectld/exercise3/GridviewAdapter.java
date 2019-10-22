@@ -1,12 +1,15 @@
 package com.example.projectld.exercise3;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,11 @@ import com.example.projectld.exercise3.nomal.ex3_normal_game_st;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_inMenu;
 import com.example.projectld.exercise3.st_hard.st_ex3_hard_inMenu;
 import com.example.projectld.exercise3.st_nomal.st_ex3_normal_inMenu;
+import com.example.projectld.navigationDrawer.F_Word_data;
 import com.example.projectld.word_Image_object;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +56,13 @@ public class GridviewAdapter extends BaseAdapter {
     SharedPreferences sharedPreferences;
     String mode;
     Intent intent;
-    int test;
+    int color;
 
-    public GridviewAdapter(List<String> lstSource, Context context,String mode,int test) {
+    public GridviewAdapter(List<String> lstSource, Context context,String mode,int color) {
         this.lstSource = lstSource;
         this.context = context;
         this.mode = mode;
-        this.test = test;
+        this.color = color;
     }
 
     @Override
@@ -85,7 +90,7 @@ public class GridviewAdapter extends BaseAdapter {
         button = new Button(context);
         button.setLayoutParams(new GridView.LayoutParams(220, 220));
         button.setPadding(0, 0, 0, 0);
-        button.setBackgroundResource(test);
+        button.setBackgroundResource(color);
         button.setTextColor(parseColor("#ffffff"));
 
         button.setText(lstSource.get(position));
@@ -232,14 +237,39 @@ public class GridviewAdapter extends BaseAdapter {
                     case "Delete_Mod_Word" :
                         final Dialog dialog = new Dialog(context);
                         dialog.setCanceledOnTouchOutside(false);
-                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
                         dialog.setContentView(R.layout.modify_delete_word_popup);
                         final DatabaseHelper databaseHelper = new DatabaseHelper(context);
 
                         final EditText editText = dialog.findViewById(R.id.Edit_Word);
                         Button delete = dialog.findViewById(R.id.Delete);
                         Button modify = dialog.findViewById(R.id.modify);
+                        ImageView upload_picture = dialog.findViewById(R.id.upload_image);
                         editText.setText(String.valueOf(finalButton.getText()));
+
+                        //แสดงรูปจาก path ใช้ object เพราะว่ามันมีจะรูปที่เป็น  defual กับรูปที่เก็บไว้ในเครื่อง
+                        ArrayList<word_Image_object> path_image2  = databaseHelper.get_Image_word(finalButton.getText().toString());
+                        if (path_image2.get(0).getDefualt_Image() != null) {
+                            int set_image = context.getResources().getIdentifier(path_image2.get(0).getDefualt_Image(), "drawable", context.getPackageName());
+                            upload_picture.setImageResource(set_image);
+                        } else if (path_image2.get(0).getPath_Image() != null) {
+                            File file = new File(path_image2.get(0).getPath_Image());
+                            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                            upload_picture.setImageBitmap(myBitmap);
+                        } else {
+                            //upload_picture.setVisibility(View.GONE);
+                        }
+
+                        upload_picture.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent();
+                                intent.setType("image/*");
+                                intent.setAction(Intent.ACTION_GET_CONTENT);
+                                ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+                            }
+                        });
+
                         dialog.show();
 
                         modify.setOnClickListener(new View.OnClickListener() {
@@ -290,8 +320,8 @@ public class GridviewAdapter extends BaseAdapter {
                     case "Delete_Mod_Sentence" :
                         final Dialog dialog_sentence = new Dialog(context);
                         dialog_sentence.setCanceledOnTouchOutside(false);
-                        dialog_sentence.getWindow().setBackgroundDrawableResource(R.drawable.relative_layout_radius);
-                        dialog_sentence.setContentView(R.layout.modify_delete_word_popup);
+                        dialog_sentence.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                        dialog_sentence.setContentView(R.layout.modify_delete_sentence_popup);
                         final DatabaseHelper databaseHelper_sentence = new DatabaseHelper(context);
 
                         final EditText editText_sentence = dialog_sentence.findViewById(R.id.Edit_Word);
@@ -364,4 +394,5 @@ public class GridviewAdapter extends BaseAdapter {
             }
         }); return button;
     }
+
 }

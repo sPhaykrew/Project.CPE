@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,75 +29,99 @@
                 android:id="@+id/textchar"
                 android:layout_marginStart="15dp"
                 android:textSize="32dp"
-                android:text="Charecter">
+                android:text="ก">
             </TextView>
 
 
-            <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-
-            <ImageView
-                android:id="@+id/image_char1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:padding="30dp"
-                android:textColor="@android:color/black" />
-
-            <CheckBox
-                android:id="@+id/checkbox1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-
-                <ImageView
-                    android:id="@+id/image_char2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:padding="30dp"
-                    android:textColor="@android:color/black"/>
-
-                <CheckBox
-                    android:id="@+id/checkbox2"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right" />
+                    android:layout_height="wrap_content">
 
-            </FrameLayout>
+                    <CheckBox
+                        android:id="@+id/checkbox1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
 
-            <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
+                    <ImageView
+                        android:id="@+id/image_char1"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="30dp"
+                        android:textColor="@android:color/black" />
 
-                <ImageView
-                    android:id="@+id/image_char3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:padding="30dp"
-                    android:textColor="@android:color/black"/>
+                </FrameLayout>
 
-                <CheckBox
-                    android:id="@+id/checkbox3"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right" />
+                    android:layout_height="wrap_content">
 
-            </FrameLayout>
+                    <CheckBox
+                        android:id="@+id/checkbox2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
+
+                    <ImageView
+                        android:id="@+id/image_char2"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="30dp"
+                        android:textColor="@android:color/black" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/checkbox3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
+
+                    <ImageView
+                        android:id="@+id/image_char3"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="30dp"
+                        android:textColor="@android:color/black" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/checkbox4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right" />
+
+                    <ImageView
+                        android:id="@+id/image_char4"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="30dp"
+                        android:textColor="@android:color/black" />
+
+                </FrameLayout>
 
 
         </LinearLayout>
+
+        </HorizontalScrollView>
+
 
     </LinearLayout>
 

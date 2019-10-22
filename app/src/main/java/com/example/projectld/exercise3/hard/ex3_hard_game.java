@@ -171,7 +171,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
             TextView valueQT = new TextView(this);
             valueQT.setText("__");
             valueQT.setId(i);
-            valueQT.setTextSize(30);
+            valueQT.setTextSize(32);
             valueQT.setOnClickListener(setAnswer(valueQT));
             valueQT.setTag(sentence.get(i));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -197,7 +197,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
         for(int i=0 ; i < loop ; i++){
             TextView answerCH = new TextView(this);
             answerCH.setText(sentenceRD.get(i));
-            answerCH.setTextSize(30);
+            answerCH.setTextSize(32);
             answerCH.setId(i);
             answerCH.setTag(answerCH.getText());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -292,7 +292,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
 
                 for (int i=0;i<answer.getChildCount();i++){ //setText size all view
                     TextView textView = (TextView) answer.getChildAt(i);
-                    textView.setTextSize(30);
+                    textView.setTextSize(32);
                 }
                 status = String.valueOf(((TextView) view).getTag());
                 status_id = ((TextView) view).getId();
@@ -363,7 +363,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                         dropTarget.setOnDragListener(null);
 
                         if (finish == start){
-                            Toast.makeText(ex3_hard_game.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(ex3_hard_game.this,"เสร็จสิ้น",Toast.LENGTH_LONG).show();
 
                             count++;
                             if(count >= wordset.size()){
@@ -380,7 +380,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
                         incorrect.start();
-                        Toast.makeText(ex3_hard_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ex3_hard_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -439,7 +439,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                         status = null;
 
                         if (finish == start){
-                            Toast.makeText(ex3_hard_game.this,"เสร็จสิ้น",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ex3_hard_game.this,"เสร็จสิ้น",Toast.LENGTH_SHORT).show();
 
                             count++;
                             if(count >= wordset.size()){
@@ -456,7 +456,7 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
                             incorrect.start();
-                            Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

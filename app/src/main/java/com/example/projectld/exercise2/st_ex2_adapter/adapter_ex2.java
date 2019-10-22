@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,8 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
 
     public static class ex2_ViewHolder extends RecyclerView.ViewHolder {
         TextView mTextView1;
-        ImageView mImageView1,mImageView2,mImageView3;
-        CheckBox checkBox1,checkBox2,checkBox3;
+        ImageView mImageView1,mImageView2,mImageView3,mImageView4;
+        CheckBox checkBox1,checkBox2,checkBox3,checkBox4;
 
         public ex2_ViewHolder(View itemView) {
             super(itemView);
@@ -37,9 +38,11 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
             mImageView1 = itemView.findViewById(R.id.image_char1);
             mImageView2 = itemView.findViewById(R.id.image_char2);
             mImageView3 = itemView.findViewById(R.id.image_char3);
+            mImageView4 = itemView.findViewById(R.id.image_char4);
             checkBox1 = itemView.findViewById(R.id.checkbox1);
             checkBox2 = itemView.findViewById(R.id.checkbox2);
             checkBox3 = itemView.findViewById(R.id.checkbox3);
+            checkBox4 = itemView.findViewById(R.id.checkbox4);
         }
     }
 
@@ -66,16 +69,19 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
         int char1 = context.getResources().getIdentifier(currentItem.getName_image1() , "drawable", context.getPackageName());
         int char2 = context.getResources().getIdentifier(currentItem.getName_image2() , "drawable", context.getPackageName());
         int char3 = context.getResources().getIdentifier(currentItem.getName_image3() , "drawable", context.getPackageName());
+        int char4 = context.getResources().getIdentifier(currentItem.getName_image4() , "drawable", context.getPackageName());
 
         holder.mTextView1.setText(currentItem.getName_char());
 
         holder.mImageView1.setImageResource(char1);
         holder.mImageView2.setImageResource(char2);
         holder.mImageView3.setImageResource(char3);
+        holder.mImageView4.setImageResource(char4);
 
         holder.checkBox1.setChecked(mSelectedItemsIds.get(position));
         holder.checkBox2.setChecked(mSelectedItemsIds.get(position));
         holder.checkBox3.setChecked(mSelectedItemsIds.get(position));
+        holder.checkBox4.setChecked(mSelectedItemsIds.get(position));
 
         holder.checkBox1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +121,20 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                 } else {
                     currentItem.setCheck(currentItem.getCheck()-1);
                     currentItem.setCheck3(null);
+                }
+            }
+        });
+
+        holder.checkBox4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox4.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image4());
+                    currentItem.setCheck4(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck4(null);
                 }
             }
         });
@@ -164,6 +184,21 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
             }
         });
 
+        holder.mImageView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.checkBox4.setChecked(!holder.checkBox4.isChecked());
+                if (holder.checkBox4.isChecked()){
+                    currentItem.setCheck(currentItem.getCheck()+1);
+                    String image = String.valueOf(currentItem.getName_image4());
+                    currentItem.setCheck4(image);
+                } else {
+                    currentItem.setCheck(currentItem.getCheck()-1);
+                    currentItem.setCheck4(null);
+                }
+            }
+        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +225,9 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     if (mExampleList.get(0).getCheck3() != null){
                         setChar.add(mExampleList.get(0).getCheck3());
                     }
+                    if (mExampleList.get(0).getCheck4() != null){
+                        setChar.add(mExampleList.get(0).getCheck4());
+                    }
                     if (mExampleList.get(1).getCheck1() != null){
                         setChar.add(mExampleList.get(1).getCheck1());
                     }
@@ -198,6 +236,9 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     }
                     if (mExampleList.get(1).getCheck3() != null){
                         setChar.add(mExampleList.get(1).getCheck3());
+                    }
+                    if (mExampleList.get(1).getCheck4() != null){
+                        setChar.add(mExampleList.get(1).getCheck4());
                     }
                     if (mExampleList.get(2).getCheck1() != null){
                         setChar.add(mExampleList.get(2).getCheck1());
@@ -208,6 +249,9 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     if (mExampleList.get(2).getCheck3() != null){
                         setChar.add(mExampleList.get(2).getCheck3());
                     }
+                    if (mExampleList.get(2).getCheck4() != null){
+                        setChar.add(mExampleList.get(2).getCheck4());
+                    }
                     if (mExampleList.get(3).getCheck1() != null){
                         setChar.add(mExampleList.get(3).getCheck1());
                     }
@@ -217,6 +261,9 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     if (mExampleList.get(3).getCheck3() != null){
                         setChar.add(mExampleList.get(3).getCheck3());
                     }
+                    if (mExampleList.get(3).getCheck4() != null){
+                        setChar.add(mExampleList.get(3).getCheck4());
+                    }
                     if (mExampleList.get(4).getCheck1() != null){
                         setChar.add(mExampleList.get(4).getCheck1());
                     }
@@ -225,6 +272,9 @@ public class adapter_ex2 extends RecyclerView.Adapter<adapter_ex2.ex2_ViewHolder
                     }
                     if (mExampleList.get(4).getCheck3() != null){
                         setChar.add(mExampleList.get(4).getCheck3());
+                    }
+                    if (mExampleList.get(4).getCheck4() != null){
+                        setChar.add(mExampleList.get(4).getCheck4());
                     }
 
                     final Dialog dialog = new Dialog(context);
