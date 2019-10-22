@@ -72,6 +72,13 @@ public class modify_word extends AppCompatActivity {
         if (path_image2.get(0).getDefualt_Image() != null ) {
             int set_image = getResources().getIdentifier(path_image2.get(0).getDefualt_Image(), "drawable",getPackageName());
             upload_picture.setImageResource(set_image);
+
+            if (path_image2.get(0).getDefualt_Image().equals("null")){
+                File file = new File(path_image2.get(0).getPath_Image());
+                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                upload_picture.setImageBitmap(myBitmap);
+            }
+
         } else if (path_image2.get(0).getPath_Image() != null) {
             File file = new File(path_image2.get(0).getPath_Image());
             Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());

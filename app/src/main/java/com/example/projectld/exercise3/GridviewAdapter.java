@@ -200,9 +200,16 @@ public class GridviewAdapter extends BaseAdapter {
                         mean.setText(get_mean);
 
                         ArrayList<word_Image_object> path_image = db.get_Image_word(get_word);
-                        if (path_image.get(0).getDefualt_Image() != null || !path_image.get(0).getDefualt_Image().equals("null")) {
+                        if (path_image.get(0).getDefualt_Image() != null) {
                             int set_image = context.getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", context.getPackageName());
                             word_Image.setImageResource(set_image);
+
+                            if (path_image.get(0).getDefualt_Image().equals("null")){
+                                File file = new File(path_image.get(0).getPath_Image());
+                                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                word_Image.setImageBitmap(myBitmap);
+                            }
+
                         } else if (path_image.get(0).getPath_Image() != null) {
                             File file = new File(path_image.get(0).getPath_Image());
                             Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
