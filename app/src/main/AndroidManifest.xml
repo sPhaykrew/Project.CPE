@@ -95,6 +95,7 @@
         <activity android:name=".test" />
         <activity android:name=".Export_Import.Export_Word" />
         <activity android:name=".Export_Import.Export_Sentence" />
+        <activity android:name=".modify_word" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

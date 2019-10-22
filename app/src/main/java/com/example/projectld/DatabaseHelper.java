@@ -778,12 +778,26 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return delete;
     }
 
-    public void update_word (String word,String mod,String table,String column){
+    public void update_word (String word,String mod,String path_image){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         Val.put("word",mod);
+        Val.put("path_image",path_image);
+        Val.put("Image","null");
         try {
-            long rows = db.update(table,Val, column + " = '" + word +"'", null);
+            long rows = db.update("Word",Val, "word = '" + word +"'", null);
+        } catch (Exception e){
+            Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+
+    public void update_sentence (String word,String mod){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Val = new ContentValues();
+        Val.put("sentence",mod);
+        try {
+            long rows = db.update("Sentence",Val,  "sentence = '" + word +"'", null);
         } catch (Exception e){
             Toast.makeText(context,"มีคำในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
         }

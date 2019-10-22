@@ -188,7 +188,7 @@ public class Add_Word extends AppCompatActivity {
             FileOutputStream fileOutputStream = new FileOutputStream(new File(file_name));
             fileOutputStream.write(data);
             fileOutputStream.close();
-            Toast.makeText(getApplicationContext(), "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "นำออกข้อมูลเสร็จสิ้น", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.d("error", e.toString());
         }
