@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
 
     HomeWatcher mHomeWatcher;
 
+    MediaPlayer correct,incorrect;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +77,8 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
         });
         mHomeWatcher.startWatch();
 
-        final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
-        final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
-
-        ImageView set_Answer = findViewById(R.id.setAnswer);
-        set_Answer.setVisibility(View.GONE);
+        incorrect = MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -104,6 +104,12 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                 PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
                 popupMenu.inflate(R.menu.menu_toolbar);
                 popupMenu.setOnMenuItemClickListener(exercise2_game.this);
+                Menu menu = popupMenu.getMenu();
+
+                if (mServ.mPlayer == null) {
+                    menu.getItem(0).setTitle("เปิดเสียงดนตรี");
+                }
+                menu.getItem(1).setVisible(false);
                 popupMenu.show();
             }
         });
@@ -165,6 +171,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
             @Override
             public void onClick(View v) {
                 if (random.get(0) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
@@ -180,6 +189,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -190,6 +202,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
             @Override
             public void onClick(View v) {
                 if (random.get(1) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
@@ -205,6 +220,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }
@@ -215,6 +233,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
             @Override
             public void onClick(View v) {
                 if (random.get(2) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
@@ -230,6 +251,9 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
                 }

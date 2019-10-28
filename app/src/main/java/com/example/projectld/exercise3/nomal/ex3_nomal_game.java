@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -106,9 +107,6 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
-        ImageView set_Answer = findViewById(R.id.setAnswer);
-        set_Answer.setVisibility(View.GONE);
-
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -133,6 +131,12 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
                 PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
                 popupMenu.inflate(R.menu.menu_toolbar);
                 popupMenu.setOnMenuItemClickListener(ex3_nomal_game.this);
+                Menu menu = popupMenu.getMenu();
+
+                if (mServ.mPlayer == null) {
+                    menu.getItem(0).setTitle("เปิดเสียงดนตรี");
+                }
+                menu.getItem(1).setVisible(false);
                 popupMenu.show();
             }
         });
@@ -349,6 +353,9 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
@@ -380,6 +387,9 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
                     }
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                        }
                         incorrect.start();
                         //Toast.makeText(ex3_nomal_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
@@ -430,6 +440,9 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
 
                 if (!textView.getTag().equals("done")){
                     if (textView.getTag().equals(status)){
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         textView.setText(status);
@@ -456,6 +469,9 @@ public class ex3_nomal_game extends AppCompatActivity implements PopupMenu.OnMen
 
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            if(correct.isPlaying() || incorrect.isPlaying()){
+                                incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                            }
                             incorrect.start();
                             //Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }

@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -107,9 +108,6 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
-        ImageView set_Answer = findViewById(R.id.setAnswer);
-        set_Answer.setVisibility(View.GONE);
-
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -134,6 +132,12 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                 PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
                 popupMenu.inflate(R.menu.menu_toolbar);
                 popupMenu.setOnMenuItemClickListener(ex3_hard_game.this);
+                Menu menu = popupMenu.getMenu();
+
+                if (mServ.mPlayer == null) {
+                    menu.getItem(0).setTitle("เปิดเสียงดนตรี");
+                }
+                menu.getItem(1).setVisible(false);
                 popupMenu.show();
             }
         });
@@ -162,6 +166,8 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
         segmentation = new segmentation();
         //ArrayList<String> sentence = segmentation.split(segmentation.Break(wordset.get(count))); //ระดับคำศัพท์
         ArrayList<String> sentence = segmentation.substring(wordset.get(count)); //ระดับตัวอักษร
+
+        Log.d("Sentence length", String.valueOf(wordset.get(count).length()));
 
         /**
          * question set ex3_easy_game listeners
@@ -348,6 +354,9 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         //stop displaying the view where it was before it was dragged
@@ -379,6 +388,9 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
                     }
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                        }
                         incorrect.start();
                         //Toast.makeText(ex3_hard_game.this, "ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
                     }
@@ -429,6 +441,9 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
 
                 if (!textView.getTag().equals("done")){
                     if (textView.getTag().equals(status)){
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         textView.setText(status);
@@ -455,6 +470,9 @@ public class ex3_hard_game extends AppCompatActivity implements PopupMenu.OnMenu
 
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            if(correct.isPlaying() || incorrect.isPlaying()){
+                                incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                            }
                             incorrect.start();
                             //Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
                         }

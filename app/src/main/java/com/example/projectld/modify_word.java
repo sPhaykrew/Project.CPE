@@ -105,7 +105,7 @@ public class modify_word extends AppCompatActivity {
                      Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
                  } else if (editText.getText().length() <= 2){
                      Toast.makeText(getApplicationContext(),"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
-                 } else if (editText.getText().length() > 13){
+                 } else if (editText.getText().length() > 12){
                      Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
                  } else {
 

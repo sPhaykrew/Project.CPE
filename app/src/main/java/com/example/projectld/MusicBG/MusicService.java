@@ -12,7 +12,7 @@ import com.example.projectld.R;
 public class MusicService extends Service implements MediaPlayer.OnErrorListener {
 
     private final IBinder mBinder = new ServiceBinder();
-    MediaPlayer mPlayer;
+    public MediaPlayer mPlayer;
     private int length = 0;
 
     public MusicService() {

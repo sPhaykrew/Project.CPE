@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +59,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
     ArrayList<Object_Choice> Char_set = new ArrayList<>();
     DatabaseHelper databaseHelper;
 
-    Dialog dialog,dialog_rank,dialog_correct; //popup score
+    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser; //popup score
 
     private RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
@@ -70,6 +71,8 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
     ArrayList<String> cerrent_Score = new ArrayList<>();
 
     HomeWatcher mHomeWatcher;
+
+    MediaPlayer correct,incorrect;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,10 +103,8 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         });
         mHomeWatcher.startWatch();
 
-        final MediaPlayer incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
-        final MediaPlayer correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
-
-        ImageView set_Answer = findViewById(R.id.setAnswer);
+        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -129,6 +130,11 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                 PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
                 popupMenu.inflate(R.menu.menu_toolbar);
                 popupMenu.setOnMenuItemClickListener(ex2_game_st.this);
+                Menu menu = popupMenu.getMenu();
+
+                if (mServ.mPlayer == null) {
+                    menu.getItem(0).setTitle("เปิดเสียงดนตรี");
+                }
                 popupMenu.show();
             }
         });
@@ -136,6 +142,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
         dialog_correct = new Dialog(this);
+        dialog_setAnser = new Dialog(this);
 
         final TTS tts = new TTS(this);
         databaseHelper = new DatabaseHelper(this);
@@ -187,6 +194,11 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         back = findViewById(R.id.back_this);
         voice = findViewById(R.id.voice);
 
+        if (count == Char_set.size()){ //เอาไว้เช็คเเมื่อข้ามไปตอบตัวสุดท้ายจะไม่ได้ส่งคำตอบเลย จะกลับมาตัวก่อนหน้าแทน
+            count--;
+            SaveInt(count);
+        }
+
         ArrayList<String> Choice = new ArrayList<>();
         Choice.add(Char_set.get(count).getChoice1());
         Choice.add(Char_set.get(count).getChoice2());
@@ -224,6 +236,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
             @Override
             public void onClick(View v) {
                 if (random.get(0) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
@@ -238,6 +253,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
@@ -249,6 +267,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
             @Override
             public void onClick(View v) {
                 if (random.get(1) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
@@ -263,6 +284,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
@@ -274,6 +298,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
             @Override
             public void onClick(View v) {
                 if (random.get(2) == cha1){
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                    }
                     correct.start();
                     Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
                     Popup_Correct();
@@ -288,6 +315,9 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                     }
 
                 } else {
+                    if(correct.isPlaying() || incorrect.isPlaying()){
+                        incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                    }
                     incorrect.start();
                     Score = Score - 5;
                     Toast.makeText(getApplicationContext(),"คำตอบผิด",Toast.LENGTH_SHORT).show();
@@ -348,22 +378,6 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                 tts.speak(Char_set.get(count).getChar());
             }
         });
-
-        set_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i=0;i<cerrent_Char.size();i++) {
-                    if (!cerrent_Char.get(i).equals("null")) {
-                        String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
-                        databaseHelper.update_score_ex2(user.getString("UserID", null),
-                                Integer.parseInt(cerrent_Score.get(i)), stID);
-                    }
-                }
-                Popup_score();
-            }
-        });
-
-
     }
 
     public void SaveInt(int value){ //เซฟค่า count
@@ -546,6 +560,14 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         dialog_rank.show();
     }
 
+//    public void Popup_setAnswer(){
+//        dialog_setAnser.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+//        dialog_setAnser.setContentView(R.layout.game_st_confirm);
+//
+//        Button Back = dialog_setAnser.findViewById(R.id.this_back);
+//        Button CF = dialog_setAnser.findViewById(R.id.CF);
+//    }
+
     public void Popup_Correct(){
         dialog_correct.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog_correct.setContentView(R.layout.correct_popup);
@@ -556,7 +578,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(count >= Char_set.size()){
+                if(Char_set.size() == 0){
                     for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
                         if (!cerrent_Char.get(i).equals("null")) {
                             String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
@@ -690,6 +712,38 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         switch (item.getItemId()){
             case R.id.close_music :
                 mServ.stopMusic();
+                return true;
+
+            case R.id.set_Answer :
+                dialog_setAnser.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                dialog_setAnser.setContentView(R.layout.game_st_confirm);
+
+                Button Back = dialog_setAnser.findViewById(R.id.this_back);
+                Button CF = dialog_setAnser.findViewById(R.id.CF);
+
+                Back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_setAnser.dismiss();
+                    }
+                });
+
+                CF.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //ทำต่อ
+                        for (int i=0;i<cerrent_Char.size();i++) {
+                            if (!cerrent_Char.get(i).equals("null")) {
+                                String stID = databaseHelper.Find_stID_Char(cerrent_Char.get(i), Groupname);
+                                databaseHelper.update_score_ex2(user.getString("UserID", null),
+                                        Integer.parseInt(cerrent_Score.get(i)), stID);
+                            }
+                        }
+                        dialog_setAnser.dismiss();
+                        Popup_score();
+                    }
+                });
+                dialog_setAnser.show();
                 return true;
 
             default: return false;

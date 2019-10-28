@@ -354,7 +354,7 @@ public class GridviewAdapter extends BaseAdapter {
                                     Toast.makeText(context,"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
                                 } else if (editText_sentence.getText().length() <= 5){
                                     Toast.makeText(context,"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
-                                } else if (editText_sentence.getText().length() > 30){
+                                } else if (editText_sentence.getText().length() > 22){
                                     Toast.makeText(context,"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
                                 } else {
                                     String Word_Mod = String.valueOf(editText_sentence.getText());

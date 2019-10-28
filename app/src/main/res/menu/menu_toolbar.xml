@@ -5,4 +5,8 @@
         android:title="ปิดเสียงดนตรี">
     </item>
 
+    <item android:id="@+id/set_Answer"
+        android:title="ส่งคำตอบ">
+    </item>
+
 </menu>

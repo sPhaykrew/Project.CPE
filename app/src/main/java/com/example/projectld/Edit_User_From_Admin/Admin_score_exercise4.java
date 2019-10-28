@@ -58,6 +58,9 @@ public class Admin_score_exercise4 extends AppCompatActivity {
             }
         });
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         Get_UserID = getIntent().getExtras().getString("UserID");
 
         //Score

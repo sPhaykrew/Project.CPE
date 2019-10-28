@@ -86,7 +86,7 @@ public class Add_Sentence extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
                 } else if (editText.getText().length() <= 5){
                     Toast.makeText(getApplicationContext(),"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
-                } else if (editText.getText().length() > 30){
+                } else if (editText.getText().length() > 22){
                     Toast.makeText(getApplicationContext(),"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
                 } else {
                     Boolean Check_Sentence = databaseHelper.AddWord(String.valueOf(editText.getText()),"Sentence",null);

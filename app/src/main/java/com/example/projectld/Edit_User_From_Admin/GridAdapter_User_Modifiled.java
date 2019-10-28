@@ -67,6 +67,9 @@ public class GridAdapter_User_Modifiled extends AppCompatActivity {
             }
         });
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         final String Get_UserID = getIntent().getExtras().getString("UserID");
         User user = databaseHelper.ModifileUser(Get_UserID);

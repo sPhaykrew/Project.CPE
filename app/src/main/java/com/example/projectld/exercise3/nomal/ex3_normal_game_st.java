@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -75,7 +76,7 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
 
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
 
-    Dialog dialog,dialog_rank,dialog_correct; //popup score
+    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser; //popup score
     DatabaseHelper databaseHelper;
     SharedPreferences user;
 
@@ -127,8 +128,6 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
         });
         mHomeWatcher.startWatch();
 
-        ImageView set_Answer = findViewById(R.id.setAnswer);
-
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
@@ -156,6 +155,11 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
                 PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
                 popupMenu.inflate(R.menu.menu_toolbar);
                 popupMenu.setOnMenuItemClickListener(ex3_normal_game_st.this);
+                Menu menu = popupMenu.getMenu();
+
+                if (mServ.mPlayer == null) {
+                    menu.getItem(0).setTitle("เปิดเสียงดนตรี");
+                }
                 popupMenu.show();
             }
         });
@@ -164,6 +168,7 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
         dialog = new Dialog(this);
         dialog_rank = new Dialog(this);
         dialog_correct = new Dialog(this);
+        dialog_setAnser = new Dialog(this);
 
         voice = findViewById(R.id.voice_tts);
         next = findViewById(R.id.next);
@@ -185,6 +190,11 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
             String[] playlists = ArraySet.split(",");
             wordset.addAll(Arrays.asList(playlists));
             Load_Array_Score();
+        }
+
+        if (count == wordset.size()){ //เอาไว้เช็คเเมื่อข้ามไปตอบตัวสุดท้ายจะไม่ได้ส่งคำตอบเลย จะกลับมาตัวก่อนหน้าแทน
+            count--;
+            SaveInt(count);
         }
 
         /**
@@ -290,20 +300,6 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
                 }
             }
         });
-
-        set_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i=0;i<cerrent_Char.size();i++) {
-                    if (!cerrent_Char.get(i).equals("null")) {
-                        String stID = databaseHelper.Find_stID_sentence(cerrent_Char.get(i),Groupname,"Setting_ex3_normal","st_ex3_normal_id");
-                        databaseHelper.update_score_ex3_normal(user.getString("UserID", null),
-                                Integer.parseInt(cerrent_Score.get(i)), stID);
-                    }
-                }
-                Popup_score();
-            }
-        });
     }
 
     @Override
@@ -311,6 +307,37 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
         switch (item.getItemId()){
             case R.id.close_music :
                 mServ.stopMusic();
+                return true;
+
+            case R.id.set_Answer :
+                dialog_setAnser.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                dialog_setAnser.setContentView(R.layout.game_st_confirm);
+
+                Button Back = dialog_setAnser.findViewById(R.id.this_back);
+                Button CF = dialog_setAnser.findViewById(R.id.CF);
+
+                Back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_setAnser.dismiss();
+                    }
+                });
+
+                CF.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (int i=0;i<cerrent_Char.size();i++) {
+                            if (!cerrent_Char.get(i).equals("null")) {
+                                String stID = databaseHelper.Find_stID_sentence(cerrent_Char.get(i),Groupname,"Setting_ex3_normal","st_ex3_normal_id");
+                                databaseHelper.update_score_ex3_normal(user.getString("UserID", null),
+                                        Integer.parseInt(cerrent_Score.get(i)), stID);
+                            }
+                        }
+                        dialog_setAnser.dismiss();
+                        Popup_score();
+                    }
+                });
+                dialog_setAnser.show();
                 return true;
 
             default: return false;
@@ -400,6 +427,9 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
                     //checking whether first character of dropTarget equals first character of dropped
                     if((dropTarget.getTag().equals(dropped.getTag())))
                     {
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         view.setVisibility(View.INVISIBLE);
@@ -417,6 +447,9 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
                     }
                     else {
                         //displays message if first character of dropTarget is not equal to first character of dropped
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                        }
                         incorrect.start();
                         Score = Score - 5;
                         //Toast.makeText(ex3_normal_game_st.this, " ไม่ถูกต้อง", Toast.LENGTH_LONG).show();
@@ -437,6 +470,9 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
             public void onClick(View v) {
                 if (!textView.getTag().equals("done")){
                     if (textView.getTag().equals(status)){
+                        if(correct.isPlaying() || incorrect.isPlaying()){
+                            correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
+                        }
                         correct.start();
                         finish++; //เช็คว่าตอบคำถามครบหรือยัง
                         textView.setText(status);
@@ -456,6 +492,9 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
 
                     } else {
                         if (status != null ){ // เพื่อไม่ได้หลัง click เสร็จไม่สารมารถ click คำอื่นได้ ถ้าไม่มีจะทำให้คลิกคำอื่นหลังคลิกเสร็จขึ้นไม่ถูกต้อง
+                            if(correct.isPlaying() || incorrect.isPlaying()){
+                                incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+                            }
                             incorrect.start();
                             Score = Score - 5;
                             //Toast.makeText(getApplicationContext(),"ไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
@@ -660,7 +699,7 @@ public class ex3_normal_game_st extends AppCompatActivity implements PopupMenu.O
             @Override
             public void onClick(View v) {
                 count++;
-                if(count >= wordset.size()){
+                if(wordset.size() == 0){
                     for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
                         if (!cerrent_Char.get(i).equals("null")) {
                             String stID = databaseHelper.Find_stID_sentence(cerrent_Char.get(i),Groupname,"Setting_ex3_normal","st_ex3_normal_id");

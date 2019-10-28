@@ -43,6 +43,9 @@ public class Call_GridAdapter_User extends AppCompatActivity {
             }
         });
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         close_activity = this;
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
