@@ -2,6 +2,7 @@ package com.example.projectld;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -85,7 +86,9 @@ public class Register extends AppCompatActivity {
 
                 } else { if(!password.getText().toString().equals(confirmPS.getText().toString()))
                 {
-                    Toast.makeText(Register.this,"พาสเวิดไม่ตรงกัน",Toast.LENGTH_SHORT).show();
+                    password.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.SRC_ATOP);
+                    confirmPS.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.SRC_ATOP);
+                    Toast.makeText(Register.this,"รหัสผ่านไม่ตรงกัน",Toast.LENGTH_SHORT).show();
                 } else {
                     if (image == null) { //ถ้าไม่ได้เลือกรูปให้ใช้รูปค่า defualt
                         Drawable myDrawable = getResources().getDrawable(R.drawable.kidpicture);
@@ -107,7 +110,7 @@ public class Register extends AppCompatActivity {
                         finish();
                         Toast.makeText(Register.this, "เพิ่มผู้ใช้งานแล้ว", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(Register.this, "ชื่อผู้ใช้งางนี้มีคนใช้แล้ว กรุณาเปลี่ยนชื่อผู้ใช้งาน", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "ชื่อผู้ใช้งานนี้มีคนใช้แล้ว กรุณาเปลี่ยนชื่อผู้ใช้งาน", Toast.LENGTH_SHORT).show();
                     }
                     }
                 }

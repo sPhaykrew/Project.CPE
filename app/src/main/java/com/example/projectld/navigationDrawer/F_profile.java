@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.R;
+import com.example.projectld.Register;
 import com.example.projectld.menu;
 
 import java.io.ByteArrayOutputStream;
@@ -40,12 +42,12 @@ import java.util.Objects;
 
 public class F_profile extends AppCompatActivity {
 
-    EditText Username,Fullname,Age;
+    EditText Username,Fullname,Age,PW,PW_CF;
     ImageView profile;
     RadioButton male,female;
     Button update;
     String getsex,sex;
-    String getUsername,getFullname,getAge,Picture,UserID;
+    String getUsername,getFullname,getAge,Picture,UserID,Password,Password_CF;
     static final int SELECT_PICTURE = 100;
     Bitmap image = null;
     boolean selectpicture = true;
@@ -57,7 +59,7 @@ public class F_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_profile);
 
-        SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
+        final SharedPreferences user = getSharedPreferences("User", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = user.edit();
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -65,7 +67,7 @@ public class F_profile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        TextView Title = toolbar.findViewById(R.id.title);
+        final TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("แก้ไขโปรไฟล์");
         Title.setTextSize(20);
 
@@ -80,6 +82,8 @@ public class F_profile extends AppCompatActivity {
         });
 
         Username = findViewById(R.id.Username);
+        PW = findViewById(R.id.Password);
+        PW_CF = findViewById(R.id.Password_CF);
         Fullname = findViewById(R.id.Fullname);
         Age = findViewById(R.id.Age);
         profile = findViewById(R.id.profile);
@@ -89,6 +93,7 @@ public class F_profile extends AppCompatActivity {
 
         Picture = user.getString("Picture",null);
         getUsername = user.getString("Username",null);
+        Password = user.getString("Password",null);
         getFullname = user.getString("Fullname",null);
         getAge = String.valueOf(user.getInt("Age",0));
         getsex = user.getString("sex",null);
@@ -102,6 +107,8 @@ public class F_profile extends AppCompatActivity {
             profile.setImageBitmap(myBitmap); }
 
         Username.setText(getUsername);
+        PW.setText(Password);
+        PW_CF.setText(Password);
         Fullname.setText(getFullname);
         Age.setText(getAge);
 
@@ -117,33 +124,76 @@ public class F_profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Username.getText().toString().equals(getUsername) && Fullname.getText().toString().equals(getFullname) &&
-                        Age.getText().toString().equals(getAge) && getsex.equals(sex) && selectpicture){
+                        Age.getText().toString().equals(getAge) && getsex.equals(sex) && selectpicture &&
+                PW.getText().toString().equals(Password) && PW_CF.getText().toString().equals(Password)){
                     Toast.makeText(getApplicationContext(),"ไม่พบการเปลี่ยนแปลง",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    String path_image = null; //เก็บ path รูป
-                    byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
-                    if (image != null) {
-                        inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
-                        path_image = export_image(inputData);
+
+                    Boolean Check_userID = databaseHelper.Check_IDUser(Username.getText().toString()); //ตรวจสอบว่าไอดีซ้ำกันไหม
+
+                    if (!PW.getText().toString().equals(PW_CF.getText().toString()))
+                    {
+                        PW.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.SRC_ATOP);
+                        PW_CF.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.SRC_ATOP);
+                        Toast.makeText(getApplicationContext(),"รหัสผ่านไม่ตรงกัน",Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (Username.getText().toString().equals(getUsername)){
+                            String path_image = Picture;//เก็บ path รูป
+                            byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
+                            if (image != null) {
+                                inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                                path_image = export_image(inputData);
+                            }
+                            databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
+                                    ,Integer.parseInt(Age.getText().toString()),sex,path_image, UserID,PW.getText().toString());
+
+                            editor.putString("Username",Username.getText().toString());
+                            editor.putString("Password",PW.getText().toString());
+                            editor.putString("Fullname",Fullname.getText().toString());
+                            editor.putInt("Age", Integer.parseInt(Age.getText().toString()));
+                            editor.putString("sex",sex);
+                            if(image != null){
+                                //String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
+                                editor.putString("Picture",path_image);}
+                            editor.commit();
+
+                            finish();
+                            Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(F_profile.this, menu.class);
+                            menu.close_activity.finish(); //ปิดหน้าเมนู รีโหลด
+                            startActivity(intent);
+                        } else {
+                            if (Check_userID){
+                                String path_image = null; //เก็บ path รูป
+                                byte[] inputData = bytes; //ถ้าไม่ได้อัพรูปใหม่ จะใช้รูปเก่า
+                                if (image != null) {
+                                    inputData = convertBitmapIntoByteArray(); //แปลงรูปเป็น byte
+                                    path_image = export_image(inputData);
+                                }
+                                databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
+                                        ,Integer.parseInt(Age.getText().toString()),sex,path_image, UserID,PW.getText().toString());
+
+                                editor.putString("Username",Username.getText().toString());
+                                editor.putString("Password",PW.getText().toString());
+                                editor.putString("Fullname",Fullname.getText().toString());
+                                editor.putInt("Age", Integer.parseInt(Age.getText().toString()));
+                                editor.putString("sex",sex);
+                                if(image != null){
+                                    //String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
+                                    editor.putString("Picture",path_image);}
+                                editor.commit();
+
+                                finish();
+                                Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(F_profile.this, menu.class);
+                                menu.close_activity.finish(); //ปิดหน้าเมนู รีโหลด
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "ชื่อผู้ใช้งานนี้มีคนใช้แล้ว กรุณาเปลี่ยนชื่อผู้ใช้งาน", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-                    databaseHelper.update_user(Username.getText().toString(),Fullname.getText().toString()
-                            ,Integer.parseInt(Age.getText().toString()),sex,path_image, UserID);
-
-                    editor.putString("Username",Username.getText().toString());
-                    editor.putString("Fullname",Fullname.getText().toString());
-                    editor.putInt("Age", Integer.parseInt(Age.getText().toString()));
-                    editor.putString("sex",sex);
-                    if(image != null){
-                        //String saveThis = Base64.encodeToString(inputData, Base64.DEFAULT);//แปลง byte เป็น String
-                        editor.putString("Picture",path_image);}
-                    editor.commit();
-
-                    finish();
-                    Toast.makeText(getApplicationContext(),"แก้ไขแล้ว",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(F_profile.this, menu.class);
-                    menu.close_activity.finish(); //ปิดหน้าเมนู รีโหลด
-                    startActivity(intent);
                 }
             }
         });

@@ -85,10 +85,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return Check;
     }
 
-    public void update_user (String user,String name,int age,String sex,String Picture,String UserID){
+    public void update_user (String user,String name,int age,String sex,String Picture,String UserID,String Password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Val = new ContentValues();
         Val.put("Username",user);
+        Val.put("Password",Password);
         Val.put("Fullname",name);
         Val.put("Age",age);
         Val.put("sex",sex);
