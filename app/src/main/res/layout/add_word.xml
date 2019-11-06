@@ -26,6 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/title_add"
                 android:text="คำศัพท์ในคลังข้อมูล"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="8dp"

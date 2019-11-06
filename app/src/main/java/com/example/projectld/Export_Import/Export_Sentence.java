@@ -44,7 +44,7 @@ public class Export_Sentence extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("นำออกข้อมูลคำศัพท์");
+        Title.setText("นำออกข้อมูลประโยค");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
@@ -90,6 +90,8 @@ public class Export_Sentence extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
         dialog.setContentView(R.layout.export_word_popup);
         dialog.setCanceledOnTouchOutside(false);
+        TextView title_export = dialog.findViewById(R.id.title_export);
+        title_export.setText("นำออกข้อมูลประโยค");
         final EditText Groupname = dialog.findViewById(R.id.Groupname);
         Button export = dialog.findViewById(R.id.CF);
         Button share = dialog.findViewById(R.id.share);

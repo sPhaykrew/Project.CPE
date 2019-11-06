@@ -717,11 +717,12 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
         Button button = dialog_correct.findViewById(R.id.go_next);
         ImageView back = dialog_correct.findViewById(R.id.this_back);
         TextView textView = dialog_correct.findViewById(R.id.score_correct);
-        textView.setText(String.valueOf(Score+" คะแนน"));
+        textView.setText(Score + " คะแนน");
+        wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
+//                count++;
                 if(wordset.size() == 0){
                     for (int i=0;i<cerrent_Char.size();i++) { //อัพเดตคะแนน
                         if (!cerrent_Char.get(i).equals("null")) {
@@ -733,8 +734,8 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
                     dialog_correct.dismiss();
                     Popup_score();
                 } else {
-                    count--;
-                    wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
+//                    count--;
+//                    wordset.remove(wordset.get(count)); // ลบคำที่ทำเสร็จแล้ว
                     StringBuilder Sumwordset = new StringBuilder(); //เก็บคำศัพท์ปัจจุบันที่ลบคำไปแล้ว
                     for (int i = 0; i < wordset.size(); i++) {
                         Sumwordset.append(wordset.get(i)).append(",");

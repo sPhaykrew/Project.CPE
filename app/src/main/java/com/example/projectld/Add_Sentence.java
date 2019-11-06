@@ -25,6 +25,7 @@ public class Add_Sentence extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     GridView gridView;
     GridviewAdapter gridviewAdapter;
+    TextView title_add;
     Dialog dialog;
 
     public static Activity close_activity;
@@ -35,6 +36,9 @@ public class Add_Sentence extends AppCompatActivity {
         setContentView(R.layout.add_word);
 
         close_activity = this;
+
+        title_add = findViewById(R.id.title_add);
+        title_add.setText("ประโยคในคลังข้อมูล");
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);

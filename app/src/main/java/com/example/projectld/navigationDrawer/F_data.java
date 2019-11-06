@@ -37,7 +37,7 @@ public class F_data extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("ข้อมูล");
+        Title.setText("ข้อมูลผู้ใช้งาน");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);

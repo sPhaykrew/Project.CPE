@@ -50,7 +50,7 @@ public class Register extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("สมัคสมาชิก");
+        Title.setText("เพิ่มผู้ใช้งาน");
         Title.setTextSize(20);
 
         ImageView show_menu = toolbar.findViewById(R.id.show_menu);

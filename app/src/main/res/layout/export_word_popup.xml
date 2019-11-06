@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="นำออกข้อมูลคำศัพท์"
             android:textSize="20dp"
+            android:id="@+id/title_export"
             android:layout_gravity="start|top"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"/>

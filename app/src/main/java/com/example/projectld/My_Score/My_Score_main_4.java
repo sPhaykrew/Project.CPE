@@ -47,7 +47,7 @@ public class My_Score_main_4 extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("คะแนนของฉัน");
+        Title.setText("คะแนนแบบฝึกที่ 4");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);
