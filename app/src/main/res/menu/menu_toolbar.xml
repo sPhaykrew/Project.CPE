@@ -5,6 +5,10 @@
         android:title="ปิดเสียงดนตรี">
     </item>
 
+    <item android:id="@+id/manual"
+        android:title="วิธีการเล่น">
+    </item>
+
     <item android:id="@+id/set_Answer"
         android:title="ส่งคำตอบ">
     </item>

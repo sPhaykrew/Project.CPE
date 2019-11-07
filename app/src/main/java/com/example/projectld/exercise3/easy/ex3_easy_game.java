@@ -147,7 +147,7 @@ public class ex3_easy_game extends AppCompatActivity implements PopupMenu.OnMenu
                 if (mServ.mPlayer == null) {
                     menu.getItem(0).setTitle("เปิดเสียงดนตรี");
                 }
-                menu.getItem(1).setVisible(false);
+                menu.getItem(2).setVisible(false);
                 popupMenu.show();
             }
         });
@@ -311,6 +311,26 @@ public class ex3_easy_game extends AppCompatActivity implements PopupMenu.OnMenu
             case R.id.close_music :
                 mServ.stopMusic();
             return true;
+
+            case R.id.manual :
+                final Dialog Manual = new Dialog(this);
+                Manual.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                Manual.setContentView(R.layout.manual);
+
+                ImageView Back_manual = Manual.findViewById(R.id.this_back);
+                TextView Manual_text = Manual.findViewById(R.id.manual_text);
+
+                Manual_text.setText("ฟังเสียงของคำศัพท์และเรียงตัวอักษรให้เป็นคำศัพท์ โดยลากหรือกดที่ตัวอักษรไปวางที่ตำแหน่งที่ถูกต้อง สามารถดูรูปภาพของคำศัพท์ได้โดยกดกดที่รูปภาพด้านขวา\n");
+
+                Back_manual.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Manual.dismiss();
+                    }
+                });
+//                Manual.setCanceledOnTouchOutside(false);
+                Manual.show();
+                return true;
 
             default: return false;
         }

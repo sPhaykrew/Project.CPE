@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -76,7 +77,7 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
 
     int first = 0; //เช็คว่าใช้การทำงานครั่งแรกไหม
 
-    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser; //popup score
+    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser,cf_back; //popup score
     DatabaseHelper databaseHelper;
     SharedPreferences user;
 
@@ -136,7 +137,7 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("เแบบฝึกเรียงตัวอักษร");
+        Title.setText("เแบบทดสอบเรียงตัวอักษร");
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
@@ -145,7 +146,26 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
         back_toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                cf_back.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                cf_back.setContentView(R.layout.game_cf_back);
+
+                Button Back = cf_back.findViewById(R.id.this_back);
+                Button CF = cf_back.findViewById(R.id.CF);
+
+                Back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cf_back.dismiss();
+                    }
+                });
+
+                CF.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                cf_back.show();
             }
         });
 
@@ -168,6 +188,7 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
         dialog_rank = new Dialog(this);
         dialog_correct = new Dialog(this);
         dialog_setAnser = new Dialog(this);
+        cf_back = new Dialog(this);
 
         voice = findViewById(R.id.voice_tts);
         next = findViewById(R.id.next);
@@ -336,7 +357,27 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
                     }
                 });
                 dialog_setAnser.show();
+                return true;
 
+            case R.id.manual :
+                final Dialog Manual = new Dialog(this);
+                Manual.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                Manual.setContentView(R.layout.manual);
+
+                ImageView Back_manual = Manual.findViewById(R.id.this_back);
+                TextView Manual_text = Manual.findViewById(R.id.manual_text);
+
+                Manual_text.setText("ฟังเสียงของประโยคและเรียงตัวอักษรให้เป็นประโยค โดยลากหรือกดที่ตัวอักษรไปวางที่ตำแหน่งที่ถูกต้อง " +
+                        "เมื่อตอบครบทุกข้อจะส่งคำตอบอัติโนมัติหรือถ้าทำไม่ครบทุกข้อสามารถกดส่งคำตอบได้ที่เมนูด้านขวาบนเลือก 'ส่งคำตอบ' \n");
+
+                Back_manual.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Manual.dismiss();
+                    }
+                });
+//                Manual.setCanceledOnTouchOutside(false);
+                Manual.show();
                 return true;
 
             default: return false;
@@ -564,6 +605,15 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
             }
         });
 
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface Dialog) {
+                // if from activity
+                dialog.dismiss();
+                finish();
+            }
+        });
+
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
@@ -602,6 +652,15 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
             public void onClick(View v) {
                 dialog_rank.dismiss();
                 Popup_score();
+            }
+        });
+
+        dialog_rank.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // if from activity
+                dialog_rank.dismiss();
+                finish();
             }
         });
 
@@ -805,5 +864,29 @@ public class ex3_hard_game_st extends AppCompatActivity implements PopupMenu.OnM
         music.setClass(this,MusicService.class);
         stopService(music);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        cf_back.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+        cf_back.setContentView(R.layout.game_cf_back);
+
+        Button Back = cf_back.findViewById(R.id.this_back);
+        Button CF = cf_back.findViewById(R.id.CF);
+
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cf_back.dismiss();
+            }
+        });
+
+        CF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        cf_back.show();
     }
 }

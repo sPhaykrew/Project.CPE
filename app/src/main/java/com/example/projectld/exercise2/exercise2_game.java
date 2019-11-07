@@ -1,5 +1,6 @@
 package com.example.projectld.exercise2;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -109,7 +110,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                 if (mServ.mPlayer == null) {
                     menu.getItem(0).setTitle("เปิดเสียงดนตรี");
                 }
-                menu.getItem(1).setVisible(false);
+                menu.getItem(2).setVisible(false);
                 popupMenu.show();
             }
         });
@@ -326,6 +327,26 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
         switch (item.getItemId()){
             case R.id.close_music :
                 mServ.stopMusic();
+                return true;
+
+            case R.id.manual :
+                final Dialog Manual = new Dialog(this);
+                Manual.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                Manual.setContentView(R.layout.manual);
+
+                ImageView Back_manual = Manual.findViewById(R.id.this_back);
+                TextView Manual_text = Manual.findViewById(R.id.manual_text);
+
+                Manual_text.setText("เลือกตัวอักษรที่ถูกต้องโดยฟังจากเสียงหรือรูปภาพ \n");
+
+                Back_manual.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Manual.dismiss();
+                    }
+                });
+//                Manual.setCanceledOnTouchOutside(false);
+                Manual.show();
                 return true;
 
             default: return false;

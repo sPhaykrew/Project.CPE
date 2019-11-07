@@ -3,6 +3,7 @@ package com.example.projectld.exercise2;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -59,7 +60,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
     ArrayList<Object_Choice> Char_set = new ArrayList<>();
     DatabaseHelper databaseHelper;
 
-    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser; //popup score
+    Dialog dialog,dialog_rank,dialog_correct,dialog_setAnser,cf_back; //popup score
 
     private RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
@@ -111,7 +112,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("เแบบฝึกถามตอบ");
+        Title.setText("เแบบทดสอบถามตอบ");
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
@@ -120,7 +121,26 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         back_toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                cf_back.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                cf_back.setContentView(R.layout.game_cf_back);
+
+                Button Back = cf_back.findViewById(R.id.this_back);
+                Button CF = cf_back.findViewById(R.id.CF);
+
+                Back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cf_back.dismiss();
+                    }
+                });
+
+                CF.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                cf_back.show();
             }
         });
 
@@ -143,6 +163,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         dialog_rank = new Dialog(this);
         dialog_correct = new Dialog(this);
         dialog_setAnser = new Dialog(this);
+        cf_back = new Dialog(this);
 
         final TTS tts = new TTS(this);
         databaseHelper = new DatabaseHelper(this);
@@ -514,6 +535,15 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
             }
         });
 
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface Dialog) {
+                // if from activity
+                dialog.dismiss();
+                finish();
+            }
+        });
+
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
@@ -553,6 +583,15 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
             public void onClick(View v) {
                 dialog_rank.dismiss();
                 Popup_score();
+            }
+        });
+
+        dialog_rank.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // if from activity
+                dialog_rank.dismiss();
+                finish();
             }
         });
 
@@ -746,7 +785,51 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
                 dialog_setAnser.show();
                 return true;
 
+            case R.id.manual :
+                final Dialog Manual = new Dialog(this);
+                Manual.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+                Manual.setContentView(R.layout.manual);
+
+                ImageView Back_manual = Manual.findViewById(R.id.this_back);
+                TextView Manual_text = Manual.findViewById(R.id.manual_text);
+
+                Manual_text.setText("เลือกตัวอักษรที่ถูกต้องโดยฟังจากเสียงหรือรูปภาพ เมื่อตอบครบทุกข้อจะส่งคำตอบอัติโนมัติหรือถ้าทำไม่ครบทุกข้อสามารถกดส่งคำตอบได้ที่เมนูด้านขวาบนเลือก 'ส่งคำตอบ' \n");
+
+                Back_manual.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Manual.dismiss();
+                    }
+                });
+//                Manual.setCanceledOnTouchOutside(false);
+                Manual.show();
+                return true;
+
             default: return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        cf_back.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
+        cf_back.setContentView(R.layout.game_cf_back);
+
+        Button Back = cf_back.findViewById(R.id.this_back);
+        Button CF = cf_back.findViewById(R.id.CF);
+
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cf_back.dismiss();
+            }
+        });
+
+        CF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        cf_back.show();
     }
 }
