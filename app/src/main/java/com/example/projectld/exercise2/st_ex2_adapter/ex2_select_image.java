@@ -36,6 +36,9 @@ public class ex2_select_image extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("เลือกคำถาม");
         Title.setTextSize(20);

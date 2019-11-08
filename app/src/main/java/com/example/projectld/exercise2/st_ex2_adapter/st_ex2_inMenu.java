@@ -41,8 +41,11 @@ public class st_ex2_inMenu extends AppCompatActivity implements MyRecyclerViewAd
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("รายการคำศัพท์");
+        Title.setText("รายการตัวอักษร");
         Title.setTextSize(20);
+
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
 
         ImageView back = toolbar.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

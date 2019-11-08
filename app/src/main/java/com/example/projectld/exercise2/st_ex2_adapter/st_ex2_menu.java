@@ -39,6 +39,9 @@ public class st_ex2_menu extends AppCompatActivity {
         Title.setText("สร้างแบบทดสอบ");
         Title.setTextSize(20);
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         ImageView back = toolbar.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

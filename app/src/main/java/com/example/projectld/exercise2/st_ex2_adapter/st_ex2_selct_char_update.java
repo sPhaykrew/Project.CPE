@@ -40,6 +40,9 @@ public class st_ex2_selct_char_update extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        ImageView show_menu = toolbar.findViewById(R.id.show_menu);
+        show_menu.setVisibility(View.GONE);
+
         TextView Title = toolbar.findViewById(R.id.title);
         Title.setText("แก้ไขแบบทดสอบ");
         Title.setTextSize(20);
