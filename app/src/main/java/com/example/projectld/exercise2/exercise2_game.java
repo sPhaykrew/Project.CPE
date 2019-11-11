@@ -176,7 +176,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                         correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
                     }
                     correct.start();
-                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
                     if(count >= char_array.size()){
@@ -207,7 +207,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                         correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
                     }
                     correct.start();
-                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
                     if(count >= char_array.size()){
@@ -238,7 +238,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
                         correct= MediaPlayer.create(getApplicationContext(),R.raw.correct);
                     }
                     correct.start();
-                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),"คำตอบถูกต้อง",Toast.LENGTH_SHORT).show();
 
                     count++; //เมื่อตอบถูกจะไปพยัญชนะถัดไปทันที
                     if(count >= char_array.size()){

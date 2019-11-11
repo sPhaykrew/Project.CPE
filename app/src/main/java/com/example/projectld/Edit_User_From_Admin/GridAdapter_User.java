@@ -84,7 +84,7 @@ public class GridAdapter_User extends BaseAdapter {
                 PopupMenu popupMenu = new PopupMenu(context,rowView);
                 popupMenu.getMenuInflater().inflate(R.menu.admin_user_menu,popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
+                        @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case  R.id.edit_user :

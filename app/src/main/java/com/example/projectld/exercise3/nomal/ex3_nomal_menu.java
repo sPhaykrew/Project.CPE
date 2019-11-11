@@ -47,14 +47,19 @@ public class ex3_nomal_menu extends AppCompatActivity {
         Sentence = dbHelper.queryword("Sentence");
         gridView = findViewById(R.id.GridViewnomal);
 
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i=1;i<=Sentence.size();i++){
+            numbers.add(String.valueOf(i));
+        }
+
         //create Girdview
-        gridviewAdapter = new GridviewAdapter(Sentence,this,"nomal",R.drawable.radius_button_color2);
+        gridviewAdapter = new GridviewAdapter(numbers,this,"nomal",R.drawable.radius_button_color2,Sentence);
         gridView.setAdapter(gridviewAdapter);
 
         //gridview admin setting
         gridView_admin = findViewById(R.id.gridView_admin);
         st = dbHelper.GetGroupname("Setting_ex3_normal","st_ex3_normal_id");
-        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_normal_game_st",R.drawable.radius_button_color2);
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_normal_game_st",R.drawable.radius_button_color2,null);
         gridView_admin.setAdapter(gridviewAdapter_admin);
 
         TextView textHide = findViewById(R.id.noEX);

@@ -55,15 +55,21 @@ public class exercise2_menu extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i=1;i<=arrayList.size();i++){
+            numbers.add(String.valueOf(i));
+        }
+
+
         //create Girdview
         gridView = findViewById(R.id.gridView);
-        gridviewAdapter = new GridviewAdapter(arrayList,this,"exercise2_game",R.drawable.radius_button_color_ex2);
+        gridviewAdapter = new GridviewAdapter(numbers,this,"exercise2_game",R.drawable.radius_button_color_ex2,arrayList);
         gridView.setAdapter(gridviewAdapter);
 
         //gridview admin setting
         gridView_admin = findViewById(R.id.gridView_admin);
         st = databaseHelper.GetGroupname("Setting_ex2","st_ex2_id");
-        gridviewAdapter_admin = new GridviewAdapter(st,this,"exercise2_game_st",R.drawable.radius_button_color_ex2);
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"exercise2_game_st",R.drawable.radius_button_color_ex2,null);
         gridView_admin.setAdapter(gridviewAdapter_admin);
 
         TextView textHide = findViewById(R.id.noEX);

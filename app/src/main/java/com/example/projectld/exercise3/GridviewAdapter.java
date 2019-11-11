@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,11 @@ import com.example.projectld.Add_Sentence;
 import com.example.projectld.Add_Word;
 import com.example.projectld.DatabaseHelper;
 import com.example.projectld.Database_Meaning;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise2;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise3;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise4;
+import com.example.projectld.Edit_User_From_Admin.Admin_score_exercise5;
+import com.example.projectld.Edit_User_From_Admin.GridAdapter_User_Modifiled;
 import com.example.projectld.R;
 import com.example.projectld.TTS;
 import com.example.projectld.exercise2.ex2_game_st;
@@ -54,16 +61,19 @@ public class GridviewAdapter extends BaseAdapter {
     List<String> lstSource;
     Context context;
     ArrayList<String> wordset = new ArrayList<>();
+    ArrayList<String> tagset = new ArrayList<>();
     SharedPreferences sharedPreferences;
     String mode;
     Intent intent;
     int color;
+    ArrayList<String> tag = new ArrayList<>();
 
-    public GridviewAdapter(List<String> lstSource, Context context,String mode,int color) {
+    public GridviewAdapter(List<String> lstSource, Context context,String mode,int color,ArrayList<String> tag) {
         this.lstSource = lstSource;
         this.context = context;
         this.mode = mode;
         this.color = color;
+        this.tag = tag;
     }
 
     @Override
@@ -94,6 +104,9 @@ public class GridviewAdapter extends BaseAdapter {
         button.setBackgroundResource(color);
         button.setTextColor(parseColor("#ffffff"));
 
+//        if (tag != null) {
+//            button.setTag(tag.get(position));
+//        }
         button.setText(lstSource.get(position));
         button.setTag(position);
         final Button finalButton = button;
@@ -111,26 +124,109 @@ public class GridviewAdapter extends BaseAdapter {
 
                 final int count = (int) finalButton.getTag(); // count array wordset for next and back
                 wordset = (ArrayList<String>) lstSource;
+                tagset = (ArrayList<String>) tag;
 
                 switch (mode){
                     case "easy" :
-                        intent =  new Intent(context, ex3_easy_game.class);
-                        intent.putExtra("countarray",count);
-                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
-                        context.startActivity(intent);
+
+                        PopupMenu popupMenu_ex3 = new PopupMenu(context,v);
+                        popupMenu_ex3.getMenuInflater().inflate(R.menu.game_menu,popupMenu_ex3.getMenu());
+                        popupMenu_ex3.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case  R.id.voice :
+                                        tts.speak(String.valueOf(tag.get(count)));
+                                        return true;
+                                    case R.id.play:
+                                        intent = new Intent(context, ex3_easy_game.class);
+                                        intent.putExtra("countarray",count);
+                                        intent.putExtra("wordset", tagset); //ส่งค่าไปอีก activity
+                                        context.startActivity(intent);
+                                        return true;
+                                }
+                                return true;
+                            }
+                        });
+
+                        popupMenu_ex3.show();
                         break;
+
                     case "nomal" :
-                        intent =  new Intent(context, ex3_nomal_game.class);
-                        intent.putExtra("countarray",count);
-                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
-                        context.startActivity(intent);
+
+                        PopupMenu popupMenu_ex4 = new PopupMenu(context,v);
+                        popupMenu_ex4.getMenuInflater().inflate(R.menu.game_menu,popupMenu_ex4.getMenu());
+                        popupMenu_ex4.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case  R.id.voice :
+                                        tts.speak(String.valueOf(tag.get(count)));
+                                        return true;
+                                    case R.id.play:
+                                        intent =  new Intent(context, ex3_nomal_game.class);
+                                        intent.putExtra("countarray",count);
+                                        intent.putExtra("wordset", tagset); //ส่งค่าไปอีก activity
+                                        context.startActivity(intent);
+                                        return true;
+                                }
+                                return true;
+                            }
+                        });
+
+                        popupMenu_ex4.show();
                         break;
+
                     case "hard" :
-                        intent =  new Intent(context, ex3_hard_game.class);
-                        intent.putExtra("countarray",count);
-                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
-                        context.startActivity(intent);
+
+                        PopupMenu popupMenu_ex5 = new PopupMenu(context,v);
+                        popupMenu_ex5.getMenuInflater().inflate(R.menu.game_menu,popupMenu_ex5.getMenu());
+                        popupMenu_ex5.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case  R.id.voice :
+                                        tts.speak(String.valueOf(tag.get(count)));
+                                        return true;
+                                    case R.id.play:
+                                        intent =  new Intent(context, ex3_hard_game.class);
+                                        intent.putExtra("countarray",count);
+                                        intent.putExtra("wordset", tagset); //ส่งค่าไปอีก activity
+                                        context.startActivity(intent);
+                                        return true;
+                                }
+                                return true;
+                            }
+                        });
+
+                        popupMenu_ex5.show();
                         break;
+
+                    case "exercise2_game" :
+
+                        PopupMenu popupMenu_ex2 = new PopupMenu(context,v);
+                        popupMenu_ex2.getMenuInflater().inflate(R.menu.game_menu,popupMenu_ex2.getMenu());
+                        popupMenu_ex2.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case  R.id.voice :
+                                        tts.speak(String.valueOf(tag.get(count)));
+                                        return true;
+                                    case R.id.play:
+                                        intent = new Intent(context, exercise2_game.class);
+                                        intent.putExtra("wordset", tagset); //ส่งค่าไปอีก activity
+                                        intent.putExtra("countarray",count);
+                                        context.startActivity(intent);
+                                        return true;
+                                }
+                                return true;
+                            }
+                        });
+
+                        popupMenu_ex2.show();
+                        break;
+
                     case "st_ex2" :
                         intent = new Intent(context, st_ex2_inMenu.class);
                         intent.putExtra("Groupname",finalButton.getText());
@@ -242,89 +338,6 @@ public class GridviewAdapter extends BaseAdapter {
                         meaning.show();
                         break;
 
-//                    case "Delete_Mod_Word" :
-//                        final Dialog dialog = new Dialog(context);
-//                        dialog.setCanceledOnTouchOutside(false);
-//                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);
-//                        dialog.setContentView(R.layout.modify_delete_word_popup);
-//                        final DatabaseHelper databaseHelper = new DatabaseHelper(context);
-//
-//                        final EditText editText = dialog.findViewById(R.id.Edit_Word);
-//                        Button delete = dialog.findViewById(R.id.Delete);
-//                        Button modify = dialog.findViewById(R.id.modify);
-//                        ImageView upload_picture = dialog.findViewById(R.id.upload_image);
-//                        editText.setText(String.valueOf(finalButton.getText()));
-//
-//                        //แสดงรูปจาก path ใช้ object เพราะว่ามันมีจะรูปที่เป็น  defual กับรูปที่เก็บไว้ในเครื่อง
-//                        ArrayList<word_Image_object> path_image2  = databaseHelper.get_Image_word(finalButton.getText().toString());
-//                        if (path_image2.get(0).getDefualt_Image() != null) {
-//                            int set_image = context.getResources().getIdentifier(path_image2.get(0).getDefualt_Image(), "drawable", context.getPackageName());
-//                            upload_picture.setImageResource(set_image);
-//                        } else if (path_image2.get(0).getPath_Image() != null) {
-//                            File file = new File(path_image2.get(0).getPath_Image());
-//                            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-//                            upload_picture.setImageBitmap(myBitmap);
-//                        } else {
-//                            //upload_picture.setVisibility(View.GONE);
-//                        }
-//
-//                        upload_picture.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Intent intent = new Intent();
-//                                intent.setType("image/*");
-//                                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                                ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
-//                            }
-//                        });
-//
-//                        dialog.show();
-//
-//                        modify.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//
-//                                if (editText.getText().length() == 0) {
-//                                    Toast.makeText(context,"กรุณาพิมพ์ข้อความ",Toast.LENGTH_SHORT).show();
-//                                } else if (editText.getText().length() <= 2){
-//                                    Toast.makeText(context,"ข้อความสั่นเกินไป",Toast.LENGTH_SHORT).show();
-//                                } else if (editText.getText().length() > 13){
-//                                    Toast.makeText(context,"ข้อความยาวกินไป",Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    String Word_Mod = String.valueOf(editText.getText());
-//                                    databaseHelper.update_word(String.valueOf(finalButton.getText()), Word_Mod, "Word", "word");
-//
-//                                    Add_Word.close_activity.finish();
-//                                    intent = new Intent(context, Add_Word.class);
-//                                    context.startActivity(intent);
-//                                    dialog.dismiss();
-//                                }
-//                            }
-//                        });
-//
-//                        delete.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Boolean delete = databaseHelper.delete_word(String.valueOf(finalButton.getText()));
-//                                if (delete) {
-//                                    Add_Word.close_activity.finish();
-//                                    intent = new Intent(context,Add_Word.class);
-//                                    context.startActivity(intent);
-//                                    dialog.dismiss();
-//                                }
-//                            }
-//                        });
-//
-//                        ImageView goBack = dialog.findViewById(R.id.this_back);
-//                        goBack.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//
-//                        break;
-
                     case "Delete_Mod_Word" :
                         intent = new Intent(context, modify_word.class);
                         intent.putExtra("word",finalButton.getText());
@@ -389,13 +402,6 @@ public class GridviewAdapter extends BaseAdapter {
                             }
                         });
 
-                        break;
-
-                    case "exercise2_game" :
-                        intent = new Intent(context, exercise2_game.class);
-                        intent.putExtra("wordset", wordset); //ส่งค่าไปอีก activity
-                        intent.putExtra("countarray",count);
-                        context.startActivity(intent);
                         break;
 
                     case "exercise2_game_st" :

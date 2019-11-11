@@ -49,14 +49,19 @@ public class ex3_easy_menu extends AppCompatActivity {
         words = dbHelper.queryword("word");
         gridView = findViewById(R.id.gridView);
 
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i=1;i<=words.size();i++){
+            numbers.add(String.valueOf(i));
+        }
+
         //create Girdview
-        gridviewAdapter = new GridviewAdapter(words,this,"easy",R.drawable.radius_button_color1);
+        gridviewAdapter = new GridviewAdapter(numbers,this,"easy",R.drawable.radius_button_color1,words);
         gridView.setAdapter(gridviewAdapter);
 
         //gridview admin setting
         gridView_admin = findViewById(R.id.gridView_admin);
         st = dbHelper.GetGroupname("Setting_ex3_easy","st_ex3_easy_id");
-        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_easy_game_st",R.drawable.radius_button_color1);
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_easy_game_st",R.drawable.radius_button_color1,null);
         gridView_admin.setAdapter(gridviewAdapter_admin);
 
         TextView textHide = findViewById(R.id.noEX);

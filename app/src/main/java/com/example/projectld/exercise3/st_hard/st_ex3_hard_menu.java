@@ -57,7 +57,7 @@ public class st_ex3_hard_menu extends AppCompatActivity {
         ArrayList<String> Groupname = dbHelper.GetGroupname("Setting_ex3_hard","st_ex3_hard_id");
 
         //create Girdview
-        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_hard",R.drawable.radius_button_color3);
+        GridviewAdapter gridviewAdapter = new GridviewAdapter(Groupname,this,"st_hard",R.drawable.radius_button_color3,null);
         gridView.setAdapter(gridviewAdapter);
 
         TextView textHide = findViewById(R.id.noEX);

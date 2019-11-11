@@ -73,7 +73,7 @@ public class Add_Word extends AppCompatActivity {
         gridView = findViewById(R.id.GridView_Sentence);
         ArrayList Word = databaseHelper.queryword("Word");
 
-        gridviewAdapter = new GridviewAdapter(Word,this,"Delete_Mod_Word",R.drawable.radius_button_color_ex2);
+        gridviewAdapter = new GridviewAdapter(Word,this,"Delete_Mod_Word",R.drawable.radius_button_color_ex2,null);
         gridView.setAdapter(gridviewAdapter);
 
         FloatingActionButton Add = findViewById(R.id.Add);

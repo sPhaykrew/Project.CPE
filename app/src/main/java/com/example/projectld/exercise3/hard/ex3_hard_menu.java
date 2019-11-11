@@ -48,15 +48,20 @@ public class ex3_hard_menu extends AppCompatActivity {
         words = dbHelper.queryword("Sentence");
         gridView = findViewById(R.id.GridViewnomal);
 
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i=1;i<=words.size();i++){
+            numbers.add(String.valueOf(i));
+        }
+
         //create Girdview
-        gridviewAdapter = new GridviewAdapter(words,this,"hard",R.drawable.radius_button_color3);
+        gridviewAdapter = new GridviewAdapter(numbers,this,"hard",R.drawable.radius_button_color3,words);
         gridView.setAdapter(gridviewAdapter);
 
         //gridview admin setting
         gridView_admin = findViewById(R.id.gridView_admin);
         st = dbHelper.GetGroupname("Setting_ex3_hard","st_ex3_hard_id");
         Log.d("hard",st.toString());
-        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_hard_game_st",R.drawable.radius_button_color3);
+        gridviewAdapter_admin = new GridviewAdapter(st,this,"ex3_hard_game_st",R.drawable.radius_button_color3,null);
         gridView_admin.setAdapter(gridviewAdapter_admin);
 
         TextView textHide = findViewById(R.id.noEX);
