@@ -821,6 +821,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             db.insertOrThrow(table, null, Val);
             check_word = true;
         } catch (Exception e) {
+            Toast.makeText(context,"มีข้อมูลในฐานข้อมูลแล้ว",Toast.LENGTH_SHORT).show();
             check_word = false;
         }
         db.close();

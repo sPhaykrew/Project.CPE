@@ -57,7 +57,7 @@ public class Export_Word extends AppCompatActivity {
             }
         });
 
-        export_import = new Export_Import(getApplicationContext());
+        export_import = new Export_Import(this);
 
         loadGridView();
         dialog = new Dialog(this);
