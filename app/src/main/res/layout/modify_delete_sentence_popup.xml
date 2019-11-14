@@ -38,6 +38,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
+            android:digits="กขฃคฅฆงจฉชซฌญฎฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะาิีึืุูเั้๋๊แไโ์่็ใำ"
             android:hint="พิมพ์เฉพาะตัวอักษรไทย"
             android:id="@+id/Edit_Word"/>
 

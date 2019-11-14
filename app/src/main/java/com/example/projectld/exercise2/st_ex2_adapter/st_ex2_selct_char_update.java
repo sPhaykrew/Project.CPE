@@ -44,7 +44,7 @@ public class st_ex2_selct_char_update extends AppCompatActivity {
         show_menu.setVisibility(View.GONE);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("แก้ไขแบบทดสอบ");
+        Title.setText("แก้ไขแบบฝึก");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);

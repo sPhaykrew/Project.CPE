@@ -1,7 +1,12 @@
 package com.example.projectld.navigationDrawer;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.projectld.MusicBG.HomeWatcher;
+import com.example.projectld.MusicBG.MusicService;
 import com.example.projectld.My_Score.My_Score_main_2;
 import com.example.projectld.My_Score.My_Score_main_3;
 import com.example.projectld.My_Score.My_Score_main_4;
@@ -26,11 +33,36 @@ import java.util.Objects;
 public class F_data extends AppCompatActivity {
 
     Button score2,score3,score4,score5,Word,Sentence;
+    HomeWatcher mHomeWatcher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data);
+
+        ////service Music Start!
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+
+        ////service Music Start!
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new HomeWatcher.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+            @Override
+            public void onHomeLongPressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+        });
+        mHomeWatcher.startWatch();
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -106,4 +138,74 @@ public class F_data extends AppCompatActivity {
         });
 
     }
+
+        ////service Music Start!
+        private boolean mIsBound = false;
+        private MusicService mServ;
+        private ServiceConnection Scon =new ServiceConnection(){
+
+            public void onServiceConnected(ComponentName name, IBinder
+                    binder) {
+                mServ = ((MusicService.ServiceBinder)binder).getService();
+            }
+
+            public void onServiceDisconnected(ComponentName name) {
+                mServ = null;
+            }
+        };
+
+        void doBindService(){
+            bindService(new Intent(this,MusicService.class),
+                    Scon, Context.BIND_AUTO_CREATE);
+            mIsBound = true;
+        }
+
+        void doUnbindService()
+        {
+            if(mIsBound)
+            {
+                unbindService(Scon);
+                mIsBound = false;
+            }
+        }
+
+        @Override
+        protected void onResume() {
+            super.onResume();
+
+            if (mServ != null) {
+                mServ.resumeMusic();
+            }
+
+        }
+
+        @Override
+        protected void onPause() {
+            super.onPause();
+
+            PowerManager pm = (PowerManager)
+                    getSystemService(Context.POWER_SERVICE);
+            boolean isScreenOn = false;
+            if (pm != null) {
+                isScreenOn = pm.isInteractive();
+            }
+
+            if (!isScreenOn) {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+
+        }
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+
+            doUnbindService();
+            Intent music = new Intent();
+            music.setClass(this,MusicService.class);
+            stopService(music);
+
+        }
 }

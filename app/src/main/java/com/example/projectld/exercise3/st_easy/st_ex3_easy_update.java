@@ -45,7 +45,7 @@ public class st_ex3_easy_update extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("แก้ไขแบบทดสอบ");
+        Title.setText("แก้ไขแบบฝึก");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);

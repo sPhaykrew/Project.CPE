@@ -43,7 +43,7 @@ public class gridview_ex2_select_char extends AppCompatActivity {
         show_menu.setVisibility(View.GONE);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("สร้างแบบทดสอบ");
+        Title.setText("สร้างแบบฝึก");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);

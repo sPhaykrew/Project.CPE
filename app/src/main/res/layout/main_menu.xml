@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
-                    android:text="เแบบฝึกเขียน \nพยัญชนะ"
+                    android:text="แบบฝึกเขียน \nพยัญชนะ"
                     android:textSize="16dp"/>
 
             </LinearLayout>
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
-                    android:text="เแบบฝึกจำ \nพยัญชนะ"
+                    android:text="แบบฝึกจำ \nพยัญชนะ"
                     android:textSize="16dp"/>
 
             </LinearLayout>
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
-                    android:text="เแบบฝึกเเรียง \nตัวอักษรและ\nและคำศัพท์"
+                    android:text="แบบฝึกเรียง \nตัวอักษรและ\nและคำศัพท์"
                     android:textSize="16dp"/>
 
             </LinearLayout>

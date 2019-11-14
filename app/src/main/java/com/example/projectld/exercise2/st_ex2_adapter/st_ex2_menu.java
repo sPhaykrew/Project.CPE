@@ -36,7 +36,7 @@ public class st_ex2_menu extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("สร้างแบบทดสอบ");
+        Title.setText("สร้างแบบฝึก");
         Title.setTextSize(20);
 
         ImageView show_menu = toolbar.findViewById(R.id.show_menu);

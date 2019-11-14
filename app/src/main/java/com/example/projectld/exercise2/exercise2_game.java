@@ -86,7 +86,7 @@ public class exercise2_game extends AppCompatActivity implements PopupMenu.OnMen
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("เแบบฝึกถามตอบ");
+        Title.setText("เแบบฝึกจำพยัญชนะ");
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);

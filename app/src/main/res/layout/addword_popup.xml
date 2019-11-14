@@ -49,6 +49,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:digits="กขฃคฅฆงจฉชซฌญฎฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะาิีึืุูเั้๋๊แไโ์่็ใำ"
         android:id="@+id/Add_Word"/>
 
     <android.support.v7.widget.AppCompatButton

@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="แบบทดสอบ"
+            android:text="แบบฝึกกำหนดเอง"
             android:textSize="20dp"
             android:layout_marginStart="15dp"/>
 
@@ -91,7 +91,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ไม่พบแบบทดสอบ !"
+            android:text="ไม่พบแบบฝึก !"
             android:id="@+id/noEX"
             android:textSize="16dp"
             android:layout_marginStart="15dp"

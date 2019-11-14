@@ -1,9 +1,14 @@
 package com.example.projectld.navigationDrawer;
 
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,6 +29,8 @@ import com.example.projectld.Export_Import.Export_Import;
 import com.example.projectld.Export_Import.Export_Sentence;
 import com.example.projectld.Export_Import.Export_Word;
 import com.example.projectld.Export_Import.Export_adapter;
+import com.example.projectld.MusicBG.HomeWatcher;
+import com.example.projectld.MusicBG.MusicService;
 import com.example.projectld.R;
 import com.example.projectld.exercise2.st_ex2_adapter.st_ex2_menu;
 import com.example.projectld.exercise3.st_easy.st_ex3_easy_menu;
@@ -46,10 +53,36 @@ public class F_setting extends AppCompatActivity {
     Dialog dialog;
     Export_Import export_import;
 
+    HomeWatcher mHomeWatcher;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_setting);
+
+        ////service Music Start!
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+
+        ////service Music Start!
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new HomeWatcher.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+            @Override
+            public void onHomeLongPressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+        });
+        mHomeWatcher.startWatch();
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -470,5 +503,76 @@ public class F_setting extends AppCompatActivity {
             Log.e("Pathb",path);
             export_import.import_csv(Uri.parse(path));
         }
+
+            ////service Music Start!
+            private boolean mIsBound = false;
+            private MusicService mServ;
+            private ServiceConnection Scon =new ServiceConnection(){
+
+                public void onServiceConnected(ComponentName name, IBinder
+                        binder) {
+                    mServ = ((MusicService.ServiceBinder)binder).getService();
+                }
+
+                public void onServiceDisconnected(ComponentName name) {
+                    mServ = null;
+                }
+            };
+
+            void doBindService(){
+                bindService(new Intent(this,MusicService.class),
+                        Scon, Context.BIND_AUTO_CREATE);
+                mIsBound = true;
+            }
+
+            void doUnbindService()
+            {
+                if(mIsBound)
+                {
+                    unbindService(Scon);
+                    mIsBound = false;
+                }
+            }
+
+            @Override
+            protected void onResume() {
+                super.onResume();
+
+                if (mServ != null) {
+                    mServ.resumeMusic();
+                }
+
+            }
+
+            @Override
+            protected void onPause() {
+                super.onPause();
+
+                PowerManager pm = (PowerManager)
+                        getSystemService(Context.POWER_SERVICE);
+                boolean isScreenOn = false;
+                if (pm != null) {
+                    isScreenOn = pm.isInteractive();
+                }
+
+                if (!isScreenOn) {
+                    if (mServ != null) {
+                        mServ.pauseMusic();
+                    }
+                }
+
+            }
+
+            @Override
+            protected void onDestroy() {
+                super.onDestroy();
+
+                doUnbindService();
+                Intent music = new Intent();
+                music.setClass(this,MusicService.class);
+                stopService(music);
+
+            }
+
     }
 

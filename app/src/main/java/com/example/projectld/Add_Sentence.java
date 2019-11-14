@@ -70,12 +70,12 @@ public class Add_Sentence extends AppCompatActivity {
         Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Add_word();
+                Add_Sentence();
             }
         });
     }
 
-    public void Add_word(){
+    public void Add_Sentence(){
         dialog.setContentView(R.layout.addsentence_popup);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_radius_while);

@@ -42,7 +42,7 @@ public class grid_view_ex3_st_easy_selectWord extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("สร้างแบบทดสอบ");
+        Title.setText("สร้างแบบฝึก");
         Title.setTextSize(20);
 
         ImageView back = toolbar.findViewById(R.id.back);

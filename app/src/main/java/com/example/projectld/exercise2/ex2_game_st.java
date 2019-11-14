@@ -112,7 +112,7 @@ public class ex2_game_st extends AppCompatActivity implements PopupMenu.OnMenuIt
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         TextView Title = toolbar.findViewById(R.id.title);
-        Title.setText("เแบบทดสอบถามตอบ");
+        Title.setText("เแบบทดสอบจำพยัญชนะ");
         Title.setTextSize(20);
 
         ImageView back_toolbar = toolbar.findViewById(R.id.back);
