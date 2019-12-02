@@ -23,6 +23,10 @@
             android:id="@+id/StopMusic"
             android:icon="@drawable/ic_volume_off_black_24dp"
             android:title="ปิดเสียงดนตรี" />
+        <item
+            android:id="@+id/credits"
+            android:icon="@drawable/credit"
+            android:title="เครดิต" />
 
     </group>
     <item android:title="Admin"

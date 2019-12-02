@@ -248,6 +248,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 //                }
                 break;
 
+            case R.id.credits:
+                Intent credit_page = new Intent(getApplicationContext(),credits.class);
+                startActivity(credit_page);
+                break;
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

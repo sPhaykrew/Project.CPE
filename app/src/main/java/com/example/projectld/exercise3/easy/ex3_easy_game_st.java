@@ -133,6 +133,7 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
         mHomeWatcher.startWatch();
 
         ImageView show_Image = findViewById(R.id.show_image);
+
         incorrect= MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
         correct = MediaPlayer.create(getApplicationContext(),R.raw.correct);
 
@@ -336,6 +337,9 @@ public class ex3_easy_game_st extends AppCompatActivity implements PopupMenu.OnM
                 popup_Image.show();
 
                 ArrayList<word_Image_object> path_image= databaseHelper.get_Image_word(wordset.get(count));
+
+                path_image.get(0).setDefualt_Image(null); //เอารูปออกชั่วคราว
+
                 if (path_image.get(0).getDefualt_Image() != null) {
                     int set_image = getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", getPackageName());
                     word_Image.setImageResource(set_image);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_back" />
+
+    <me.biubiubiu.justifytext.library.JustifyTextView
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="ในส่วนนี้จะกล่าวถึงแหล่งที่มาของรูปภาพ เสียงดนตรีและฐานข้อมูลที่นำมาใช้ในแอปพลิเคชัน LD Training\n"/>
+
+    <me.biubiubiu.justifytext.library.JustifyTextView
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="1. ทีมวิจัยเทคโนโลยีที่ทุกคนเข้าถึงและสิ่งอำนวยความสะดวก ศูนย์วิจัยเทคโนโลยีสิ่งอำนวยความสะดวกและเครื่องมือแพทย์ สวทช.
+        \nกลุ่มวิจัยปัญญาประดิษฐ์ศูนย์เทคโนโลยีอิเล็กทรอนิกส์และคอมพิวเตอร์แห่งชาติ สวทช. \nพจนานุกรม ฉบับราชบัณฑิตยสถาน พ.ศ. ๒๕๕๔ ที่ให้ใช้ฐานข้อมูล Lexitron_v3 ที่ใช้แสดงความหมายของคำศัพท์\n"/>
+
+    <me.biubiubiu.justifytext.library.JustifyTextView
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="2. Freepik.com รูปภาพในหน้าเมนูของแอปพลิเคชัน \n"/>
+
+    <me.biubiubiu.justifytext.library.JustifyTextView
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="3. www.facebook.com/thedreamsclassroom/ รูปภาพ ก-ฮ ในแบบฝึกที่ 2\n"/>
+
+    <me.biubiubiu.justifytext.library.JustifyTextView
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="4. www.youtube.com/channel/UC1sKMyfW-pWuvbWrX1RXKAA เสียงดนตรีประกอบแอปพลิเคชัน \n"/>
+
+</LinearLayout>

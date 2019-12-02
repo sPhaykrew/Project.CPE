@@ -296,6 +296,9 @@ public class GridviewAdapter extends BaseAdapter {
                         mean.setText(get_mean);
 
                         ArrayList<word_Image_object> path_image = db.get_Image_word(get_word);
+
+                        path_image.get(0).setDefualt_Image(null); //เอารูปออกชั่วคราว
+
                         if (path_image.get(0).getDefualt_Image() != null) {
                             int set_image = context.getResources().getIdentifier(path_image.get(0).getDefualt_Image(), "drawable", context.getPackageName());
                             word_Image.setImageResource(set_image);

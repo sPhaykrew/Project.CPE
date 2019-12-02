@@ -69,6 +69,9 @@ public class modify_word extends AppCompatActivity {
 
         //แสดงรูปจาก path ใช้ object เพราะว่ามันมีจะรูปที่เป็น  defual กับรูปที่เก็บไว้ในเครื่อง
         ArrayList<word_Image_object> path_image2  = databaseHelper.get_Image_word(word);
+
+        path_image2.get(0).setDefualt_Image(null); //เอารูปออกชั่วคราว
+
         if (path_image2.get(0).getDefualt_Image() != null ) {
             int set_image = getResources().getIdentifier(path_image2.get(0).getDefualt_Image(), "drawable",getPackageName());
             upload_picture.setImageResource(set_image);

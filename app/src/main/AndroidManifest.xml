@@ -143,6 +143,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".modify_word"
             android:screenOrientation="portrait"/>
+        <activity android:name=".credits" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
